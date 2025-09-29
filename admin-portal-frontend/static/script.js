@@ -939,6 +939,38 @@ async function removeEmployee() {
 }
 
 // ATTENDANCE
+async function fetchExistingAttendance(employeeId, date) {
+    try {
+        // Try a specific endpoint first if it exists in backend (not guaranteed)
+        // Fallback to the view endpoint and filter client-side
+        const data = await apiRequest(`/api/attendance/view?date=${encodeURIComponent(date)}`);
+        if (!data || !Array.isArray(data.records)) return null;
+        // Attempt to find matching record by common keys
+        const match = data.records.find(rec => {
+            // normalize keys
+            const keys = Object.keys(rec || {}).reduce((acc, k) => { acc[k.toLowerCase()] = k; return acc; }, {});
+            const idKey = keys['employee_id'] || keys['id'] || keys['employeeid'];
+            const nameKey = keys['employee'] || keys['employee_name'] || keys['name'];
+            const selectedName = (document.getElementById('att-employee-select').selectedOptions[0]?.text || '').trim();
+            const byId = idKey ? String(rec[idKey]) === String(employeeId) : false;
+            const byName = nameKey ? String(rec[nameKey]).trim() === selectedName : false;
+            return byId || byName;
+        });
+        if (!match) return null;
+        // Normalize possible time keys from backend to expected keys
+        const lower = Object.keys(match).reduce((acc, k) => { acc[k.toLowerCase()] = match[k]; return acc; }, {});
+        return {
+            check_in_1: lower['check_in_1'] ?? lower['checkin1'] ?? lower['check_in'] ?? null,
+            check_out_1: lower['check_out_1'] ?? lower['checkout1'] ?? lower['check_out'] ?? null,
+            check_in_2: lower['check_in_2'] ?? lower['checkin2'] ?? null,
+            check_out_2: lower['check_out_2'] ?? lower['checkout2'] ?? null,
+        };
+    } catch (e) {
+        console.warn('fetchExistingAttendance error', e);
+        return null;
+    }
+}
+
 async function addUpdateAttendance() {
     const employeeId = document.getElementById('att-employee-select').value;
     const dateVal = document.getElementById('att-date').value;
@@ -947,30 +979,31 @@ async function addUpdateAttendance() {
     const in2 = document.getElementById('att-checkin2').value;
     const out2 = document.getElementById('att-checkout2').value;
 
-    const payload = { employee_id: employeeId, date: dateVal };
-    if (in1 && in1.trim() !== '') payload.check_in_1 = in1.trim();
-    if (out1 && out1.trim() !== '') payload.check_out_1 = out1.trim();
-    if (in2 && in2.trim() !== '') payload.check_in_2 = in2.trim();
-    if (out2 && out2.trim() !== '') payload.check_out_2 = out2.trim();
-
-    console.debug('Submitting attendance payload', payload);
-    
-    if (!payload.employee_id || !payload.date) {
+    if (!employeeId || !dateVal) {
         return showToast('Please select employee and date.', 'error');
     }
-    
+
     const originalText = showButtonSpinner(attUpdateBtn, 'Saving...');
-    const failsafe = setTimeout(() => {
-        try { hideButtonSpinner(attUpdateBtn, originalText); } catch(_) {}
-    }, 10000);
+    const failsafe = setTimeout(() => { try { hideButtonSpinner(attUpdateBtn, originalText); } catch(_) {} }, 10000);
     try {
-        const result = await postJsonThenForm('/api/attendance', payload, { timeoutMs: 12000 });
-        console.debug('Attendance response', result);
+        // Fetch existing values to avoid overwriting earlier times
+        const existing = await fetchExistingAttendance(employeeId, dateVal);
+        const merged = { employee_id: employeeId, date: dateVal };
+        function choose(newVal, oldVal) {
+            const nv = (newVal || '').trim();
+            return nv !== '' ? nv : (oldVal || undefined);
+        }
+        merged.check_in_1 = choose(in1, existing?.check_in_1);
+        merged.check_out_1 = choose(out1, existing?.check_out_1);
+        merged.check_in_2 = choose(in2, existing?.check_in_2);
+        merged.check_out_2 = choose(out2, existing?.check_out_2);
+
+        console.debug('Submitting attendance merged payload', merged);
+        const result = await postJsonThenForm('/api/attendance', merged, { timeoutMs: 12000 });
         const msg = typeof result === 'object' && result !== null ? (result.message || 'Attendance updated successfully!') : 'Attendance updated successfully!';
         showToast(msg, 'success');
-        
-        // Do NOT clear the form so later edits don't lose previously entered times
-        // Optionally, you could refresh displayed data here
+
+        // Do not clear inputs, preserve user's current values
         loadDashboardData();
         loadTodaysAttendanceStatus();
     } catch (error) {
