@@ -398,9 +398,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             document.querySelectorAll('#mainTab .nav-link').forEach(link => {
                 if (link && headerTitle) {
+                    // Update header and breadcrumbs on click (fallback)
                     link.addEventListener('click', () => {
                         const title = link.getAttribute('data-header-title');
-                        if (title) headerTitle.textContent = title;
+                        if (title) {
+                            headerTitle.textContent = title;
+                            updateBreadcrumbs(title);
+                        }
+                    });
+                    // Update on Bootstrap tab activation (authoritative)
+                    link.addEventListener('shown.bs.tab', (e) => {
+                        const activated = e.target;
+                        const title = activated.getAttribute('data-header-title');
+                        if (title) {
+                            headerTitle.textContent = title;
+                            updateBreadcrumbs(title);
+                        }
                     });
                 }
             });
