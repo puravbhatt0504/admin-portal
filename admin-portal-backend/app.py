@@ -14,7 +14,12 @@ from models import Base, Employee, Attendance, TravelExpense, GeneralExpense, Ad
 
 # --- App & Database Configuration ---
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=[
+    "https://admin-portal-dusky.vercel.app",
+    "http://localhost:3000",
+    "http://127.0.0.1:5500",
+    "http://localhost:5500"
+])
 
 # --- IMPORTANT: SECURE DATABASE CONNECTION ---
 db_user = "finalboss0504"
