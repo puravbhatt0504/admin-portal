@@ -963,18 +963,52 @@ function writeAttendanceCache(employeeId, date, data) {
     } catch (_) {}
 }
 
+function normalizeTimeValue(v) {
+    if (v === undefined || v === null) return null;
+    const s = String(v).trim();
+    if (s === '' || s === '-' || s.toLowerCase() === 'null' || s.toLowerCase() === 'none') return null;
+    return s;
+}
+
+function parseAttendanceRecordKeys(obj) {
+    // obj should have lowercase keys already
+    const val = (k) => normalizeTimeValue(obj[k]);
+    // Common direct keys
+    let check_in_1 = val('check_in_1') ?? val('checkin1') ?? val('check_in') ?? null;
+    let check_out_1 = val('check_out_1') ?? val('checkout1') ?? val('check_out') ?? null;
+    let check_in_2 = val('check_in_2') ?? val('checkin2') ?? null;
+    let check_out_2 = val('check_out_2') ?? val('checkout2') ?? null;
+
+    // Heuristic: scan keys containing patterns
+    if (!check_in_1 || !check_out_1 || !check_in_2 || !check_out_2) {
+        const entries = Object.entries(obj);
+        for (const [k, raw] of entries) {
+            const v = normalizeTimeValue(raw);
+            if (!v) continue;
+            const key = k.toLowerCase();
+            if (key.includes('shift') && key.includes('1')) {
+                if (key.includes('in') && !check_in_1) check_in_1 = v;
+                if ((key.includes('out') || key.includes('exit')) && !check_out_1) check_out_1 = v;
+            } else if (key.includes('shift') && key.includes('2')) {
+                if (key.includes('in') && !check_in_2) check_in_2 = v;
+                if ((key.includes('out') || key.includes('exit')) && !check_out_2) check_out_2 = v;
+            } else if ((key.includes('in') || key.includes('checkin')) && !check_in_1) {
+                check_in_1 = v;
+            } else if ((key.includes('out') || key.includes('checkout')) && !check_out_1) {
+                check_out_1 = v;
+            }
+        }
+    }
+    return { check_in_1, check_out_1, check_in_2, check_out_2 };
+}
+
 async function fetchExistingAttendance(employeeId, date) {
     // 1) Try dedicated load endpoint if backend supports it
     try {
         const data = await apiRequest(`/api/attendance/load?employee_id=${encodeURIComponent(employeeId)}&date=${encodeURIComponent(date)}`);
-        if (data) {
+        if (data && typeof data === 'object') {
             const lower = Object.keys(data).reduce((acc, k) => { acc[k.toLowerCase()] = data[k]; return acc; }, {});
-            return {
-                check_in_1: lower['check_in_1'] ?? lower['checkin1'] ?? lower['check_in'] ?? null,
-                check_out_1: lower['check_out_1'] ?? lower['checkout1'] ?? lower['check_out'] ?? null,
-                check_in_2: lower['check_in_2'] ?? lower['checkin2'] ?? null,
-                check_out_2: lower['check_out_2'] ?? lower['checkout2'] ?? null,
-            };
+            return parseAttendanceRecordKeys(lower);
         }
     } catch (e) {
         // proceed to fallback
@@ -994,12 +1028,7 @@ async function fetchExistingAttendance(employeeId, date) {
         });
         if (match) {
             const lower = Object.keys(match).reduce((acc, k) => { acc[k.toLowerCase()] = match[k]; return acc; }, {});
-            return {
-                check_in_1: lower['check_in_1'] ?? lower['checkin1'] ?? lower['check_in'] ?? null,
-                check_out_1: lower['check_out_1'] ?? lower['checkout1'] ?? lower['check_out'] ?? null,
-                check_in_2: lower['check_in_2'] ?? lower['checkin2'] ?? null,
-                check_out_2: lower['check_out_2'] ?? lower['checkout2'] ?? null,
-            };
+            return parseAttendanceRecordKeys(lower);
         }
     } catch (e) {
         // ignore
@@ -2168,10 +2197,10 @@ async function loadAttendanceIntoForm() {
         const existing = await fetchExistingAttendance(employeeId, dateVal);
         const cached = readAttendanceCache(employeeId, dateVal);
         const merged = {
-            check_in_1: existing?.check_in_1 ?? cached?.check_in_1 ?? '',
-            check_out_1: existing?.check_out_1 ?? cached?.check_out_1 ?? '',
-            check_in_2: existing?.check_in_2 ?? cached?.check_in_2 ?? '',
-            check_out_2: existing?.check_out_2 ?? cached?.check_out_2 ?? '',
+            check_in_1: normalizeTimeValue(existing?.check_in_1) ?? normalizeTimeValue(cached?.check_in_1) ?? '',
+            check_out_1: normalizeTimeValue(existing?.check_out_1) ?? normalizeTimeValue(cached?.check_out_1) ?? '',
+            check_in_2: normalizeTimeValue(existing?.check_in_2) ?? normalizeTimeValue(cached?.check_in_2) ?? '',
+            check_out_2: normalizeTimeValue(existing?.check_out_2) ?? normalizeTimeValue(cached?.check_out_2) ?? '',
         };
         setAttendanceInputs(merged);
     } catch (e) {
