@@ -37,10 +37,14 @@ db.Model = Base
 
 # --- Helper Functions ---
 def parse_time(time_str):
-    if not time_str: return None
+    if not time_str or not time_str.strip():
+        return None
+    time_str = time_str.strip()
     for fmt in ('%I:%M %p', '%H:%M'):
-        try: return datetime.strptime(time_str.strip(), fmt).time()
-        except ValueError: pass
+        try: 
+            return datetime.strptime(time_str, fmt).time()
+        except ValueError: 
+            pass
     return None
 
 # --- Main & Config API Endpoints ---
@@ -137,10 +141,16 @@ def add_update_attendance():
         message = 'Attendance updated successfully.'
 
     # Use object.__setattr__ to avoid linter errors with SQLAlchemy columns
-    object.__setattr__(record, 'shift1_in', parse_time(data.get('check_in_1') or data.get('shift1_in')))
-    object.__setattr__(record, 'shift1_out', parse_time(data.get('check_out_1') or data.get('shift1_out')))
-    object.__setattr__(record, 'shift2_in', parse_time(data.get('check_in_2') or data.get('shift2_in')))
-    object.__setattr__(record, 'shift2_out', parse_time(data.get('check_out_2') or data.get('shift2_out')))
+    # Only set times if they have actual values (not empty strings)
+    shift1_in_val = data.get('check_in_1') or data.get('shift1_in')
+    shift1_out_val = data.get('check_out_1') or data.get('shift1_out')
+    shift2_in_val = data.get('check_in_2') or data.get('shift2_in')
+    shift2_out_val = data.get('check_out_2') or data.get('shift2_out')
+    
+    object.__setattr__(record, 'shift1_in', parse_time(shift1_in_val) if shift1_in_val and shift1_in_val.strip() else None)
+    object.__setattr__(record, 'shift1_out', parse_time(shift1_out_val) if shift1_out_val and shift1_out_val.strip() else None)
+    object.__setattr__(record, 'shift2_in', parse_time(shift2_in_val) if shift2_in_val and shift2_in_val.strip() else None)
+    object.__setattr__(record, 'shift2_out', parse_time(shift2_out_val) if shift2_out_val and shift2_out_val.strip() else None)
 
     db.session.commit()
     return jsonify({'message': message})
