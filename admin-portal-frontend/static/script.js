@@ -252,6 +252,8 @@ let __lastToastTime = 0;
 function showButtonSpinner(button, text = 'Loading...') {
     if (!button) return null;
     try {
+        // mark busy
+        try { button.dataset.busy = '1'; } catch(_) {}
         button.disabled = true;
         const originalText = button.innerHTML;
         // store original in dataset as backup
@@ -266,6 +268,8 @@ function showButtonSpinner(button, text = 'Loading...') {
 function hideButtonSpinner(button, originalText) {
     if (!button) return;
     try {
+        // clear busy
+        if (button.dataset) { button.dataset.busy = '0'; }
         button.disabled = false;
         let restore = typeof originalText === 'string' ? originalText : undefined;
         if (!restore && button.dataset && button.dataset.originalHtml) {
@@ -532,12 +536,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         addEmployee();
     });
 
-    attUpdateBtn.addEventListener('click', () => {
+    attUpdateBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        // Prevent double submits while busy
+        if (attUpdateBtn.dataset && attUpdateBtn.dataset.busy === '1') {
+            return;
+        }
         const emp = document.getElementById('att-employee-select');
         const date = document.getElementById('att-date');
         if (!emp.value) return markInvalid(emp, 'Please select employee.');
         if (!date.value) return markInvalid(date, 'Please select date.');
-        addUpdateAttendance();
+        // Run async and ensure UI restore even if unexpected error
+        Promise.resolve().then(() => addUpdateAttendance()).catch((err) => {
+            console.error('Attendance click error', err);
+            showToast('Failed to update attendance', 'error');
+        }).finally(() => {
+            try { hideButtonSpinner(attUpdateBtn, attUpdateBtn.dataset ? attUpdateBtn.dataset.originalHtml : undefined); } catch(_) {}
+        });
     });
 
     travelLogBtn.addEventListener('click', () => {
@@ -942,7 +958,7 @@ async function addUpdateAttendance() {
     // Failsafe: ensure button is restored even if something hangs
     const failsafe = setTimeout(() => {
         try { hideButtonSpinner(attUpdateBtn, originalText); } catch(_) {}
-    }, 15000);
+    }, 10000);
     try {
         const result = await postJsonThenForm('/api/attendance', payload, { timeoutMs: 12000 });
         console.debug('Attendance response', result);
