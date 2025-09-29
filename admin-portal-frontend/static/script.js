@@ -1003,19 +1003,22 @@ function parseAttendanceRecordKeys(obj) {
 }
 
 async function fetchExistingAttendance(employeeId, date) {
+    console.debug('fetchExistingAttendance start', { employeeId, date });
     // 1) Try dedicated load endpoint if backend supports it
     try {
         const data = await apiRequest(`/api/attendance/load?employee_id=${encodeURIComponent(employeeId)}&date=${encodeURIComponent(date)}`);
+        console.debug('attendance/load response', data);
         if (data && typeof data === 'object') {
             const lower = Object.keys(data).reduce((acc, k) => { acc[k.toLowerCase()] = data[k]; return acc; }, {});
             return parseAttendanceRecordKeys(lower);
         }
     } catch (e) {
-        // proceed to fallback
+        console.warn('attendance/load failed', e);
     }
     // 2) Fallback to view endpoint and match by id/name
     try {
         const data = await apiRequest(`/api/attendance/view?date=${encodeURIComponent(date)}`);
+        console.debug('attendance/view response', data);
         if (!data || !Array.isArray(data.records)) throw new Error('no-records');
         const match = data.records.find(rec => {
             const keys = Object.keys(rec || {}).reduce((acc, k) => { acc[k.toLowerCase()] = k; return acc; }, {});
@@ -1023,7 +1026,7 @@ async function fetchExistingAttendance(employeeId, date) {
             const nameKey = keys['employee'] || keys['employee_name'] || keys['name'];
             const selectedName = (document.getElementById('att-employee-select').selectedOptions[0]?.text || '').trim();
             const byId = idKey ? String(rec[idKey]) === String(employeeId) : false;
-            const byName = nameKey ? String(rec[nameKey]).trim() === selectedName : false;
+            const byName = nameKey ? String(rec[nameKey]).trim().toLowerCase() === selectedName.toLowerCase() : false;
             return byId || byName;
         });
         if (match) {
@@ -1031,10 +1034,12 @@ async function fetchExistingAttendance(employeeId, date) {
             return parseAttendanceRecordKeys(lower);
         }
     } catch (e) {
-        // ignore
+        console.warn('attendance/view failed', e);
     }
     // 3) Final fallback: local cache
-    return readAttendanceCache(employeeId, date);
+    const cached = readAttendanceCache(employeeId, date);
+    console.debug('attendance cache hit?', !!cached, cached);
+    return cached;
 }
 
 async function addUpdateAttendance() {
@@ -1067,7 +1072,6 @@ async function addUpdateAttendance() {
         merged.check_in_2 = pick(in2, existing.check_in_2, cached.check_in_2);
         merged.check_out_2 = pick(out2, existing.check_out_2, cached.check_out_2);
 
-        // Ensure we explicitly send previous values if backend overwrites missing keys
         ['check_in_1','check_out_1','check_in_2','check_out_2'].forEach(k => {
             if (merged[k] === undefined) delete merged[k];
         });
@@ -1077,14 +1081,15 @@ async function addUpdateAttendance() {
         const msg = typeof result === 'object' && result !== null ? (result.message || 'Attendance updated successfully!') : 'Attendance updated successfully!';
         showToast(msg, 'success');
 
-        // Update cache with best-known values (server-prev or user)
-        const newCache = {
-            check_in_1: merged.check_in_1 ?? existing.check_in_1 ?? cached.check_in_1 ?? '',
-            check_out_1: merged.check_out_1 ?? existing.check_out_1 ?? cached.check_out_1 ?? '',
-            check_in_2: merged.check_in_2 ?? existing.check_in_2 ?? cached.check_in_2 ?? '',
-            check_out_2: merged.check_out_2 ?? existing.check_out_2 ?? cached.check_out_2 ?? '',
+        // Update inputs with merged values so user sees final state
+        const finalValues = {
+            check_in_1: merged.check_in_1 ?? existing.check_in_1 ?? '',
+            check_out_1: merged.check_out_1 ?? existing.check_out_1 ?? '',
+            check_in_2: merged.check_in_2 ?? existing.check_in_2 ?? '',
+            check_out_2: merged.check_out_2 ?? existing.check_out_2 ?? '',
         };
-        writeAttendanceCache(employeeId, dateVal, newCache);
+        setAttendanceInputs(finalValues);
+        writeAttendanceCache(employeeId, dateVal, finalValues);
 
         loadDashboardData();
         loadTodaysAttendanceStatus();
@@ -2203,8 +2208,14 @@ async function loadAttendanceIntoForm() {
             check_out_2: normalizeTimeValue(existing?.check_out_2) ?? normalizeTimeValue(cached?.check_out_2) ?? '',
         };
         setAttendanceInputs(merged);
+        if (!merged.check_in_1 && !merged.check_out_1 && !merged.check_in_2 && !merged.check_out_2) {
+            showToast('No existing attendance for this employee/date', 'error');
+        } else {
+            showToast('Loaded existing attendance for this employee/date', 'success');
+        }
     } catch (e) {
         console.warn('loadAttendanceIntoForm error', e);
+        showToast('Failed to load existing attendance', 'error');
     }
 }
 
