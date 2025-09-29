@@ -2188,3 +2188,15 @@ RESPONSIVE DESIGN & PERFORMANCE
 /* Hide action history (bottom-left side arrows) */
 .action-history { display: none !important; }
 
+/* --- Mobile Table Visibility --- */
+@media (max-width: 768px) {
+  .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table { width: 100%; table-layout: auto; }
+  .table th, .table td { white-space: nowrap; }
+}
+
+/* --- Mobile Header Title Centering --- */
+@media (max-width: 768px) {
+  .mobile-header .logo-text { text-align: center; margin: 0 auto; font-size: 1.15rem; }
+}
+

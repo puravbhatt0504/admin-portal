@@ -1853,31 +1853,7 @@ function switchTab(tabId) {
 
 // --- Touch Gestures ---
 function initializeTouchGestures() {
-    let startX, startY, endX, endY;
-    
-    document.addEventListener('touchstart', function(e) {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-    });
-    
-    document.addEventListener('touchend', function(e) {
-        endX = e.changedTouches[0].clientX;
-        endY = e.changedTouches[0].clientY;
-        
-        const diffX = startX - endX;
-        const diffY = startY - endY;
-        
-        // Swipe left/right for tab navigation
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-            if (diffX > 0) {
-                // Swipe left - next tab
-                navigateToNextTab();
-            } else {
-                // Swipe right - previous tab
-                navigateToPreviousTab();
-            }
-        }
-    });
+    // Intentionally left blank to disable tab swipe navigation
 }
 
 function navigateToNextTab() {
