@@ -249,34 +249,42 @@ let actionToConfirm = null;
 let __lastToastKey = '';
 let __lastToastTime = 0;
 function showToast(message, type = 'success') {
-    const toastContainer = document.querySelector('.toast-container');
-    if (!toastContainer) {
-        console[type === 'success' ? 'log' : 'error'](message);
-        return;
-    }
-    // De-duplicate identical toasts within a short window
-    const now = Date.now();
-    const key = `${type}:${message}`;
-    if (__lastToastKey === key && now - __lastToastTime < 2000) {
-        return;
-    }
-    __lastToastKey = key;
-    __lastToastTime = now;
+    try {
+        const toastContainer = document.querySelector('.toast-container');
+        if (!toastContainer) {
+            console[type === 'success' ? 'log' : 'error'](message);
+            return;
+        }
+        // De-duplicate identical toasts within a short window
+        const now = Date.now();
+        const key = `${type}:${message}`;
+        if (__lastToastKey === key && now - __lastToastTime < 2000) {
+            return;
+        }
+        __lastToastKey = key;
+        __lastToastTime = now;
 
-    // Prevent duplicate visible toasts with same content
-    const existing = toastContainer.querySelector(`[data-toast-key="${CSS.escape(key)}"]`);
-    if (existing) {
-        return;
-    }
+        // Prevent duplicate visible toasts with same content (dataset match)
+        const existing = Array.from(toastContainer.querySelectorAll('.toast'))
+            .find(el => el.dataset && el.dataset.toastKey === key);
+        if (existing) {
+            return;
+        }
 
-    const toastId = `toast-${now}`;
-    const icon = type === 'success' ? '<i class="bi bi-check-circle-fill text-success me-2"></i>' : '<i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>';
-    const toastHTML = `<div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-toast-key="${key}"><div class="toast-header">${icon}<strong class="me-auto">${type === 'success' ? 'Success' : 'Error'}</strong><button type="button" class="btn-close" data-bs-dismiss="toast"></button></div><div class="toast-body">${message}</div></div>`;
-    toastContainer.insertAdjacentHTML('beforeend', toastHTML);
-    const toastElement = document.getElementById(toastId);
-    const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
-    toast.show();
-    toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
+        const toastId = `toast-${now}`;
+        const icon = type === 'success' 
+            ? '<i class="bi bi-check-circle-fill text-success me-2"></i>' 
+            : '<i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>';
+        const toastHTML = `<div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-toast-key="${key}"><div class="toast-header">${icon}<strong class="me-auto">${type === 'success' ? 'Success' : 'Error'}</strong><button type="button" class="btn-close" data-bs-dismiss="toast"></button></div><div class="toast-body">${message}</div></div>`;
+        toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+        const toastElement = document.getElementById(toastId);
+        const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
+        toast.show();
+        toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
+    } catch (err) {
+        // Never throw from toasts; fallback to console
+        try { console[type === 'success' ? 'log' : 'error'](message); } catch (_) {}
+    }
 }
 
 function showSkeletonLoader(containerId, rows = 3) {
