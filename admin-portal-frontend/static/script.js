@@ -940,14 +940,19 @@ async function removeEmployee() {
 
 // ATTENDANCE
 async function addUpdateAttendance() {
-    const payload = {
-        employee_id: document.getElementById('att-employee-select').value,
-        date: document.getElementById('att-date').value,
-        check_in_1: document.getElementById('att-checkin1').value,
-        check_out_1: document.getElementById('att-checkout1').value,
-        check_in_2: document.getElementById('att-checkin2').value || null,
-        check_out_2: document.getElementById('att-checkout2').value || null
-    };
+    const employeeId = document.getElementById('att-employee-select').value;
+    const dateVal = document.getElementById('att-date').value;
+    const in1 = document.getElementById('att-checkin1').value;
+    const out1 = document.getElementById('att-checkout1').value;
+    const in2 = document.getElementById('att-checkin2').value;
+    const out2 = document.getElementById('att-checkout2').value;
+
+    const payload = { employee_id: employeeId, date: dateVal };
+    if (in1 && in1.trim() !== '') payload.check_in_1 = in1.trim();
+    if (out1 && out1.trim() !== '') payload.check_out_1 = out1.trim();
+    if (in2 && in2.trim() !== '') payload.check_in_2 = in2.trim();
+    if (out2 && out2.trim() !== '') payload.check_out_2 = out2.trim();
+
     console.debug('Submitting attendance payload', payload);
     
     if (!payload.employee_id || !payload.date) {
@@ -955,7 +960,6 @@ async function addUpdateAttendance() {
     }
     
     const originalText = showButtonSpinner(attUpdateBtn, 'Saving...');
-    // Failsafe: ensure button is restored even if something hangs
     const failsafe = setTimeout(() => {
         try { hideButtonSpinner(attUpdateBtn, originalText); } catch(_) {}
     }, 10000);
@@ -965,13 +969,8 @@ async function addUpdateAttendance() {
         const msg = typeof result === 'object' && result !== null ? (result.message || 'Attendance updated successfully!') : 'Attendance updated successfully!';
         showToast(msg, 'success');
         
-        // Clear form
-        document.getElementById('att-checkin1').value = '';
-        document.getElementById('att-checkout1').value = '';
-        document.getElementById('att-checkin2').value = '';
-        document.getElementById('att-checkout2').value = '';
-        
-        // Refresh dashboard
+        // Do NOT clear the form so later edits don't lose previously entered times
+        // Optionally, you could refresh displayed data here
         loadDashboardData();
         loadTodaysAttendanceStatus();
     } catch (error) {
