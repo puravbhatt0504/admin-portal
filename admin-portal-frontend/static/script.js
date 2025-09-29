@@ -254,6 +254,8 @@ function showButtonSpinner(button, text = 'Loading...') {
     try {
         button.disabled = true;
         const originalText = button.innerHTML;
+        // store original in dataset as backup
+        try { button.dataset.originalHtml = originalText; } catch(_) {}
         button.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${text}`;
         return originalText;
     } catch (_) {
@@ -265,8 +267,12 @@ function hideButtonSpinner(button, originalText) {
     if (!button) return;
     try {
         button.disabled = false;
-        if (typeof originalText === 'string') {
-            button.innerHTML = originalText;
+        let restore = typeof originalText === 'string' ? originalText : undefined;
+        if (!restore && button.dataset && button.dataset.originalHtml) {
+            restore = button.dataset.originalHtml;
+        }
+        if (typeof restore === 'string') {
+            button.innerHTML = restore;
         }
     } catch (_) {}
 }
@@ -933,6 +939,10 @@ async function addUpdateAttendance() {
     }
     
     const originalText = showButtonSpinner(attUpdateBtn, 'Saving...');
+    // Failsafe: ensure button is restored even if something hangs
+    const failsafe = setTimeout(() => {
+        try { hideButtonSpinner(attUpdateBtn, originalText); } catch(_) {}
+    }, 15000);
     try {
         const result = await postJsonThenForm('/api/attendance', payload, { timeoutMs: 12000 });
         console.debug('Attendance response', result);
@@ -952,6 +962,7 @@ async function addUpdateAttendance() {
         console.error('Attendance update error', error);
         showToast(error.message || 'Failed to update attendance', 'error');
     } finally {
+        clearTimeout(failsafe);
         hideButtonSpinner(attUpdateBtn, originalText);
     }
 }
