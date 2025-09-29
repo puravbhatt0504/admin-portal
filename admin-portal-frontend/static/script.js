@@ -2,6 +2,89 @@
 // API base URL for the backend
 let API_BASE_URL = 'https://finalboss0504.pythonanywhere.com';
 
+// --- Mobile Functionality ---
+function initMobileFeatures() {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const mobileSidebarOverlay = document.getElementById('mobile-sidebar-overlay');
+    const mobileDarkModeToggle = document.getElementById('mobileDarkModeToggle');
+    
+    // Mobile menu toggle
+    if (mobileMenuToggle && sidebar) {
+        mobileMenuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('show');
+            mobileSidebarOverlay.classList.toggle('show');
+        });
+    }
+    
+    // Close sidebar when clicking overlay
+    if (mobileSidebarOverlay) {
+        mobileSidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+            mobileSidebarOverlay.classList.remove('show');
+        });
+    }
+    
+    // Close sidebar when clicking nav links on mobile
+    const navLinks = document.querySelectorAll('.sidebar .nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('show');
+                mobileSidebarOverlay.classList.remove('show');
+            }
+        });
+    });
+    
+    // Sync mobile dark mode toggle with main toggle
+    if (mobileDarkModeToggle && darkModeToggle) {
+        mobileDarkModeToggle.addEventListener('change', (e) => {
+            darkModeToggle.checked = e.target.checked;
+            darkModeToggle.dispatchEvent(new Event('change'));
+        });
+        
+        darkModeToggle.addEventListener('change', (e) => {
+            mobileDarkModeToggle.checked = e.target.checked;
+        });
+    }
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            sidebar.classList.remove('show');
+            mobileSidebarOverlay.classList.remove('show');
+        }
+    });
+    
+    // Touch gestures for mobile
+    let startX = 0;
+    let startY = 0;
+    
+    document.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+    });
+    
+    document.addEventListener('touchend', (e) => {
+        if (!startX || !startY) return;
+        
+        const endX = e.changedTouches[0].clientX;
+        const endY = e.changedTouches[0].clientY;
+        
+        const diffX = startX - endX;
+        const diffY = startY - endY;
+        
+        // Swipe left to close sidebar
+        if (Math.abs(diffX) > Math.abs(diffY) && diffX > 50 && sidebar.classList.contains('show')) {
+            sidebar.classList.remove('show');
+            mobileSidebarOverlay.classList.remove('show');
+        }
+        
+        startX = 0;
+        startY = 0;
+    });
+}
+
 // --- DOM Elements ---
 const themeContainer = document.getElementById('theme-container');
 const darkModeToggle = document.getElementById('darkModeToggle');
@@ -148,6 +231,7 @@ async function apiRequest(endpoint, method = 'GET', body = null, { timeoutMs = 1
 // --- Event Listeners Setup ---
 document.addEventListener('DOMContentLoaded', async () => {
     applyTheme(localStorage.getItem('theme') || 'light');
+    initMobileFeatures(); // Initialize mobile functionality
     loadDashboardData();
     loadEmployees();
     loadConfig();

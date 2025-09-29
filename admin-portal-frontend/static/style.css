@@ -1396,17 +1396,78 @@ RESPONSIVE DESIGN & PERFORMANCE
 ================================
 */
 
+/* Mobile Header */
+.mobile-header {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+}
+
+.mobile-sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1045;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.mobile-sidebar-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Mobile Touch Optimizations */
+@media (max-width: 768px) {
+    /* Improve touch targets */
+    .btn, .nav-link, .form-control, .form-select {
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+    
+    /* Prevent text selection on buttons */
+    .btn, .nav-link {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    /* Better scrolling on mobile */
+    .main-content {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+    
+    /* Optimize animations for mobile */
+    .card, .btn, .stat-card-live {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+}
+
 /* Mobile First Responsive Design */
 @media (max-width: 768px) {
     .sidebar {
-        width: 100%;
-        min-height: auto;
+        width: 280px;
+        min-height: 100vh;
         position: fixed;
         top: 0;
-        left: -100%;
+        left: -280px;
         z-index: 1050;
         -webkit-transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
     }
     
     .sidebar.show {
@@ -1414,42 +1475,99 @@ RESPONSIVE DESIGN & PERFORMANCE
     }
     
     .main-content {
-        margin: 10px;
-        border-radius: 16px;
+        margin: 0;
+        padding: 16px;
+        border-radius: 0;
+        width: 100%;
+        min-height: 100vh;
     }
     
     .stat-card-live {
         padding: 16px;
         margin-bottom: 16px;
+        flex-direction: column;
+        text-align: center;
     }
     
     .stat-card-live .stat-icon {
-        font-size: 2rem;
-        margin-right: 16px;
+        font-size: 2.5rem;
+        margin-right: 0;
+        margin-bottom: 12px;
     }
     
     .stat-card-live .stat-number {
-        font-size: 1.8rem;
+        font-size: 2rem;
+    }
+    
+    .stat-card-live .stat-label {
+        font-size: 0.9rem;
     }
     
     .card {
         margin-bottom: 16px;
+        border-radius: 12px;
+    }
+    
+    .card-body {
+        padding: 16px;
     }
     
     .btn {
-        padding: 8px 16px;
+        padding: 10px 16px;
         font-size: 0.9rem;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    
+    .btn-group .btn {
+        width: auto;
+        margin-bottom: 0;
     }
     
     .sidebar .nav-link {
         padding: 12px 16px;
         font-size: 1rem;
+        margin-bottom: 4px;
+    }
+    
+    .table-responsive {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    
+    .table {
+        font-size: 0.85rem;
+    }
+    
+    .table th,
+    .table td {
+        padding: 8px 4px;
+        white-space: nowrap;
+    }
+    
+    .modal-dialog {
+        margin: 16px;
+        max-width: calc(100% - 32px);
+    }
+    
+    .modal-content {
+        border-radius: 16px;
+    }
+    
+    .form-control,
+    .form-select {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .breadcrumb {
+        font-size: 0.8rem;
+        margin-bottom: 16px;
     }
 }
 
 @media (max-width: 576px) {
     .main-content {
-        padding: 16px;
+        padding: 12px;
     }
     
     .stat-card-live {
@@ -1464,17 +1582,52 @@ RESPONSIVE DESIGN & PERFORMANCE
     }
     
     .card-body {
-        padding: 16px;
+        padding: 12px;
     }
     
     .btn {
         width: 100%;
         margin-bottom: 8px;
+        font-size: 0.9rem;
+        padding: 12px 16px;
     }
     
     .btn-group .btn {
         width: auto;
         margin-bottom: 0;
+    }
+    
+    .table {
+        font-size: 0.8rem;
+    }
+    
+    .table th,
+    .table td {
+        padding: 6px 2px;
+    }
+    
+    .modal-dialog {
+        margin: 8px;
+        max-width: calc(100% - 16px);
+    }
+    
+    .form-control,
+    .form-select {
+        font-size: 16px;
+        padding: 12px;
+    }
+    
+    .input-group-text {
+        padding: 12px;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 8px 12px;
+        font-size: 0.9rem;
     }
 }
 
