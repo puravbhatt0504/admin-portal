@@ -252,20 +252,25 @@ def get_dashboard():
     today = date.today()
     total = db.session.query(Employee).count()
     
-    # Count only employees who actually checked in (shift1_in is not null)
-    present = db.session.query(Attendance).filter(
-        Attendance.date == today, 
-        Attendance.shift1_in.isnot(None)
-    ).count()
+    # Get all employees who have attendance records for today
+    attendance_records = db.session.query(Attendance).filter(
+        Attendance.date == today
+    ).all()
     
-    # Count employees who checked in late (after 10:00 AM)
-    late = db.session.query(Attendance).filter(
-        Attendance.date == today, 
-        Attendance.shift1_in.isnot(None),
-        Attendance.shift1_in > time(10, 0)
-    ).count()
+    # Count unique employees who actually checked in (have valid shift1_in)
+    present_employees = set()
+    late_employees = set()
     
-    # Absent = total employees - those who checked in
+    for record in attendance_records:
+        shift1_in = getattr(record, 'shift1_in', None)
+        if shift1_in and shift1_in != time(0, 0, 0):
+            present_employees.add(record.employee_name)
+            # Check if they were late (after 10:00 AM)
+            if shift1_in > time(10, 0):
+                late_employees.add(record.employee_name)
+    
+    present = len(present_employees)
+    late = len(late_employees)
     absent = max(0, total - present)
     
     return jsonify({'present_count': present, 'late_count': late, 'absent_count': absent})
