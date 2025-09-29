@@ -248,6 +248,29 @@ let actionToConfirm = null;
 // --- Helper Functions ---
 let __lastToastKey = '';
 let __lastToastTime = 0;
+
+function showButtonSpinner(button, text = 'Loading...') {
+    if (!button) return null;
+    try {
+        button.disabled = true;
+        const originalText = button.innerHTML;
+        button.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ${text}`;
+        return originalText;
+    } catch (_) {
+        return null;
+    }
+}
+
+function hideButtonSpinner(button, originalText) {
+    if (!button) return;
+    try {
+        button.disabled = false;
+        if (typeof originalText === 'string') {
+            button.innerHTML = originalText;
+        }
+    } catch (_) {}
+}
+
 function showToast(message, type = 'success') {
     try {
         const toastContainer = document.querySelector('.toast-container');
