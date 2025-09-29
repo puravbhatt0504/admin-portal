@@ -530,6 +530,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Main initialization error:', error);
     }
 
+    // Autofill attendance when employee or date changes
+    const attEmp = document.getElementById('att-employee-select');
+    const attDate = document.getElementById('att-date');
+    if (attEmp) attEmp.addEventListener('change', loadAttendanceIntoForm);
+    if (attDate) attDate.addEventListener('change', loadAttendanceIntoForm);
+
     addEmployeeBtn.addEventListener('click', () => {
         const name = newEmployeeInput.value.trim();
         if (!name) return markInvalid(newEmployeeInput, 'Please enter employee name.');
@@ -2132,5 +2138,44 @@ function saveCurrentForm() {
     // Auto-save current form data
     autoSaveForm();
     showToast('Form saved', 'success');
+}
+
+function setAttendanceInputs(values) {
+    try {
+        if (!values) return;
+        if (values.check_in_1 !== undefined && values.check_in_1 !== null) {
+            document.getElementById('att-checkin1').value = values.check_in_1;
+        }
+        if (values.check_out_1 !== undefined && values.check_out_1 !== null) {
+            document.getElementById('att-checkout1').value = values.check_out_1;
+        }
+        if (values.check_in_2 !== undefined && values.check_in_2 !== null) {
+            document.getElementById('att-checkin2').value = values.check_in_2;
+        }
+        if (values.check_out_2 !== undefined && values.check_out_2 !== null) {
+            document.getElementById('att-checkout2').value = values.check_out_2;
+        }
+    } catch (e) {
+        console.warn('setAttendanceInputs error', e);
+    }
+}
+
+async function loadAttendanceIntoForm() {
+    const employeeId = document.getElementById('att-employee-select').value;
+    const dateVal = document.getElementById('att-date').value;
+    if (!employeeId || !dateVal) return;
+    try {
+        const existing = await fetchExistingAttendance(employeeId, dateVal);
+        const cached = readAttendanceCache(employeeId, dateVal);
+        const merged = {
+            check_in_1: existing?.check_in_1 ?? cached?.check_in_1 ?? '',
+            check_out_1: existing?.check_out_1 ?? cached?.check_out_1 ?? '',
+            check_in_2: existing?.check_in_2 ?? cached?.check_in_2 ?? '',
+            check_out_2: existing?.check_out_2 ?? cached?.check_out_2 ?? '',
+        };
+        setAttendanceInputs(merged);
+    } catch (e) {
+        console.warn('loadAttendanceIntoForm error', e);
+    }
 }
 
