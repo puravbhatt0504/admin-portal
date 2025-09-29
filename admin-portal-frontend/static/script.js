@@ -1002,23 +1002,39 @@ function parseAttendanceRecordKeys(obj) {
     return { check_in_1, check_out_1, check_in_2, check_out_2 };
 }
 
+function sanitizeName(str) {
+    if (str === undefined || str === null) return '';
+    return String(str).toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '');
+}
+
 async function fetchExistingAttendance(employeeId, date) {
     console.debug('fetchExistingAttendance start', { employeeId, date });
-    // Use day view endpoint and match by id/name
+    // Use day view endpoint and match by id/name (robust)
     try {
         const data = await apiRequest(`/api/attendance/view?date=${encodeURIComponent(date)}`);
         if (data && Array.isArray(data.records)) {
+            const selectedNameRaw = (document.getElementById('att-employee-select').selectedOptions[0]?.text || '').trim();
+            const selectedName = sanitizeName(selectedNameRaw);
             const match = data.records.find(rec => {
-                const keys = Object.keys(rec || {}).reduce((acc, k) => { acc[k.toLowerCase()] = k; return acc; }, {});
-                const idKey = keys['employee_id'] || keys['id'] || keys['employeeid'];
-                const nameKey = keys['employee'] || keys['employee_name'] || keys['name'];
-                const selectedName = (document.getElementById('att-employee-select').selectedOptions[0]?.text || '').trim();
-                const byId = idKey ? String(rec[idKey]) === String(employeeId) : false;
-                const byName = nameKey ? String(rec[nameKey]).trim().toLowerCase() === selectedName.toLowerCase() : false;
-                return byId || byName;
+                if (!rec) return false;
+                const lowerMap = Object.keys(rec).reduce((acc, k) => { acc[k.toLowerCase()] = rec[k]; return acc; }, {});
+                // Try id keys
+                const idCandidate = lowerMap['employee_id'] ?? lowerMap['id'] ?? lowerMap['employeeid'];
+                if (idCandidate !== undefined && String(idCandidate) === String(employeeId)) return true;
+                // Try name keys
+                const nameCandidate = lowerMap['employee'] ?? lowerMap['employee_name'] ?? lowerMap['name'] ?? lowerMap['emp_name'] ?? lowerMap['emp'];
+                if (nameCandidate !== undefined && sanitizeName(nameCandidate) === selectedName) return true;
+                // Try contains (fallback, to tolerate extra decorations in dropdown label)
+                if (nameCandidate !== undefined && selectedName && sanitizeName(nameCandidate).includes(selectedName)) return true;
+                return false;
             });
-            if (match) {
-                const lower = Object.keys(match).reduce((acc, k) => { acc[k.toLowerCase()] = match[k]; return acc; }, {});
+            let recordToUse = match;
+            // If no match but there is exactly one record for the date, use it as a last resort
+            if (!recordToUse && data.records.length === 1) {
+                recordToUse = data.records[0];
+            }
+            if (recordToUse) {
+                const lower = Object.keys(recordToUse).reduce((acc, k) => { acc[k.toLowerCase()] = recordToUse[k]; return acc; }, {});
                 return parseAttendanceRecordKeys(lower);
             }
         }
