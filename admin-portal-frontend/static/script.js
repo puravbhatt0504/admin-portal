@@ -1,19 +1,6 @@
 // --- Configuration ---
-// Dynamic API base URL loaded from backend, fallback to current origin
-let API_BASE_URL = '';
-async function initApiBaseUrl() {
-    try {
-        const res = await fetch('/api/frontend-config');
-        if (res.ok) {
-            const cfg = await res.json();
-            if (cfg && cfg.api_base_url) {
-                API_BASE_URL = cfg.api_base_url;
-                return;
-            }
-        }
-    } catch (e) { /* ignore and fallback */ }
-    API_BASE_URL = window.location.origin;
-}
+// API base URL for the backend
+let API_BASE_URL = 'https://finalboss0504.pythonanywhere.com';
 
 // --- DOM Elements ---
 const themeContainer = document.getElementById('theme-container');
@@ -156,15 +143,10 @@ async function apiRequest(endpoint, method = 'GET', body = null, { timeoutMs = 1
     throw lastErr || new Error('Network error');
 }
 
-// Ensure API_BASE_URL is initialized before any API call
-const _originalDOMContentLoaded = document.addEventListener;
-document.addEventListener('DOMContentLoaded', async () => {
-    await initApiBaseUrl();
-});
+// API_BASE_URL is now hardcoded to the backend URL
 
 // --- Event Listeners Setup ---
 document.addEventListener('DOMContentLoaded', async () => {
-    await initApiBaseUrl();
     applyTheme(localStorage.getItem('theme') || 'light');
     loadDashboardData();
     loadEmployees();
