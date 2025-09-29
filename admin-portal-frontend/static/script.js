@@ -1015,26 +1015,50 @@ async function fetchExistingAttendance(employeeId, date) {
         if (data && Array.isArray(data.records)) {
             const selectedNameRaw = (document.getElementById('att-employee-select').selectedOptions[0]?.text || '').trim();
             const selectedName = sanitizeName(selectedNameRaw);
+
+            // Case 1: records are array of arrays with columns metadata
+            if (data.columns && Array.isArray(data.columns) && Array.isArray(data.records[0])) {
+                const titleAt = (t) => (data.columns.findIndex(c => String(c.title || c).toLowerCase().includes(t)));
+                const idxEmp = titleAt('employee');
+                const idxIn1 = titleAt('shift 1 in');
+                const idxOut1 = titleAt('shift 1 out');
+                const idxIn2 = titleAt('shift 2 in');
+                const idxOut2 = titleAt('shift 2 out');
+
+                const row = data.records.find(r => Array.isArray(r) && sanitizeName(r[idxEmp] || '') === selectedName);
+                if (row) {
+                    return {
+                        check_in_1: normalizeTimeValue(row[idxIn1]),
+                        check_out_1: normalizeTimeValue(row[idxOut1]),
+                        check_in_2: normalizeTimeValue(row[idxIn2]),
+                        check_out_2: normalizeTimeValue(row[idxOut2])
+                    };
+                }
+                // If exactly one record, use it as last resort
+                if (data.records.length === 1) {
+                    const r = data.records[0];
+                    return {
+                        check_in_1: normalizeTimeValue(r[idxIn1]),
+                        check_out_1: normalizeTimeValue(r[idxOut1]),
+                        check_in_2: normalizeTimeValue(r[idxIn2]),
+                        check_out_2: normalizeTimeValue(r[idxOut2])
+                    };
+                }
+            }
+
+            // Case 2: records are array of objects
             const match = data.records.find(rec => {
-                if (!rec) return false;
+                if (!rec || typeof rec !== 'object' || Array.isArray(rec)) return false;
                 const lowerMap = Object.keys(rec).reduce((acc, k) => { acc[k.toLowerCase()] = rec[k]; return acc; }, {});
-                // Try id keys
                 const idCandidate = lowerMap['employee_id'] ?? lowerMap['id'] ?? lowerMap['employeeid'];
                 if (idCandidate !== undefined && String(idCandidate) === String(employeeId)) return true;
-                // Try name keys
                 const nameCandidate = lowerMap['employee'] ?? lowerMap['employee_name'] ?? lowerMap['name'] ?? lowerMap['emp_name'] ?? lowerMap['emp'];
                 if (nameCandidate !== undefined && sanitizeName(nameCandidate) === selectedName) return true;
-                // Try contains (fallback, to tolerate extra decorations in dropdown label)
                 if (nameCandidate !== undefined && selectedName && sanitizeName(nameCandidate).includes(selectedName)) return true;
                 return false;
             });
-            let recordToUse = match;
-            // If no match but there is exactly one record for the date, use it as a last resort
-            if (!recordToUse && data.records.length === 1) {
-                recordToUse = data.records[0];
-            }
-            if (recordToUse) {
-                const lower = Object.keys(recordToUse).reduce((acc, k) => { acc[k.toLowerCase()] = recordToUse[k]; return acc; }, {});
+            if (match) {
+                const lower = Object.keys(match).reduce((acc, k) => { acc[k.toLowerCase()] = match[k]; return acc; }, {});
                 return parseAttendanceRecordKeys(lower);
             }
         }
