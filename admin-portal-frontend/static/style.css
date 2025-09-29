@@ -2200,3 +2200,26 @@ RESPONSIVE DESIGN & PERFORMANCE
   .mobile-header .logo-text { text-align: center; margin: 0 auto; font-size: 1.15rem; }
 }
 
+/* --- Mobile UI Refinements v2 --- */
+@media (max-width: 768px) {
+  /* Center main content */
+  .main-content { margin: 0 auto; max-width: 720px; }
+
+  /* Global spacing and readability */
+  body { line-height: 1.35; }
+  p, label, .form-text { line-height: 1.35; }
+
+  /* Unified radii and gaps */
+  :root { --m-radius: 12px; --m-gap: 10px; }
+  .card, .btn, .form-control, .form-select, .input-group-text { border-radius: var(--m-radius); }
+  .row.g-2, .row.g-3, .row.g-4 { --bs-gutter-x: var(--m-gap); --bs-gutter-y: var(--m-gap); }
+
+  /* Modal actions full-width */
+  .modal-footer .btn { width: 100%; }
+  .modal-footer { display: flex; flex-direction: column; gap: 8px; }
+
+  /* Sidebar menu sizes/spaces */
+  .sidebar .nav-link { padding: 10px 12px; font-size: 0.95rem; }
+  .sidebar .nav-link i { font-size: 1.05rem; margin-right: 8px; }
+}
+
