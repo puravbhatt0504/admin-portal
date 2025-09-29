@@ -2185,3 +2185,6 @@ RESPONSIVE DESIGN & PERFORMANCE
   .quick-access-btn { width: 46px; height: 46px; }
 }
 
+/* Hide action history (bottom-left side arrows) */
+.action-history { display: none !important; }
+
