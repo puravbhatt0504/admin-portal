@@ -2148,3 +2148,40 @@ RESPONSIVE DESIGN & PERFORMANCE
   /* Quick access already optimized separately */
 }
 
+/* --- Mobile Professional Polish --- */
+@media (max-width: 768px) {
+  /* Spacing scale */
+  :root { --m-space-1: 6px; --m-space-2: 10px; --m-space-3: 14px; --m-space-4: 18px; }
+
+  /* Safe-area support */
+  body { padding-bottom: calc(env(safe-area-inset-bottom, 0) + var(--m-space-2)); }
+
+  /* Cards and sections */
+  .card { box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); }
+  .card + .card { margin-top: var(--m-space-3); }
+  .card-header, .card-footer { padding: var(--m-space-2) var(--m-space-3); }
+  .border-end-lg { border-right: none !important; }
+
+  /* Section dividers */
+  .section-divider { height: 1px; background: rgba(0,0,0,0.06); margin: var(--m-space-3) 0; }
+
+  /* Forms: alignment and focus */
+  .form-label { margin-bottom: var(--m-space-1); font-weight: 500; }
+  .form-control, .form-select { border-radius: 10px; border-color: rgba(0,0,0,0.1); }
+  .form-control:focus, .form-select:focus { box-shadow: 0 0 0 3px rgba(45,55,72,0.15); border-color: #2d3748; }
+  .input-group .form-control { border-left: 0; }
+  .input-group-text { border-color: rgba(0,0,0,0.1); background: #fafafa; }
+
+  /* Button aesthetics */
+  .btn { border-radius: 10px; letter-spacing: .2px; }
+  .btn-outline-secondary, .btn-outline-danger { background: #fff; }
+
+  /* Header and actions */
+  .main-content header { padding-bottom: var(--m-space-2); margin-bottom: var(--m-space-3) !important; }
+  .status-indicator { border-radius: 16px; }
+
+  /* Quick access spacing on mobile row layout */
+  .quick-access { gap: var(--m-space-2); }
+  .quick-access-btn { width: 46px; height: 46px; }
+}
+
