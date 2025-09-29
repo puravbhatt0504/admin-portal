@@ -1759,28 +1759,75 @@ function initializeQuickAccess() {
         'quick-reports': 'reports-tab',
         'quick-settings': 'settings-tab'
     };
-    
     Object.entries(quickButtons).forEach(([buttonId, tabId]) => {
         document.getElementById(buttonId).addEventListener('click', () => {
             switchTab(tabId);
         });
     });
-    
-    // Show quick access menu on page load, then hide it
     showQuickAccessOnLoad();
+    setupQuickAccessMobileFade();
 }
 
 function showQuickAccessOnLoad() {
     const quickAccess = document.querySelector('.quick-access');
     if (quickAccess) {
-        // Show the menu initially
-        quickAccess.style.right = '20px';
-        
-        // Hide it after 3 seconds
-        setTimeout(() => {
+        if (window.innerWidth <= 768) {
+            quickAccess.style.right = '20px';
+            quickAccess.classList.remove('quick-access-hidden');
+            setTimeout(() => {
+                quickAccess.classList.add('quick-access-hidden');
+            }, 3000);
+        } else {
             quickAccess.style.right = '-60px';
-        }, 3000);
+            quickAccess.classList.remove('quick-access-hidden');
+        }
     }
+}
+
+function setupQuickAccessMobileFade() {
+    const quickAccess = document.querySelector('.quick-access');
+    let fadeTimeout;
+    if (!quickAccess) return;
+    // Hide after inactivity (mobile only)
+    function hideQuickAccess() {
+        if (window.innerWidth <= 768) {
+            quickAccess.classList.add('quick-access-hidden');
+        }
+    }
+    // Show on right swipe (mobile only)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    document.addEventListener('touchstart', function(e) {
+        if (e.touches && e.touches.length === 1) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }
+    }, { passive: true });
+    document.addEventListener('touchend', function(e) {
+        if (!touchStartX || !e.changedTouches) return;
+        const endX = e.changedTouches[0].clientX;
+        const endY = e.changedTouches[0].clientY;
+        const diffX = endX - touchStartX;
+        const diffY = Math.abs(endY - touchStartY);
+        if (window.innerWidth <= 768 && diffX > 50 && diffY < 40) {
+            quickAccess.classList.remove('quick-access-hidden');
+            clearTimeout(fadeTimeout);
+            fadeTimeout = setTimeout(hideQuickAccess, 2500);
+        }
+        touchStartX = 0;
+        touchStartY = 0;
+    }, { passive: true });
+    // Hide again after a short time (mobile only)
+    quickAccess.addEventListener('touchstart', function() {
+        if (window.innerWidth <= 768) {
+            clearTimeout(fadeTimeout);
+        }
+    });
+    quickAccess.addEventListener('touchend', function() {
+        if (window.innerWidth <= 768) {
+            fadeTimeout = setTimeout(hideQuickAccess, 2500);
+        }
+    });
 }
 
 function switchTab(tabId) {
