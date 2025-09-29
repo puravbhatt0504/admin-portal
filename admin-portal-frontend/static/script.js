@@ -872,6 +872,7 @@ async function addUpdateAttendance() {
         check_in_2: document.getElementById('att-checkin2').value || null,
         check_out_2: document.getElementById('att-checkout2').value || null
     };
+    console.debug('Submitting attendance payload', payload);
     
     if (!payload.employee_id || !payload.date) {
         return showToast('Please select employee and date.', 'error');
@@ -880,6 +881,7 @@ async function addUpdateAttendance() {
     const originalText = showButtonSpinner(attUpdateBtn, 'Saving...');
     try {
         const result = await apiRequest('/api/attendance', 'POST', payload);
+        console.debug('Attendance response', result);
         showToast(result.message || 'Attendance updated successfully!', 'success');
         
         // Clear form
@@ -892,7 +894,8 @@ async function addUpdateAttendance() {
         loadDashboardData();
         loadTodaysAttendanceStatus();
     } catch (error) {
-        showToast(error.message, 'error');
+        console.error('Attendance update error', error);
+        showToast(error.message || 'Failed to update attendance', 'error');
     } finally {
         hideButtonSpinner(attUpdateBtn, originalText);
     }
