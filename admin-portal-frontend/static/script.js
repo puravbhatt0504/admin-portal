@@ -939,15 +939,45 @@ async function removeEmployee() {
 }
 
 // ATTENDANCE
-async function fetchExistingAttendance(employeeId, date) {
+function attendanceLocalKey(employeeId, date) {
+    return `att:${employeeId}:${date}`;
+}
+
+function readAttendanceCache(employeeId, date) {
     try {
-        // Try a specific endpoint first if it exists in backend (not guaranteed)
-        // Fallback to the view endpoint and filter client-side
+        const raw = localStorage.getItem(attendanceLocalKey(employeeId, date));
+        if (!raw) return null;
+        return JSON.parse(raw);
+    } catch (_) { return null; }
+}
+
+function writeAttendanceCache(employeeId, date, data) {
+    try {
+        localStorage.setItem(attendanceLocalKey(employeeId, date), JSON.stringify(data));
+    } catch (_) {}
+}
+
+async function fetchExistingAttendance(employeeId, date) {
+    // 1) Try dedicated load endpoint if backend supports it
+    try {
+        const data = await apiRequest(`/api/attendance/load?employee_id=${encodeURIComponent(employeeId)}&date=${encodeURIComponent(date)}`);
+        if (data) {
+            const lower = Object.keys(data).reduce((acc, k) => { acc[k.toLowerCase()] = data[k]; return acc; }, {});
+            return {
+                check_in_1: lower['check_in_1'] ?? lower['checkin1'] ?? lower['check_in'] ?? null,
+                check_out_1: lower['check_out_1'] ?? lower['checkout1'] ?? lower['check_out'] ?? null,
+                check_in_2: lower['check_in_2'] ?? lower['checkin2'] ?? null,
+                check_out_2: lower['check_out_2'] ?? lower['checkout2'] ?? null,
+            };
+        }
+    } catch (e) {
+        // proceed to fallback
+    }
+    // 2) Fallback to view endpoint and match by id/name
+    try {
         const data = await apiRequest(`/api/attendance/view?date=${encodeURIComponent(date)}`);
-        if (!data || !Array.isArray(data.records)) return null;
-        // Attempt to find matching record by common keys
+        if (!data || !Array.isArray(data.records)) throw new Error('no-records');
         const match = data.records.find(rec => {
-            // normalize keys
             const keys = Object.keys(rec || {}).reduce((acc, k) => { acc[k.toLowerCase()] = k; return acc; }, {});
             const idKey = keys['employee_id'] || keys['id'] || keys['employeeid'];
             const nameKey = keys['employee'] || keys['employee_name'] || keys['name'];
@@ -956,19 +986,20 @@ async function fetchExistingAttendance(employeeId, date) {
             const byName = nameKey ? String(rec[nameKey]).trim() === selectedName : false;
             return byId || byName;
         });
-        if (!match) return null;
-        // Normalize possible time keys from backend to expected keys
-        const lower = Object.keys(match).reduce((acc, k) => { acc[k.toLowerCase()] = match[k]; return acc; }, {});
-        return {
-            check_in_1: lower['check_in_1'] ?? lower['checkin1'] ?? lower['check_in'] ?? null,
-            check_out_1: lower['check_out_1'] ?? lower['checkout1'] ?? lower['check_out'] ?? null,
-            check_in_2: lower['check_in_2'] ?? lower['checkin2'] ?? null,
-            check_out_2: lower['check_out_2'] ?? lower['checkout2'] ?? null,
-        };
+        if (match) {
+            const lower = Object.keys(match).reduce((acc, k) => { acc[k.toLowerCase()] = match[k]; return acc; }, {});
+            return {
+                check_in_1: lower['check_in_1'] ?? lower['checkin1'] ?? lower['check_in'] ?? null,
+                check_out_1: lower['check_out_1'] ?? lower['checkout1'] ?? lower['check_out'] ?? null,
+                check_in_2: lower['check_in_2'] ?? lower['checkin2'] ?? null,
+                check_out_2: lower['check_out_2'] ?? lower['checkout2'] ?? null,
+            };
+        }
     } catch (e) {
-        console.warn('fetchExistingAttendance error', e);
-        return null;
+        // ignore
     }
+    // 3) Final fallback: local cache
+    return readAttendanceCache(employeeId, date);
 }
 
 async function addUpdateAttendance() {
@@ -986,24 +1017,40 @@ async function addUpdateAttendance() {
     const originalText = showButtonSpinner(attUpdateBtn, 'Saving...');
     const failsafe = setTimeout(() => { try { hideButtonSpinner(attUpdateBtn, originalText); } catch(_) {} }, 10000);
     try {
-        // Fetch existing values to avoid overwriting earlier times
-        const existing = await fetchExistingAttendance(employeeId, dateVal);
+        const existing = await fetchExistingAttendance(employeeId, dateVal) || {};
+        const cached = readAttendanceCache(employeeId, dateVal) || {};
         const merged = { employee_id: employeeId, date: dateVal };
-        function choose(newVal, oldVal) {
+        function pick(newVal, prevVal, cacheVal) {
             const nv = (newVal || '').trim();
-            return nv !== '' ? nv : (oldVal || undefined);
+            if (nv !== '') return nv; // user provided
+            if (prevVal && String(prevVal).trim() !== '') return prevVal; // server existing
+            if (cacheVal && String(cacheVal).trim() !== '') return cacheVal; // local cache
+            return undefined; // nothing to send
         }
-        merged.check_in_1 = choose(in1, existing?.check_in_1);
-        merged.check_out_1 = choose(out1, existing?.check_out_1);
-        merged.check_in_2 = choose(in2, existing?.check_in_2);
-        merged.check_out_2 = choose(out2, existing?.check_out_2);
+        merged.check_in_1 = pick(in1, existing.check_in_1, cached.check_in_1);
+        merged.check_out_1 = pick(out1, existing.check_out_1, cached.check_out_1);
+        merged.check_in_2 = pick(in2, existing.check_in_2, cached.check_in_2);
+        merged.check_out_2 = pick(out2, existing.check_out_2, cached.check_out_2);
+
+        // Ensure we explicitly send previous values if backend overwrites missing keys
+        ['check_in_1','check_out_1','check_in_2','check_out_2'].forEach(k => {
+            if (merged[k] === undefined) delete merged[k];
+        });
 
         console.debug('Submitting attendance merged payload', merged);
         const result = await postJsonThenForm('/api/attendance', merged, { timeoutMs: 12000 });
         const msg = typeof result === 'object' && result !== null ? (result.message || 'Attendance updated successfully!') : 'Attendance updated successfully!';
         showToast(msg, 'success');
 
-        // Do not clear inputs, preserve user's current values
+        // Update cache with best-known values (server-prev or user)
+        const newCache = {
+            check_in_1: merged.check_in_1 ?? existing.check_in_1 ?? cached.check_in_1 ?? '',
+            check_out_1: merged.check_out_1 ?? existing.check_out_1 ?? cached.check_out_1 ?? '',
+            check_in_2: merged.check_in_2 ?? existing.check_in_2 ?? cached.check_in_2 ?? '',
+            check_out_2: merged.check_out_2 ?? existing.check_out_2 ?? cached.check_out_2 ?? '',
+        };
+        writeAttendanceCache(employeeId, dateVal, newCache);
+
         loadDashboardData();
         loadTodaysAttendanceStatus();
     } catch (error) {
