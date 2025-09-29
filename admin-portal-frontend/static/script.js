@@ -344,6 +344,37 @@ async function apiRequest(endpoint, method = 'GET', body = null, { timeoutMs = 1
     throw lastErr || new Error('Network error');
 }
 
+async function postJsonThenForm(endpoint, payload, { timeoutMs = 10000 } = {}) {
+    // First attempt: JSON
+    try {
+        return await apiRequest(endpoint, 'POST', payload, { timeoutMs });
+    } catch (jsonErr) {
+        // Fallback: application/x-www-form-urlencoded
+        try {
+            const controller = new AbortController();
+            const body = new URLSearchParams();
+            Object.entries(payload).forEach(([k, v]) => {
+                if (v !== undefined && v !== null) body.append(k, String(v));
+            });
+            const resp = await withTimeout(fetch(`${API_BASE_URL}${endpoint}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+                body: body.toString(),
+                signal: controller.signal,
+            }), timeoutMs, controller);
+            if (!resp.ok) {
+                const errorData = await resp.json().catch(() => ({ message: 'A server error occurred.' }));
+                throw new Error(errorData.message || `HTTP ${resp.status}`);
+            }
+            const contentType = resp.headers.get('Content-Type') || '';
+            return contentType.includes('application/json') ? resp.json() : resp.text();
+        } catch (formErr) {
+            // Re-throw original JSON error if form also fails
+            throw jsonErr || formErr;
+        }
+    }
+}
+
 // API_BASE_URL is now hardcoded to the backend URL
 
 // --- Event Listeners Setup ---
@@ -880,9 +911,10 @@ async function addUpdateAttendance() {
     
     const originalText = showButtonSpinner(attUpdateBtn, 'Saving...');
     try {
-        const result = await apiRequest('/api/attendance', 'POST', payload);
+        const result = await postJsonThenForm('/api/attendance', payload, { timeoutMs: 12000 });
         console.debug('Attendance response', result);
-        showToast(result.message || 'Attendance updated successfully!', 'success');
+        const msg = typeof result === 'object' && result !== null ? (result.message || 'Attendance updated successfully!') : 'Attendance updated successfully!';
+        showToast(msg, 'success');
         
         // Clear form
         document.getElementById('att-checkin1').value = '';
