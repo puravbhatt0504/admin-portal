@@ -1004,41 +1004,29 @@ function parseAttendanceRecordKeys(obj) {
 
 async function fetchExistingAttendance(employeeId, date) {
     console.debug('fetchExistingAttendance start', { employeeId, date });
-    // 1) Try dedicated load endpoint if backend supports it
-    try {
-        const data = await apiRequest(`/api/attendance/load?employee_id=${encodeURIComponent(employeeId)}&date=${encodeURIComponent(date)}`);
-        console.debug('attendance/load response', data);
-        if (data && typeof data === 'object') {
-            const lower = Object.keys(data).reduce((acc, k) => { acc[k.toLowerCase()] = data[k]; return acc; }, {});
-            return parseAttendanceRecordKeys(lower);
-        }
-    } catch (e) {
-        console.warn('attendance/load failed', e);
-    }
-    // 2) Fallback to view endpoint and match by id/name
+    // Use day view endpoint and match by id/name
     try {
         const data = await apiRequest(`/api/attendance/view?date=${encodeURIComponent(date)}`);
-        console.debug('attendance/view response', data);
-        if (!data || !Array.isArray(data.records)) throw new Error('no-records');
-        const match = data.records.find(rec => {
-            const keys = Object.keys(rec || {}).reduce((acc, k) => { acc[k.toLowerCase()] = k; return acc; }, {});
-            const idKey = keys['employee_id'] || keys['id'] || keys['employeeid'];
-            const nameKey = keys['employee'] || keys['employee_name'] || keys['name'];
-            const selectedName = (document.getElementById('att-employee-select').selectedOptions[0]?.text || '').trim();
-            const byId = idKey ? String(rec[idKey]) === String(employeeId) : false;
-            const byName = nameKey ? String(rec[nameKey]).trim().toLowerCase() === selectedName.toLowerCase() : false;
-            return byId || byName;
-        });
-        if (match) {
-            const lower = Object.keys(match).reduce((acc, k) => { acc[k.toLowerCase()] = match[k]; return acc; }, {});
-            return parseAttendanceRecordKeys(lower);
+        if (data && Array.isArray(data.records)) {
+            const match = data.records.find(rec => {
+                const keys = Object.keys(rec || {}).reduce((acc, k) => { acc[k.toLowerCase()] = k; return acc; }, {});
+                const idKey = keys['employee_id'] || keys['id'] || keys['employeeid'];
+                const nameKey = keys['employee'] || keys['employee_name'] || keys['name'];
+                const selectedName = (document.getElementById('att-employee-select').selectedOptions[0]?.text || '').trim();
+                const byId = idKey ? String(rec[idKey]) === String(employeeId) : false;
+                const byName = nameKey ? String(rec[nameKey]).trim().toLowerCase() === selectedName.toLowerCase() : false;
+                return byId || byName;
+            });
+            if (match) {
+                const lower = Object.keys(match).reduce((acc, k) => { acc[k.toLowerCase()] = match[k]; return acc; }, {});
+                return parseAttendanceRecordKeys(lower);
+            }
         }
     } catch (e) {
         console.warn('attendance/view failed', e);
     }
-    // 3) Final fallback: local cache
+    // Fallback: local cache
     const cached = readAttendanceCache(employeeId, date);
-    console.debug('attendance cache hit?', !!cached, cached);
     return cached;
 }
 
