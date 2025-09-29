@@ -162,7 +162,7 @@ admin-portal/
 
 ## 🌐 Deployment URLs
 
-- **Frontend**: [Your Vercel URL]
+- **Frontend**: https://admin-portal-dusky.vercel.app/
 - **Backend**: https://finalboss0504.pythonanywhere.com
 - **API Documentation**: Available at backend URL
 
