@@ -2,87 +2,196 @@
 // API base URL for the backend
 let API_BASE_URL = 'https://finalboss0504.pythonanywhere.com';
 
+// --- Mobile Error Handling ---
+function handleMobileErrors() {
+    // Global error handler for mobile
+    window.addEventListener('error', (e) => {
+        console.warn('Mobile error caught:', e.error);
+        // Don't show error to user, just log it
+    });
+    
+    // Handle unhandled promise rejections
+    window.addEventListener('unhandledrejection', (e) => {
+        console.warn('Mobile promise rejection:', e.reason);
+        e.preventDefault(); // Prevent console error
+    });
+    
+    // Handle network errors gracefully
+    window.addEventListener('online', () => {
+        console.log('Network connection restored');
+    });
+    
+    window.addEventListener('offline', () => {
+        console.log('Network connection lost');
+    });
+}
+
 // --- Mobile Functionality ---
 function initMobileFeatures() {
-    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-    const mobileSidebarOverlay = document.getElementById('mobile-sidebar-overlay');
-    const mobileDarkModeToggle = document.getElementById('mobileDarkModeToggle');
-    
-    // Mobile menu toggle
-    if (mobileMenuToggle && sidebar) {
-        mobileMenuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('show');
-            mobileSidebarOverlay.classList.toggle('show');
+    try {
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const mobileSidebarOverlay = document.getElementById('mobile-sidebar-overlay');
+        const mobileDarkModeToggle = document.getElementById('mobileDarkModeToggle');
+        
+        // Mobile menu toggle with error handling
+        if (mobileMenuToggle && sidebar) {
+            mobileMenuToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                try {
+                    sidebar.classList.toggle('show');
+                    if (mobileSidebarOverlay) {
+                        mobileSidebarOverlay.classList.toggle('show');
+                    }
+                } catch (error) {
+                    console.warn('Mobile menu toggle error:', error);
+                }
+            });
+        }
+        
+        // Close sidebar when clicking overlay with error handling
+        if (mobileSidebarOverlay) {
+            mobileSidebarOverlay.addEventListener('click', (e) => {
+                e.preventDefault();
+                try {
+                    sidebar.classList.remove('show');
+                    mobileSidebarOverlay.classList.remove('show');
+                } catch (error) {
+                    console.warn('Mobile overlay click error:', error);
+                }
+            });
+        }
+        
+        // Close sidebar when clicking nav links on mobile
+        const navLinks = document.querySelectorAll('.sidebar .nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                try {
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('show');
+                        if (mobileSidebarOverlay) {
+                            mobileSidebarOverlay.classList.remove('show');
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Nav link click error:', error);
+                }
+            });
         });
-    }
-    
-    // Close sidebar when clicking overlay
-    if (mobileSidebarOverlay) {
-        mobileSidebarOverlay.addEventListener('click', () => {
-            sidebar.classList.remove('show');
-            mobileSidebarOverlay.classList.remove('show');
+        
+        // Sync mobile dark mode toggle with main toggle
+        if (mobileDarkModeToggle && darkModeToggle) {
+            mobileDarkModeToggle.addEventListener('change', (e) => {
+                try {
+                    darkModeToggle.checked = e.target.checked;
+                    darkModeToggle.dispatchEvent(new Event('change'));
+                } catch (error) {
+                    console.warn('Mobile dark mode sync error:', error);
+                }
+            });
+            
+            darkModeToggle.addEventListener('change', (e) => {
+                try {
+                    mobileDarkModeToggle.checked = e.target.checked;
+                } catch (error) {
+                    console.warn('Dark mode sync error:', error);
+                }
+            });
+        }
+        
+        // Handle window resize with debouncing
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                try {
+                    if (window.innerWidth > 768) {
+                        sidebar.classList.remove('show');
+                        if (mobileSidebarOverlay) {
+                            mobileSidebarOverlay.classList.remove('show');
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Window resize error:', error);
+                }
+            }, 100);
         });
-    }
-    
-    // Close sidebar when clicking nav links on mobile
-    const navLinks = document.querySelectorAll('.sidebar .nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                sidebar.classList.remove('show');
-                mobileSidebarOverlay.classList.remove('show');
+        
+        // Touch gestures for mobile with error handling
+        let startX = 0;
+        let startY = 0;
+        let touchStartTime = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            try {
+                if (e.touches && e.touches.length === 1) {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    touchStartTime = Date.now();
+                }
+            } catch (error) {
+                console.warn('Touch start error:', error);
             }
-        });
-    });
-    
-    // Sync mobile dark mode toggle with main toggle
-    if (mobileDarkModeToggle && darkModeToggle) {
-        mobileDarkModeToggle.addEventListener('change', (e) => {
-            darkModeToggle.checked = e.target.checked;
-            darkModeToggle.dispatchEvent(new Event('change'));
+        }, { passive: true });
+        
+        document.addEventListener('touchend', (e) => {
+            try {
+                if (!startX || !startY || !e.changedTouches) return;
+                
+                const touchDuration = Date.now() - touchStartTime;
+                if (touchDuration > 500) return; // Ignore long touches
+                
+                const endX = e.changedTouches[0].clientX;
+                const endY = e.changedTouches[0].clientY;
+                
+                const diffX = startX - endX;
+                const diffY = startY - endY;
+                
+                // Swipe left to close sidebar
+                if (Math.abs(diffX) > Math.abs(diffY) && diffX > 50 && sidebar.classList.contains('show')) {
+                    sidebar.classList.remove('show');
+                    if (mobileSidebarOverlay) {
+                        mobileSidebarOverlay.classList.remove('show');
+                    }
+                }
+                
+                startX = 0;
+                startY = 0;
+            } catch (error) {
+                console.warn('Touch end error:', error);
+            }
+        }, { passive: true });
+        
+        // Prevent zoom on double tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+        
+        // Handle orientation change
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                try {
+                    if (window.innerWidth > 768) {
+                        sidebar.classList.remove('show');
+                        if (mobileSidebarOverlay) {
+                            mobileSidebarOverlay.classList.remove('show');
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Orientation change error:', error);
+                }
+            }, 100);
         });
         
-        darkModeToggle.addEventListener('change', (e) => {
-            mobileDarkModeToggle.checked = e.target.checked;
-        });
+    } catch (error) {
+        console.error('Mobile features initialization error:', error);
     }
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            sidebar.classList.remove('show');
-            mobileSidebarOverlay.classList.remove('show');
-        }
-    });
-    
-    // Touch gestures for mobile
-    let startX = 0;
-    let startY = 0;
-    
-    document.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-    });
-    
-    document.addEventListener('touchend', (e) => {
-        if (!startX || !startY) return;
-        
-        const endX = e.changedTouches[0].clientX;
-        const endY = e.changedTouches[0].clientY;
-        
-        const diffX = startX - endX;
-        const diffY = startY - endY;
-        
-        // Swipe left to close sidebar
-        if (Math.abs(diffX) > Math.abs(diffY) && diffX > 50 && sidebar.classList.contains('show')) {
-            sidebar.classList.remove('show');
-            mobileSidebarOverlay.classList.remove('show');
-        }
-        
-        startX = 0;
-        startY = 0;
-    });
 }
 
 // --- DOM Elements ---
@@ -230,19 +339,110 @@ async function apiRequest(endpoint, method = 'GET', body = null, { timeoutMs = 1
 
 // --- Event Listeners Setup ---
 document.addEventListener('DOMContentLoaded', async () => {
-    applyTheme(localStorage.getItem('theme') || 'light');
-    initMobileFeatures(); // Initialize mobile functionality
-    loadDashboardData();
-    loadEmployees();
-    loadConfig();
-    addGeneralExpenseItem();
-    initializeUIEnhancements();
-    const today = new Date().toISOString().split('T')[0];
-    document.querySelectorAll('input[type="date"]').forEach(input => input.value = today);
-    document.querySelectorAll('#mainTab .nav-link').forEach(link => link.addEventListener('click', () => headerTitle.textContent = link.getAttribute('data-header-title')));
-    darkModeToggle.addEventListener('change', handleThemeToggle);
-    modalConfirmBtn.addEventListener('click', () => { if (typeof actionToConfirm === 'function') actionToConfirm(); });
-    setInterval(loadTodaysAttendanceStatus, 60000);
+    try {
+        // Initialize mobile error handling first
+        handleMobileErrors();
+        
+        // Initialize mobile features
+        initMobileFeatures();
+        
+        // Apply theme with error handling
+        try {
+            applyTheme(localStorage.getItem('theme') || 'light');
+        } catch (error) {
+            console.warn('Theme application error:', error);
+        }
+        
+        // Load data with error handling
+        try {
+            await loadDashboardData();
+        } catch (error) {
+            console.warn('Dashboard data load error:', error);
+        }
+        
+        try {
+            await loadEmployees();
+        } catch (error) {
+            console.warn('Employees load error:', error);
+        }
+        
+        try {
+            await loadConfig();
+        } catch (error) {
+            console.warn('Config load error:', error);
+        }
+        
+        try {
+            addGeneralExpenseItem();
+        } catch (error) {
+            console.warn('General expense item error:', error);
+        }
+        
+        try {
+            initializeUIEnhancements();
+        } catch (error) {
+            console.warn('UI enhancements error:', error);
+        }
+        
+        // Set today's date with error handling
+        try {
+            const today = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                if (input) input.value = today;
+            });
+        } catch (error) {
+            console.warn('Date input error:', error);
+        }
+        
+        // Add navigation listeners with error handling
+        try {
+            document.querySelectorAll('#mainTab .nav-link').forEach(link => {
+                if (link && headerTitle) {
+                    link.addEventListener('click', () => {
+                        const title = link.getAttribute('data-header-title');
+                        if (title) headerTitle.textContent = title;
+                    });
+                }
+            });
+        } catch (error) {
+            console.warn('Navigation listener error:', error);
+        }
+        
+        // Add theme toggle listener with error handling
+        try {
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', handleThemeToggle);
+            }
+        } catch (error) {
+            console.warn('Theme toggle error:', error);
+        }
+        
+        // Add modal confirmation listener with error handling
+        try {
+            if (modalConfirmBtn) {
+                modalConfirmBtn.addEventListener('click', () => { 
+                    if (typeof actionToConfirm === 'function') actionToConfirm(); 
+                });
+            }
+        } catch (error) {
+            console.warn('Modal confirmation error:', error);
+        }
+        
+        // Set up interval with error handling
+        try {
+            setInterval(() => {
+                try {
+                    loadTodaysAttendanceStatus();
+                } catch (error) {
+                    console.warn('Attendance status load error:', error);
+                }
+            }, 60000);
+        } catch (error) {
+            console.warn('Interval setup error:', error);
+        }
+    } catch (error) {
+        console.error('Main initialization error:', error);
+    }
 
     addEmployeeBtn.addEventListener('click', () => {
         const name = newEmployeeInput.value.trim();
