@@ -224,9 +224,23 @@ def attendance_delete_all():
 def get_dashboard():
     today = date.today()
     total = db.session.query(Employee).count()
-    present = db.session.query(Attendance).filter(Attendance.date == today, Attendance.shift1_in.isnot(None)).count()
-    late = db.session.query(Attendance).filter(Attendance.date == today, Attendance.shift1_in > time(10, 0)).count()
+    
+    # Count only employees who actually checked in (shift1_in is not null)
+    present = db.session.query(Attendance).filter(
+        Attendance.date == today, 
+        Attendance.shift1_in.isnot(None)
+    ).count()
+    
+    # Count employees who checked in late (after 10:00 AM)
+    late = db.session.query(Attendance).filter(
+        Attendance.date == today, 
+        Attendance.shift1_in.isnot(None),
+        Attendance.shift1_in > time(10, 0)
+    ).count()
+    
+    # Absent = total employees - those who checked in
     absent = max(0, total - present)
+    
     return jsonify({'present_count': present, 'late_count': late, 'absent_count': absent})
 
 # --- Travel Expenses ---
