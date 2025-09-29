@@ -1,0 +1,13 @@
+{
+  "name": "admin-portal-frontend",
+  "version": "1.0.0",
+  "description": "Admin Portal Frontend for Employee Management",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'No build step required for static site'",
+    "start": "echo 'Static site - open index.html in browser'"
+  },
+  "keywords": ["admin", "portal", "employee", "management"],
+  "author": "Your Name",
+  "license": "MIT"
+}
