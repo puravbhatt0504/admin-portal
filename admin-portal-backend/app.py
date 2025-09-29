@@ -134,7 +134,14 @@ def add_update_attendance():
     record = db.session.query(Attendance).filter_by(employee_name=employee.name, date=attendance_date).first()
     
     if not record:
-        record = Attendance(employee_name=employee.name, date=attendance_date)
+        record = Attendance(
+            employee_name=employee.name, 
+            date=attendance_date,
+            shift1_in=None,
+            shift1_out=None,
+            shift2_in=None,
+            shift2_out=None
+        )
         db.session.add(record)
         message = 'Attendance added successfully.'
     else:
@@ -161,10 +168,20 @@ def view_day_attendance():
     if not date_str: return jsonify({'message': 'Date parameter is required'}), 400
     view_date = datetime.strptime(date_str, '%Y-%m-%d').date()
     records = db.session.query(Attendance).filter_by(date=view_date).all()
+    
     def get_status(rec):
         shift1_in = getattr(rec, 'shift1_in', None)
         if not shift1_in: return "Absent"
         return "Late" if shift1_in > time(10, 0) else "Present"
+    
+    def format_time(time_val):
+        if time_val is None:
+            return ''
+        # Additional check to prevent 00:00:00 from showing as 12:00 AM
+        if time_val == time(0, 0, 0):
+            return ''
+        return time_val.strftime('%I:%M %p')
+    
     response_data = {
         'columns': [
             {"title": "Employee"}, {"title": "Shift 1 In"}, {"title": "Shift 1 Out"}, 
@@ -172,10 +189,10 @@ def view_day_attendance():
         ],
         'records': [[
                 rec.employee_name, 
-            (shift1_in.strftime('%I:%M %p') if (shift1_in := getattr(rec, 'shift1_in', None)) is not None else ''),
-            (shift1_out.strftime('%I:%M %p') if (shift1_out := getattr(rec, 'shift1_out', None)) is not None else ''),
-            (shift2_in.strftime('%I:%M %p') if (shift2_in := getattr(rec, 'shift2_in', None)) is not None else ''),
-            (shift2_out.strftime('%I:%M %p') if (shift2_out := getattr(rec, 'shift2_out', None)) is not None else ''),
+                format_time(getattr(rec, 'shift1_in', None)),
+                format_time(getattr(rec, 'shift1_out', None)),
+                format_time(getattr(rec, 'shift2_in', None)),
+                format_time(getattr(rec, 'shift2_out', None)),
                 get_status(rec)
         ] for rec in records]
     }
@@ -210,10 +227,10 @@ def attendance_today():
         if rec:
             shift1_in = getattr(rec, 'shift1_in', None)
             shift1_out = getattr(rec, 'shift1_out', None)
-            if shift1_in:
+            if shift1_in and shift1_in != time(0, 0, 0):
                 status = 'Late' if shift1_in > time(10,0) else 'Present'
                 check_in = shift1_in.strftime('%I:%M %p')
-            if shift1_out:
+            if shift1_out and shift1_out != time(0, 0, 0):
                 check_out = shift1_out.strftime('%I:%M %p')
         records.append({'employee_name': emp, 'status': status, 'check_in': check_in, 'check_out': check_out})
     absent_employees = [{'name': emp} for emp in all_emps if emp not in present_map]
