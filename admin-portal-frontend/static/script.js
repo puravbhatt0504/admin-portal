@@ -1441,7 +1441,18 @@ document.head.appendChild(style);
 
 // --- Keyboard Shortcuts ---
 function initializeKeyboardShortcuts() {
+    function isEditableTarget(target) {
+        if (!target) return false;
+        const tag = (target.tagName || '').toLowerCase();
+        if (tag === 'input' || tag === 'textarea' || tag === 'select') return true;
+        if (target.isContentEditable) return true;
+        return false;
+    }
     document.addEventListener('keydown', function(e) {
+        // If typing in an editable field, do not trigger app-wide shortcuts
+        if (isEditableTarget(e.target)) {
+            return;
+        }
         // Ctrl combinations
         if (e.ctrlKey) {
             switch(e.key) {
@@ -1467,7 +1478,6 @@ function initializeKeyboardShortcuts() {
                     break;
             }
         }
-        
         // Function keys
         switch(e.key) {
             case 'F11':
@@ -1480,8 +1490,7 @@ function initializeKeyboardShortcuts() {
                 document.getElementById('bulk-actions').classList.remove('show');
                 break;
         }
-        
-        // Number keys for quick tab switching
+        // Number keys for quick tab switching (disabled while typing via early return above)
         if (e.key >= '1' && e.key <= '9') {
             const tabIndex = parseInt(e.key) - 1;
             const tabs = document.querySelectorAll('#mainTab .nav-link');
