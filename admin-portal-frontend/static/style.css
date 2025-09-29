@@ -1442,12 +1442,25 @@ code, pre, .form-control[readonly] {
     pointer-events: auto;
     transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .quick-access:hover {
+  .quick-access:hover,
+  .quick-access:focus-within {
     right: 20px;
   }
   .quick-access.quick-access-hidden {
+    /* Remove opacity and pointer-events for desktop */
     opacity: 1 !important;
     pointer-events: auto;
+  }
+  /* Expand hover area for easier access */
+  .quick-access::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100vh;
+    background: transparent;
+    z-index: 999;
   }
 }
 
@@ -2026,5 +2039,66 @@ RESPONSIVE DESIGN & PERFORMANCE
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* --- Mobile UI tightening: menus, buttons, header actions --- */
+@media (max-width: 768px) {
+  /* Smaller sidebar/menu items */
+  .sidebar .nav-link,
+  #mainTab .nav-link {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+
+  /* Smaller general buttons and badges */
+  .btn {
+    font-size: 0.85rem;
+    padding: 8px 10px;
+  }
+  .keyboard-shortcut {
+    font-size: 0.7rem;
+    padding: 1px 5px;
+    margin-left: 6px;
+  }
+
+  /* Header layout: keep actions on same line */
+  .main-content header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .header-actions { 
+    display: flex; 
+    flex-wrap: nowrap; 
+    align-items: center; 
+  }
+  .header-actions .btn { 
+    font-size: 0.85rem; 
+    padding: 6px 8px; 
+  }
+
+  /* Stack action button groups under forms for alignment */
+  .mt-3.d-flex,
+  .mt-4.d-flex,
+  .mb-3.d-flex,
+  .mb-4.d-flex,
+  .d-flex.justify-content-between {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px;
+  }
+  /* Ensure nested button groups wrap vertically */
+  .mt-3.d-flex > div,
+  .mt-4.d-flex > div {
+    width: 100%;
+  }
+  .mt-3.d-flex > div .btn,
+  .mt-4.d-flex > div .btn {
+    width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 6px;
+  }
 }
 
