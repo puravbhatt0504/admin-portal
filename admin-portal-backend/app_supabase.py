@@ -32,7 +32,7 @@ db_name = os.environ.get('SUPABASE_DB_NAME', 'postgres')
 db_port = os.environ.get('SUPABASE_DB_PORT', '5432')
 
 # Construct PostgreSQL connection string
-app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'pool_pre_ping': True,
