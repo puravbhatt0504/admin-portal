@@ -25,6 +25,15 @@ app.options('*', (req, res) => {
   res.sendStatus(200);
 });
 
+// Add CORS headers to all responses
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Origin, Accept');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 // Supabase PostgreSQL Configuration - Using Shared Pooler
 const pool = new Pool({
   user: process.env.SUPABASE_DB_USER || 'postgres.sevlfbqydeludjfzatfe',
