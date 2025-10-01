@@ -19,10 +19,10 @@ A comprehensive admin portal for managing employees, attendance, expenses, and m
 
 - **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
 - **Backend**: Python Flask with SQLAlchemy
-- **Database**: MySQL
+- **Database**: Supabase PostgreSQL
 - **Deployment**: 
   - Frontend: Vercel
-  - Backend: PythonAnywhere
+  - Backend: Render
 - **UI Framework**: Bootstrap 5 with custom styling
 
 ## 📁 Project Structure
@@ -113,13 +113,13 @@ admin-portal/
 - Python 3.x
 - Flask web framework
 - SQLAlchemy ORM
-- MySQL database
-- FPDF for PDF generation
+- Supabase PostgreSQL database
+- FPDF2 for PDF generation
 
 ### Deployment
 - Vercel (Frontend hosting)
-- PythonAnywhere (Backend hosting)
-- MySQL (Database hosting)
+- Render (Backend hosting)
+- Supabase (Database hosting)
 
 ## 📱 Features in Detail
 
@@ -163,8 +163,9 @@ admin-portal/
 ## 🌐 Deployment URLs
 
 - **Frontend**: https://admin-portal-dusky.vercel.app/
-- **Backend**: https://finalboss0504.pythonanywhere.com
+- **Backend**: https://admin-portal-uax8.onrender.com
 - **API Documentation**: Available at backend URL
+- **Health Check**: https://admin-portal-uax8.onrender.com/api/health
 
 ## 📝 License
 

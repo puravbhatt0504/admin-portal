@@ -35,27 +35,30 @@
    - Output Directory: `admin-portal-frontend` (if deploying whole project)
 6. **Click "Deploy"**
 
-### Step 3: Deploy Backend to PythonAnywhere
+### Step 3: Deploy Backend to Render
 
-1. **Go to [pythonanywhere.com](https://pythonanywhere.com)**
-2. **Upload backend files:**
-   - Upload `admin-portal-backend/` folder contents
-   - Place in `/home/yourusername/admin-portal-backend/`
-3. **Install dependencies:**
-   ```bash
-   pip3.10 install --user -r requirements.txt
+1. **Go to [render.com](https://render.com)**
+2. **Sign up with GitHub**
+3. **Create New Web Service:**
+   - Connect your GitHub repository
+   - Select `admin-portal-backend` as root directory
+   - Runtime: Python 3
+   - Build Command: `pip install -r requirements_supabase.txt`
+   - Start Command: `python wsgi_supabase.py`
+4. **Add Environment Variables:**
    ```
-4. **Configure web app:**
-   - Source code: `/home/yourusername/admin-portal-backend`
-   - WSGI file: `/home/yourusername/admin-portal-backend/wsgi.py`
-5. **Set environment variables:**
-   - `DB_PASSWORD` = your database password
-6. **Reload web app**
+   SUPABASE_DB_HOST=your_supabase_host
+   SUPABASE_DB_NAME=postgres
+   SUPABASE_DB_USER=postgres
+   SUPABASE_DB_PASSWORD=your_supabase_password
+   SUPABASE_DB_PORT=5432
+   ```
+5. **Deploy!**
 
 ### Step 4: Test Your Deployment
 
 1. **Frontend URL:** `https://your-project.vercel.app`
-2. **Backend URL:** `https://yourusername.pythonanywhere.com`
+2. **Backend URL:** `https://your-app-name.onrender.com`
 3. **Test features:**
    - Add an employee
    - Log attendance
@@ -69,24 +72,25 @@
 - `package.json` - Project metadata
 - Auto-detects API URL from backend
 
-### Backend (PythonAnywhere)
-- `wsgi.py` - WSGI configuration
-- `app.py` - Flask application
-- `config.json` - App settings
-- `requirements.txt` - Dependencies
+### Backend (Render)
+- `wsgi_supabase.py` - WSGI configuration
+- `app_supabase.py` - Flask application
+- `requirements_supabase.txt` - Dependencies
+- Environment variables for Supabase connection
 
 ## 🌐 Live URLs
 
 After deployment, your admin portal will be available at:
 
 - **Frontend:** `https://your-project-name.vercel.app`
-- **Backend API:** `https://yourusername.pythonanywhere.com`
-- **API Endpoints:** `https://yourusername.pythonanywhere.com/api/`
+- **Backend API:** `https://your-app-name.onrender.com`
+- **API Endpoints:** `https://your-app-name.onrender.com/api/`
+- **Health Check:** `https://your-app-name.onrender.com/api/health`
 
 ## 🔄 Automatic Updates
 
 - **Frontend:** Updates automatically when you push to GitHub
-- **Backend:** Manual updates required (upload new files)
+- **Backend:** Updates automatically when you push to GitHub (Render auto-deploys)
 
 ## 🛠️ Troubleshooting
 
@@ -96,12 +100,12 @@ After deployment, your admin portal will be available at:
 - Ensure backend is running
 
 ### Backend Issues
-- Check PythonAnywhere error logs
-- Verify database connection
+- Check Render error logs
+- Verify Supabase database connection
 - Check environment variables
 
 ### Database Issues
-- Verify MySQL credentials
+- Verify Supabase credentials
 - Check database permissions
 - Ensure tables are created
 
