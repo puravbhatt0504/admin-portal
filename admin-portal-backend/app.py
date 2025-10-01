@@ -649,10 +649,6 @@ def generate_report_pdf():
 
 def _generate_attendance_report_pdf(pdf, start_date, end_date):
     """Generate attendance report data for PDF"""
-    pdf.set_font('Arial', 'B', 12)
-    pdf.cell(0, 8, 'Attendance Summary:', ln=True)
-    pdf.set_font('Arial', '', 10)
-    
     try:
         # Query attendance data
         query = db.session.query(Attendance)
@@ -661,9 +657,54 @@ def _generate_attendance_report_pdf(pdf, start_date, end_date):
         if end_date:
             query = query.filter(Attendance.date <= end_date)
         
-        records = query.limit(20).all()  # Limit for PDF readability
+        records = query.all()
         
         if records:
+            # Page 1: Summary statistics
+            pdf.set_font('Arial', 'B', 14)
+            pdf.cell(0, 10, 'Attendance Summary Report', ln=True, align='C')
+            pdf.ln(5)
+            
+            # Calculate statistics
+            total_employees = len(set(record.employee_name for record in records))
+            present_count = len([r for r in records if r.shift1_in])
+            absent_count = len([r for r in records if not r.shift1_in])
+            late_count = 0
+            
+            # Count late employees (check-in after 9:30 AM)
+            for record in records:
+                if record.shift1_in:
+                    try:
+                        # Parse time and check if after 9:30 AM
+                        time_str = str(record.shift1_in)
+                        if ':' in time_str:
+                            hour = int(time_str.split(':')[0])
+                            if hour > 9 or (hour == 9 and int(time_str.split(':')[1].split()[0]) > 30):
+                                late_count += 1
+                    except:
+                        pass
+            
+            # Summary statistics
+            pdf.set_font('Arial', 'B', 12)
+            pdf.cell(0, 8, 'Summary Statistics:', ln=True)
+            pdf.ln(2)
+            
+            pdf.set_font('Arial', '', 10)
+            pdf.cell(0, 6, f'Total Employees: {total_employees}', ln=True)
+            pdf.cell(0, 6, f'Total Records: {len(records)}', ln=True)
+            pdf.cell(0, 6, f'Present: {present_count}', ln=True)
+            pdf.cell(0, 6, f'Absent: {absent_count}', ln=True)
+            pdf.cell(0, 6, f'Late: {late_count}', ln=True)
+            pdf.ln(5)
+            
+            # Page break for detailed records
+            pdf.add_page()
+            
+            # Page 2: Detailed attendance records
+            pdf.set_font('Arial', 'B', 14)
+            pdf.cell(0, 10, 'Daily Attendance Details', ln=True, align='C')
+            pdf.ln(5)
+            
             # Table header
             pdf.set_font('Arial', 'B', 9)
             pdf.cell(30, 6, 'Date', 1, 0, 'C')
@@ -672,27 +713,54 @@ def _generate_attendance_report_pdf(pdf, start_date, end_date):
             pdf.cell(25, 6, 'Check Out', 1, 0, 'C')
             pdf.cell(20, 6, 'Status', 1, 1, 'C')
             
-            # Table data
+            # Table data with color coding
             pdf.set_font('Arial', '', 8)
             for record in records:
                 pdf.cell(30, 6, str(record.date), 1, 0, 'C')
                 pdf.cell(50, 6, record.employee_name[:20], 1, 0, 'L')
                 pdf.cell(25, 6, str(record.shift1_in or '-'), 1, 0, 'C')
                 pdf.cell(25, 6, str(record.shift1_out or '-'), 1, 0, 'C')
-                status = 'Present' if record.shift1_in else 'Absent'
-                pdf.cell(20, 6, status, 1, 1, 'C')
+                
+                # Determine status and apply color coding
+                if not record.shift1_in:
+                    # Absent - highlight in yellow (simulated with bold)
+                    status = 'ABSENT'
+                    pdf.set_font('Arial', 'B', 8)
+                    pdf.cell(20, 6, status, 1, 1, 'C')
+                else:
+                    # Check if late
+                    is_late = False
+                    try:
+                        time_str = str(record.shift1_in)
+                        if ':' in time_str:
+                            hour = int(time_str.split(':')[0])
+                            if hour > 9 or (hour == 9 and int(time_str.split(':')[1].split()[0]) > 30):
+                                is_late = True
+                    except:
+                        pass
+                    
+                    if is_late:
+                        # Late - highlight in red (simulated with bold)
+                        status = 'LATE'
+                        pdf.set_font('Arial', 'B', 8)
+                        pdf.cell(20, 6, status, 1, 1, 'C')
+                    else:
+                        # Present
+                        status = 'Present'
+                        pdf.set_font('Arial', '', 8)
+                        pdf.cell(20, 6, status, 1, 1, 'C')
+                
+                pdf.set_font('Arial', '', 8)
         else:
+            pdf.set_font('Arial', '', 10)
             pdf.cell(0, 6, 'No attendance records found for the selected period.', ln=True)
             
     except Exception as e:
+        pdf.set_font('Arial', '', 10)
         pdf.cell(0, 6, f'Error loading attendance data: {str(e)}', ln=True)
 
 def _generate_travel_expenses_report_pdf(pdf, start_date, end_date):
     """Generate travel expenses report data for PDF"""
-    pdf.set_font('Arial', 'B', 12)
-    pdf.cell(0, 8, 'Travel Expenses Summary:', ln=True)
-    pdf.set_font('Arial', '', 10)
-    
     try:
         # Query travel expenses data
         query = db.session.query(TravelExpense)
@@ -701,42 +769,97 @@ def _generate_travel_expenses_report_pdf(pdf, start_date, end_date):
         if end_date:
             query = query.filter(TravelExpense.date <= end_date)
         
-        records = query.limit(20).all()
+        records = query.all()
         
         if records:
-            # Table header
+            # Page 1: Employee-wise summary
+            pdf.set_font('Arial', 'B', 14)
+            pdf.cell(0, 10, 'Employee-wise Travel Expenses Summary', ln=True, align='C')
+            pdf.ln(5)
+            
+            # Calculate employee totals
+            employee_totals = {}
+            for record in records:
+                if record.employee_name not in employee_totals:
+                    employee_totals[record.employee_name] = 0
+                employee_totals[record.employee_name] += record.amount
+            
+            # Employee summary table
+            pdf.set_font('Arial', 'B', 10)
+            pdf.cell(0, 8, 'Total Expenses by Employee:', ln=True)
+            pdf.ln(2)
+            
+            pdf.set_font('Arial', 'B', 9)
+            pdf.cell(100, 6, 'Employee Name', 1, 0, 'C')
+            pdf.cell(50, 6, 'Total Amount', 1, 1, 'C')
+            
+            pdf.set_font('Arial', '', 9)
+            grand_total = 0
+            for employee, total in sorted(employee_totals.items()):
+                pdf.cell(100, 6, employee[:30], 1, 0, 'L')
+                # Highlight amount in green (simulated with bold)
+                pdf.set_font('Arial', 'B', 9)
+                pdf.cell(50, 6, f'₹{total:,.0f}', 1, 1, 'R')
+                pdf.set_font('Arial', '', 9)
+                grand_total += total
+            
+            # Grand total
+            pdf.set_font('Arial', 'B', 10)
+            pdf.cell(100, 8, 'GRAND TOTAL:', 1, 0, 'R')
+            pdf.cell(50, 8, f'₹{grand_total:,.0f}', 1, 1, 'R')
+            
+            # Page break for detailed records
+            pdf.add_page()
+            
+            # Page 2: Detailed daily records
+            pdf.set_font('Arial', 'B', 14)
+            pdf.cell(0, 10, 'Daily Travel Expenses Details', ln=True, align='C')
+            pdf.ln(5)
+            
+            # Group records by date
+            records_by_date = {}
+            for record in records:
+                date_str = str(record.date)
+                if date_str not in records_by_date:
+                    records_by_date[date_str] = []
+                records_by_date[date_str].append(record)
+            
+            # Detailed table
             pdf.set_font('Arial', 'B', 9)
             pdf.cell(30, 6, 'Date', 1, 0, 'C')
             pdf.cell(50, 6, 'Employee', 1, 0, 'C')
             pdf.cell(40, 6, 'Purpose', 1, 0, 'C')
             pdf.cell(30, 6, 'Amount', 1, 1, 'C')
             
-            # Table data
             pdf.set_font('Arial', '', 8)
-            total_amount = 0
-            for record in records:
-                pdf.cell(30, 6, str(record.date), 1, 0, 'C')
-                pdf.cell(50, 6, record.employee_name[:20], 1, 0, 'L')
-                pdf.cell(40, 6, (record.purpose or 'N/A')[:15], 1, 0, 'L')
-                pdf.cell(30, 6, f'₹{record.amount:,.0f}', 1, 1, 'R')
-                total_amount += record.amount
-            
-            # Total
-            pdf.set_font('Arial', 'B', 9)
-            pdf.cell(120, 6, 'Total:', 1, 0, 'R')
-            pdf.cell(30, 6, f'₹{total_amount:,.0f}', 1, 1, 'R')
+            for date_str in sorted(records_by_date.keys()):
+                day_total = 0
+                for record in records_by_date[date_str]:
+                    pdf.cell(30, 6, date_str, 1, 0, 'C')
+                    pdf.cell(50, 6, record.employee_name[:20], 1, 0, 'L')
+                    pdf.cell(40, 6, (record.purpose or 'N/A')[:15], 1, 0, 'L')
+                    # Highlight amount in green (simulated with bold)
+                    pdf.set_font('Arial', 'B', 8)
+                    pdf.cell(30, 6, f'₹{record.amount:,.0f}', 1, 1, 'R')
+                    pdf.set_font('Arial', '', 8)
+                    day_total += record.amount
+                
+                # Day total
+                pdf.set_font('Arial', 'B', 8)
+                pdf.cell(120, 6, f'Day Total ({date_str}):', 1, 0, 'R')
+                pdf.cell(30, 6, f'₹{day_total:,.0f}', 1, 1, 'R')
+                pdf.set_font('Arial', '', 8)
+                pdf.ln(2)
         else:
+            pdf.set_font('Arial', '', 10)
             pdf.cell(0, 6, 'No travel expense records found for the selected period.', ln=True)
             
     except Exception as e:
+        pdf.set_font('Arial', '', 10)
         pdf.cell(0, 6, f'Error loading travel expenses data: {str(e)}', ln=True)
 
 def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
     """Generate general expenses report data for PDF"""
-    pdf.set_font('Arial', 'B', 12)
-    pdf.cell(0, 8, 'General Expenses Summary:', ln=True)
-    pdf.set_font('Arial', '', 10)
-    
     try:
         # Query general expenses data
         query = db.session.query(GeneralExpense)
@@ -745,34 +868,93 @@ def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
         if end_date:
             query = query.filter(GeneralExpense.date <= end_date)
         
-        records = query.limit(20).all()
+        records = query.all()
         
         if records:
-            # Table header
+            # Page 1: Employee-wise summary
+            pdf.set_font('Arial', 'B', 14)
+            pdf.cell(0, 10, 'Employee-wise General Expenses Summary', ln=True, align='C')
+            pdf.ln(5)
+            
+            # Calculate employee totals
+            employee_totals = {}
+            for record in records:
+                if record.employee_name not in employee_totals:
+                    employee_totals[record.employee_name] = 0
+                employee_totals[record.employee_name] += record.amount
+            
+            # Employee summary table
+            pdf.set_font('Arial', 'B', 10)
+            pdf.cell(0, 8, 'Total Expenses by Employee:', ln=True)
+            pdf.ln(2)
+            
+            pdf.set_font('Arial', 'B', 9)
+            pdf.cell(100, 6, 'Employee Name', 1, 0, 'C')
+            pdf.cell(50, 6, 'Total Amount', 1, 1, 'C')
+            
+            pdf.set_font('Arial', '', 9)
+            grand_total = 0
+            for employee, total in sorted(employee_totals.items()):
+                pdf.cell(100, 6, employee[:30], 1, 0, 'L')
+                # Highlight amount in green (simulated with bold)
+                pdf.set_font('Arial', 'B', 9)
+                pdf.cell(50, 6, f'₹{total:,.0f}', 1, 1, 'R')
+                pdf.set_font('Arial', '', 9)
+                grand_total += total
+            
+            # Grand total
+            pdf.set_font('Arial', 'B', 10)
+            pdf.cell(100, 8, 'GRAND TOTAL:', 1, 0, 'R')
+            pdf.cell(50, 8, f'₹{grand_total:,.0f}', 1, 1, 'R')
+            
+            # Page break for detailed records
+            pdf.add_page()
+            
+            # Page 2: Detailed daily records
+            pdf.set_font('Arial', 'B', 14)
+            pdf.cell(0, 10, 'Daily General Expenses Details', ln=True, align='C')
+            pdf.ln(5)
+            
+            # Group records by date
+            records_by_date = {}
+            for record in records:
+                date_str = str(record.date)
+                if date_str not in records_by_date:
+                    records_by_date[date_str] = []
+                records_by_date[date_str].append(record)
+            
+            # Detailed table
             pdf.set_font('Arial', 'B', 9)
             pdf.cell(30, 6, 'Date', 1, 0, 'C')
             pdf.cell(50, 6, 'Employee', 1, 0, 'C')
             pdf.cell(40, 6, 'Description', 1, 0, 'C')
             pdf.cell(30, 6, 'Amount', 1, 1, 'C')
             
-            # Table data
             pdf.set_font('Arial', '', 8)
-            total_amount = 0
-            for record in records:
-                pdf.cell(30, 6, str(record.date), 1, 0, 'C')
-                pdf.cell(50, 6, record.employee_name[:20], 1, 0, 'L')
-                pdf.cell(40, 6, (record.description or 'N/A')[:15], 1, 0, 'L')
-                pdf.cell(30, 6, f'₹{record.amount:,.0f}', 1, 1, 'R')
-                total_amount += record.amount
-            
-            # Total
-            pdf.set_font('Arial', 'B', 9)
-            pdf.cell(120, 6, 'Total:', 1, 0, 'R')
-            pdf.cell(30, 6, f'₹{total_amount:,.0f}', 1, 1, 'R')
+            for date_str in sorted(records_by_date.keys()):
+                day_total = 0
+                for record in records_by_date[date_str]:
+                    pdf.cell(30, 6, date_str, 1, 0, 'C')
+                    pdf.cell(50, 6, record.employee_name[:20], 1, 0, 'L')
+                    pdf.cell(40, 6, (record.description or 'N/A')[:15], 1, 0, 'L')
+                    # Highlight amount in green (simulated with bold)
+                    pdf.set_font('Arial', 'B', 8)
+                    pdf.cell(30, 6, f'₹{record.amount:,.0f}', 1, 1, 'R')
+                    pdf.set_font('Arial', '', 8)
+                    day_total += record.amount
+                
+                # Day total
+                pdf.set_font('Arial', 'B', 8)
+                pdf.cell(120, 6, f'Day Total ({date_str}):', 1, 0, 'R')
+                pdf.cell(30, 6, f'₹{day_total:,.0f}', 1, 1, 'R')
+                pdf.set_font('Arial', '', 8)
+                pdf.ln(2)
         else:
+            pdf.set_font('Arial', '', 10)
             pdf.cell(0, 6, 'No general expense records found for the selected period.', ln=True)
             
     except Exception as e:
+        pdf.set_font('Arial', '', 10)
         pdf.cell(0, 6, f'Error loading general expenses data: {str(e)}', ln=True)
 
 # --- AI (match frontend endpoints) ---
