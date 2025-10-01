@@ -9,7 +9,7 @@ from sqlalchemy import func, desc, and_, text
 try:
     from fpdf2 import FPDF
 except ImportError:
-from fpdf import FPDF
+    from fpdf import FPDF
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from dotenv import load_dotenv
