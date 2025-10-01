@@ -1,6 +1,6 @@
 // --- Configuration ---
 // API base URL for the backend
-let API_BASE_URL = 'https://admin-portal-uax8.onrender.com';
+let API_BASE_URL = 'https://admin-portal-backend-nodejs-2kyp6int0-purav-bhatts-projects.vercel.app';
 
 // --- Mobile Error Handling ---
 function handleMobileErrors() {
