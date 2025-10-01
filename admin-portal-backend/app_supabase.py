@@ -9,7 +9,7 @@ from sqlalchemy import func, desc, and_, text
 try:
     from fpdf2 import FPDF
 except ImportError:
-    from fpdf import FPDF
+from fpdf import FPDF
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from dotenv import load_dotenv
@@ -32,8 +32,12 @@ db_host = os.environ.get('SUPABASE_DB_HOST') or 'db.sevlfbqydeludjfzatfe.supabas
 db_name = os.environ.get('SUPABASE_DB_NAME') or 'postgres'
 db_port = os.environ.get('SUPABASE_DB_PORT') or '5432'
 
+# Check if we're in production (Render)
+is_render = os.environ.get('RENDER') or os.environ.get('PORT')
+print(f"Environment check - RENDER: {os.environ.get('RENDER')}, PORT: {os.environ.get('PORT')}, is_render: {is_render}")
+
 # If we're in production (Render), use the correct Supabase credentials
-if os.environ.get('RENDER'):
+if is_render:
     # Try pooler connection first (more reliable for Render)
     db_user = 'postgres'
     db_password = 'puravbhatt0504'
@@ -41,6 +45,8 @@ if os.environ.get('RENDER'):
     db_name = 'postgres'
     db_port = '6543'
     print("Using Supabase pooler connection for Render")
+else:
+    print("Using local development configuration")
 
 print(f"=== DATABASE CONFIG DEBUG ===")
 print(f"DB_USER: {db_user}")
@@ -61,8 +67,11 @@ connection_string = f"postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db
 app.config['SQLALCHEMY_DATABASE_URI'] = connection_string
 print(f"Connection string: {connection_string}")
 print(f"=== END DATABASE CONFIG DEBUG ===")
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+
+# Configure engine options
+engine_options = {
     'pool_pre_ping': True,
     'pool_recycle': 300,
     'pool_timeout': 10,
@@ -74,6 +83,13 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
         'options': '-c default_transaction_isolation=read_committed'
     }
 }
+
+# Force IPv4 connections for Render
+if is_render:
+    print("Adding IPv4 preference for Render...")
+    engine_options['connect_args']['options'] = '-c default_transaction_isolation=read_committed -c tcp_keepalives_idle=600'
+
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = engine_options
 
 db = SQLAlchemy(app)
 db.Model = Base
@@ -1197,11 +1213,11 @@ def view_general():
 
 def initialize_database():
     """Initialize database tables - non-blocking"""
-    try:
+        try:
         print("=== DATABASE INITIALIZATION START ===")
         print("Creating all tables...")
-        db.create_all()
-        print("✅ Supabase database tables created successfully!")
+            db.create_all()
+            print("✅ Supabase database tables created successfully!")
         
         # Test database connection
         print("Testing database connection...")
@@ -1220,8 +1236,8 @@ def initialize_database():
             print(f"❌ Error checking employees: {emp_error}")
         
         print("=== DATABASE INITIALIZATION END ===")
-    except Exception as e:
-        print(f"❌ Error creating tables: {e}")
+        except Exception as e:
+            print(f"❌ Error creating tables: {e}")
         import traceback
         print(f"Traceback: {traceback.format_exc()}")
         print("⚠️ Database initialization failed, but app will continue running")
