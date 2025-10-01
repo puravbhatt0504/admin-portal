@@ -183,6 +183,34 @@ def update_config():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# --- Test PDF Endpoint ---
+@app.route('/api/test-pdf', methods=['GET'])
+def test_pdf():
+    """Test PDF generation"""
+    try:
+        print("=== TEST PDF GENERATION ===")
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.set_font('Arial', 'B', 16)
+        pdf.cell(0, 10, 'PDF Test - Admin Portal', ln=True, align='C')
+        pdf.ln(10)
+        pdf.set_font('Arial', '', 12)
+        pdf.cell(0, 8, 'This is a test PDF to verify FPDF is working correctly.', ln=True)
+        pdf.cell(0, 8, f'Generated at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', ln=True)
+        
+        # Generate PDF bytes
+        pdf_bytes = pdf.output(dest='S').encode('latin1')
+        
+        return send_file(
+            io.BytesIO(pdf_bytes),
+            mimetype='application/pdf',
+            as_attachment=False,
+            download_name='test.pdf'
+        )
+    except Exception as e:
+        print(f"PDF test error: {e}")
+        return jsonify({'error': str(e)}), 500
+
 # --- Database Status Endpoint ---
 @app.route('/api/database/status', methods=['GET'])
 def database_status():
