@@ -24,7 +24,7 @@ def create_mysql_connection():
             host='finalboss0504.mysql.pythonanywhere-services.com',
             database='finalboss0504$default',
             user='finalboss0504',
-            password=os.environ.get('OLD_MYSQL_PASSWORD', 'your_old_password')
+            password='puravbhatt0504'
         )
         
         if connection.is_connected():
@@ -44,13 +44,13 @@ def create_supabase_connection():
         import psycopg2
         from psycopg2 import sql
         
-        # Supabase PostgreSQL connection
+        # Supabase PostgreSQL connection (hardcoded)
         connection = psycopg2.connect(
-            host=os.environ.get('SUPABASE_DB_HOST'),
-            database=os.environ.get('SUPABASE_DB_NAME', 'postgres'),
-            user=os.environ.get('SUPABASE_DB_USER', 'postgres'),
-            password=os.environ.get('SUPABASE_DB_PASSWORD'),
-            port=os.environ.get('SUPABASE_DB_PORT', '5432'),
+            host='db.sevlfbqydeludjfzatfe.supabase.co',
+            database='postgres',
+            user='postgres',
+            password='puravbhatt0504',
+            port='5432',
             sslmode='require'
         )
         
