@@ -1,6 +1,9 @@
 // --- Configuration ---
 // API base URL for the backend
-let API_BASE_URL = 'https://admin-portal-backend-nodejs-17cdfr0fx-purav-bhatts-projects.vercel.app';
+let API_BASE_URL = 'https://admin-portal-backend-nodejs-drqgjizs4-purav-bhatts-projects.vercel.app';
+console.log('🔗 Backend URL:', API_BASE_URL);
+console.log('📅 Script loaded at:', new Date().toISOString());
+console.log('🌐 Frontend URL:', window.location.origin);
 
 // --- Mobile Error Handling ---
 function handleMobileErrors() {
@@ -1622,7 +1625,7 @@ async function generateReport(preset = null) {
             // Handle preset dates
             const today = new Date();
             let startDate, endDate, reportType = 'Attendance';
-            
+
             if (preset === 'today') {
                 startDate = endDate = today.toISOString().split('T')[0];
             } else if (preset === 'week') {
@@ -1634,43 +1637,54 @@ async function generateReport(preset = null) {
                 startDate = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
                 endDate = today.toISOString().split('T')[0];
             }
-            
+
             params = `?type=${reportType}&start_date=${startDate}&end_date=${endDate}`;
         } else {
             const reportType = document.getElementById('report-type-select').value;
             const startDate = document.getElementById('report-start-date').value;
             const endDate = document.getElementById('report-end-date').value;
-            
+
             if (!startDate || !endDate) {
                 return showToast('Please select start and end dates.', 'error');
             }
-            
+
             params = `?type=${reportType}&start_date=${startDate}&end_date=${endDate}`;
         }
-        
+
         // Add cache-busting parameter to ensure fresh request
         const cacheBuster = `&_t=${Date.now()}`;
         const fullUrl = `/api/reports/pdf${params}${cacheBuster}`;
-        
-        await logDebug('INFO', 'Generating PDF report', null, { 
+
+        await logDebug('INFO', 'Generating PDF report', null, {
             function: 'generateReport',
             preset: preset,
             params: params,
             url: fullUrl
         });
-        
+
         console.log('Making PDF request to:', fullUrl);
-        const blob = await apiRequest(fullUrl, 'POST');
-        
-        // Generate filename
-        const reportType = params.includes('type=') ? params.split('type=')[1].split('&')[0] : 'Attendance';
-        const filename = `${reportType.replace('%20', '_')}_report.pdf`;
-        
-        await handlePdfResponse(blob, 'export', filename);
-        showToast('PDF report generated and downloaded successfully!', 'success');
-        
+        const response = await apiRequest(fullUrl, 'POST');
+
+        // Handle the new PDF response format
+        if (response.success && response.pdfContent) {
+            // Create and download the text file
+            const blob = new Blob([response.pdfContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = response.filename || 'report.txt';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            
+            showToast('Report generated and downloaded successfully!', 'success');
+        } else {
+            throw new Error(response.error || 'Failed to generate report');
+        }
+
     } catch (error) {
-        await logDebug('ERROR', 'PDF report generation failed', error, { 
+        await logDebug('ERROR', 'PDF report generation failed', error, {
             function: 'generateReport',
             preset: preset
         });
