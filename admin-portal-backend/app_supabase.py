@@ -130,7 +130,7 @@ def get_employees():
         print("=== GET EMPLOYEES DEBUG START ===")
         print("Querying employees from Supabase database...")
         
-        employees = Employee.query.all()
+        employees = db.session.query(Employee).all()
         print(f"Found {len(employees)} employees")
         
         if not employees:
@@ -142,7 +142,7 @@ def get_employees():
             print("Test employee added")
             
             # Query again
-            employees = Employee.query.all()
+            employees = db.session.query(Employee).all()
             print(f"Now found {len(employees)} employees")
         
         result = [{'id': emp.id, 'name': emp.name} for emp in employees]
@@ -179,7 +179,7 @@ def add_employee():
 def delete_employee(employee_id):
     """Delete employee"""
     try:
-        employee = Employee.query.get(employee_id)
+        employee = db.session.query(Employee).get(employee_id)
         if not employee:
             return jsonify({'error': 'Employee not found'}), 404
         
