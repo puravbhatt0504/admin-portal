@@ -663,6 +663,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Make the function available globally for testing
             window.testViewGeneral = viewGeneral;
             console.log('Test: You can now call testViewGeneral() in console to test the function');
+            
+            // Test if the date input exists
+            const dateInput = document.getElementById('gen-date');
+            if (dateInput) {
+                console.log('Test: Date input found');
+                // Set a test date
+                dateInput.value = '2024-01-15';
+                console.log('Test: Set test date to 2024-01-15');
+                console.log('Test: You can now click the View Day button or call testViewGeneral()');
+            } else {
+                console.error('Test: Date input not found');
+            }
         } else {
             console.error('Test: Button still not found after delay');
         }
