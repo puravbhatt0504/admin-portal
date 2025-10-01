@@ -485,22 +485,35 @@ def fetch_salary():
 @app.route('/api/salary/pdf', methods=['POST'])
 def salary_pdf():
     try:
+        print("=== SALARY PDF DEBUG START ===")
+        print(f"Request method: {request.method}")
+        print(f"Request args: {request.args}")
+        print(f"Request JSON: {request.json}")
+        
         # Get parameters from request
         data = request.json or {}
         employee_id = data.get('employee_id') or request.args.get('employee_id')
         period = data.get('period') or request.args.get('period', 'month')
         action = data.get('action') or request.args.get('action', 'preview')
         
+        print(f"Parsed parameters - employee_id: {employee_id}, period: {period}, action: {action}")
+        
         # Get employee details
+        print("Querying employee from database...")
         employee = db.session.query(Employee).get(employee_id) if employee_id else None
+        print(f"Employee found: {employee}")
         if not employee:
+            print("ERROR: Employee not found")
             return jsonify({'error': 'Employee not found'}), 404
         
         # Create PDF
+        print("Creating FPDF instance...")
         pdf = FPDF()
+        print("Adding page to PDF...")
         pdf.add_page()
         
         # Header
+        print("Setting up PDF header...")
         pdf.set_font('Arial', 'B', 16)
         pdf.cell(0, 10, 'SALARY SLIP', ln=True, align='C')
         pdf.ln(5)
@@ -552,19 +565,33 @@ def salary_pdf():
         pdf.cell(0, 6, 'This is a computer generated salary slip.', ln=True, align='C')
         
         # Generate PDF bytes
+        print("Generating PDF bytes...")
         pdf_bytes = pdf.output(dest='S')
+        print(f"PDF bytes type: {type(pdf_bytes)}, length: {len(pdf_bytes) if pdf_bytes else 0}")
+        
         if isinstance(pdf_bytes, str):
+            print("Converting string to bytes...")
             pdf_bytes = pdf_bytes.encode('latin1')
         
+        print("Creating BytesIO buffer...")
         pdf_buffer = io.BytesIO(pdf_bytes)
         pdf_buffer.seek(0)
         
+        filename = f'salary_slip_{employee.name.replace(" ", "_")}_{period}.pdf'
+        print(f"Returning PDF file: {filename}")
+        print("=== SALARY PDF DEBUG END ===")
+        
         return send_file(pdf_buffer, as_attachment=(action == 'export'), 
-                        download_name=f'salary_slip_{employee.name.replace(" ", "_")}_{period}.pdf',
+                        download_name=filename,
                         mimetype='application/pdf')
         
     except Exception as e:
-        print(f"Error generating salary PDF: {str(e)}")
+        print(f"=== SALARY PDF ERROR ===")
+        print(f"Error type: {type(e).__name__}")
+        print(f"Error message: {str(e)}")
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
+        print("=== SALARY PDF ERROR END ===")
         return jsonify({'error': f'PDF generation failed: {str(e)}'}), 500
 
 @app.route('/api/reports/generate', methods=['POST'])
@@ -581,6 +608,11 @@ def generate_report():
 @app.route('/api/reports/pdf', methods=['POST'])
 def generate_report_pdf():
     try:
+        print("=== REPORTS PDF DEBUG START ===")
+        print(f"Request method: {request.method}")
+        print(f"Request args: {request.args}")
+        print(f"Request JSON: {request.json}")
+        
         # Get parameters from request
         data = request.json or {}
         report_type = data.get('type') or request.args.get('type', 'attendance')
@@ -588,14 +620,21 @@ def generate_report_pdf():
         end_date = data.get('end_date') or request.args.get('end_date')
         action = data.get('action') or request.args.get('action', 'preview')
         
+        print(f"Parsed parameters - report_type: {report_type}, start_date: {start_date}, end_date: {end_date}, action: {action}")
+        
         # Parse dates
+        print("Parsing dates...")
         if start_date:
             start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            print(f"Parsed start_date: {start_date}")
         if end_date:
             end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+            print(f"Parsed end_date: {end_date}")
         
         # Create PDF
+        print("Creating FPDF instance for reports...")
         pdf = FPDF()
+        print("Adding page to reports PDF...")
         pdf.add_page()
         
         # Header
@@ -614,13 +653,18 @@ def generate_report_pdf():
         pdf.ln(10)
         
         # Generate report data based on type
+        print(f"Generating report data for type: {report_type}")
         if report_type.lower() == 'attendance':
+            print("Calling attendance report generator...")
             _generate_attendance_report_pdf(pdf, start_date, end_date)
         elif report_type.lower() == 'travel expenses':
+            print("Calling travel expenses report generator...")
             _generate_travel_expenses_report_pdf(pdf, start_date, end_date)
         elif report_type.lower() == 'general expenses':
+            print("Calling general expenses report generator...")
             _generate_general_expenses_report_pdf(pdf, start_date, end_date)
         else:
+            print(f"Unknown report type: {report_type}")
             pdf.set_font('Arial', '', 10)
             pdf.cell(0, 6, 'No data available for this report type.', ln=True)
         
@@ -630,21 +674,33 @@ def generate_report_pdf():
         pdf.cell(0, 6, 'This is a computer generated report.', ln=True, align='C')
         
         # Generate PDF bytes
+        print("Generating reports PDF bytes...")
         pdf_bytes = pdf.output(dest='S')
+        print(f"Reports PDF bytes type: {type(pdf_bytes)}, length: {len(pdf_bytes) if pdf_bytes else 0}")
+        
         if isinstance(pdf_bytes, str):
+            print("Converting reports PDF string to bytes...")
             pdf_bytes = pdf_bytes.encode('latin1')
         
+        print("Creating BytesIO buffer for reports...")
         pdf_buffer = io.BytesIO(pdf_bytes)
         pdf_buffer.seek(0)
         
         filename = f'{report_type.replace(" ", "_")}_report_{start_date}_{end_date}.pdf' if start_date and end_date else f'{report_type.replace(" ", "_")}_report.pdf'
+        print(f"Returning reports PDF file: {filename}")
+        print("=== REPORTS PDF DEBUG END ===")
         
         return send_file(pdf_buffer, as_attachment=(action == 'export'), 
                         download_name=filename,
                         mimetype='application/pdf')
         
     except Exception as e:
-        print(f"Error generating report PDF: {str(e)}")
+        print(f"=== REPORTS PDF ERROR ===")
+        print(f"Error type: {type(e).__name__}")
+        print(f"Error message: {str(e)}")
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
+        print("=== REPORTS PDF ERROR END ===")
         return jsonify({'error': f'PDF generation failed: {str(e)}'}), 500
 
 def _generate_attendance_report_pdf(pdf, start_date, end_date):

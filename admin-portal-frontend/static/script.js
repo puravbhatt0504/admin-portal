@@ -1445,8 +1445,14 @@ async function fetchSalaryData() {
 }
 
 async function handleSalaryPDF(action) {
+    console.log('=== SALARY PDF FRONTEND DEBUG START ===');
+    console.log('Action:', action);
+    
     const employeeId = document.getElementById('salary-employee-select').value;
+    console.log('Employee ID:', employeeId);
+    
     if (!employeeId) {
+        console.log('ERROR: No employee selected');
         return showToast('Please select an employee.', 'error');
     }
     
@@ -1460,6 +1466,11 @@ async function handleSalaryPDF(action) {
         const startDate = document.getElementById('salary-start-date').value;
         const endDate = document.getElementById('salary-end-date').value;
         
+        console.log('Period:', period);
+        console.log('Month:', month);
+        console.log('Start Date:', startDate);
+        console.log('End Date:', endDate);
+        
         let params = `?employee_id=${employeeId}&period=${period}&action=${action}`;
         if (period === 'month' && month) {
             params += `&month=${month}`;
@@ -1467,9 +1478,20 @@ async function handleSalaryPDF(action) {
             params += `&start_date=${startDate}&end_date=${endDate}`;
         }
         
+        console.log('Final params:', params);
+        console.log('Making API request to:', `/api/salary/pdf${params}`);
+        
         const blob = await apiRequest(`/api/salary/pdf${params}`, 'POST');
+        console.log('Received blob:', blob);
+        console.log('Blob type:', typeof blob);
+        console.log('Blob size:', blob ? blob.size : 'null');
+        
         await handlePdfResponse(blob, action, 'salary-report.pdf');
+        console.log('PDF response handled successfully');
     } catch (error) {
+        console.error('SALARY PDF ERROR:', error);
+        console.error('Error type:', typeof error);
+        console.error('Error message:', error.message);
         showToast(error.message, 'error');
     } finally {
         if (action === 'preview') {
@@ -1477,6 +1499,7 @@ async function handleSalaryPDF(action) {
         } else {
             hideButtonSpinner(salaryExportBtn, originalText);
         }
+        console.log('=== SALARY PDF FRONTEND DEBUG END ===');
     }
 }
 
@@ -1519,23 +1542,43 @@ async function generateReport(preset = null) {
 }
 
 async function exportReportPDF(action = 'preview') {
+    console.log('=== REPORTS PDF FRONTEND DEBUG START ===');
+    console.log('Action:', action);
+    
     const originalText = showButtonSpinner(reportExportBtn, action === 'preview' ? 'Generating...' : 'Exporting...');
     try {
         const reportType = document.getElementById('report-type-select').value;
         const startDate = document.getElementById('report-start-date').value;
         const endDate = document.getElementById('report-end-date').value;
         
+        console.log('Report Type:', reportType);
+        console.log('Start Date:', startDate);
+        console.log('End Date:', endDate);
+        
         if (!startDate || !endDate) {
+            console.log('ERROR: Missing dates');
             return showToast('Please select start and end dates.', 'error');
         }
         
         const params = `?type=${reportType}&start_date=${startDate}&end_date=${endDate}&action=${action}`;
+        console.log('Final params:', params);
+        console.log('Making API request to:', `/api/reports/pdf${params}`);
+        
         const blob = await apiRequest(`/api/reports/pdf${params}`, 'POST');
+        console.log('Received blob:', blob);
+        console.log('Blob type:', typeof blob);
+        console.log('Blob size:', blob ? blob.size : 'null');
+        
         await handlePdfResponse(blob, action, `${reportType.replace(' ', '_')}_report.pdf`);
+        console.log('Reports PDF response handled successfully');
     } catch (error) {
+        console.error('REPORTS PDF ERROR:', error);
+        console.error('Error type:', typeof error);
+        console.error('Error message:', error.message);
         showToast(error.message, 'error');
     } finally {
         hideButtonSpinner(reportExportBtn, originalText);
+        console.log('=== REPORTS PDF FRONTEND DEBUG END ===');
     }
 }
 
