@@ -249,11 +249,11 @@ def test_pdf():
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font('Arial', 'B', 16)
-        pdf.cell(0, 10, 'PDF Test - Admin Portal', ln=True, align='C')
+        pdf.cell(0, 10, 'PDF Test - Admin Portal', new_x="LMARGIN", new_y="NEXT", align='C')
         pdf.ln(10)
         pdf.set_font('Arial', '', 12)
-        pdf.cell(0, 8, 'This is a test PDF to verify FPDF is working correctly.', ln=True)
-        pdf.cell(0, 8, f'Generated at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', ln=True)
+        pdf.cell(0, 8, 'This is a test PDF to verify FPDF is working correctly.', new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 8, f'Generated at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', new_x="LMARGIN", new_y="NEXT")
         
         # Generate PDF using FPDF2 syntax
         pdf_bytes = pdf.output()
@@ -498,21 +498,21 @@ def salary_pdf():
         # Header
         print("Setting up PDF header...")
         pdf.set_font('Arial', 'B', 16)
-        pdf.cell(0, 10, 'SALARY SLIP', ln=True, align='C')
+        pdf.cell(0, 10, 'SALARY SLIP', new_x="LMARGIN", new_y="NEXT", align='C')
         pdf.ln(5)
         
         # Company details
         pdf.set_font('Arial', 'B', 12)
-        pdf.cell(0, 8, 'Company Name: Admin Portal System', ln=True)
+        pdf.cell(0, 8, 'Company Name: Admin Portal System', new_x="LMARGIN", new_y="NEXT")
         pdf.set_font('Arial', '', 10)
-        pdf.cell(0, 6, f'Employee: {employee.name}', ln=True)
-        pdf.cell(0, 6, f'Employee ID: {employee.id}', ln=True)
-        pdf.cell(0, 6, f'Period: {period.title()}', ln=True)
+        pdf.cell(0, 6, f'Employee: {employee.name}', new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 6, f'Employee ID: {employee.id}', new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 6, f'Period: {period.title()}', new_x="LMARGIN", new_y="NEXT")
         pdf.ln(10)
         
         # Salary breakdown table
         pdf.set_font('Arial', 'B', 12)
-        pdf.cell(0, 8, 'Salary Breakdown', ln=True)
+        pdf.cell(0, 8, 'Salary Breakdown', new_x="LMARGIN", new_y="NEXT")
         pdf.ln(5)
         
         # Table headers
@@ -534,7 +534,7 @@ def salary_pdf():
         # Footer
         pdf.ln(10)
         pdf.set_font('Arial', '', 8)
-        pdf.cell(0, 6, 'This is a computer generated salary slip.', ln=True, align='C')
+        pdf.cell(0, 6, 'This is a computer generated salary slip.', new_x="LMARGIN", new_y="NEXT", align='C')
         
         # Generate PDF bytes
         print("Generating PDF bytes...")
@@ -672,14 +672,14 @@ def generate_report_pdf():
         
         # Header
         pdf.set_font('Arial', 'B', 16)
-        pdf.cell(0, 10, f'{report_type.title()} Report', ln=True, align='C')
+        pdf.cell(0, 10, f'{report_type.title()} Report', new_x="LMARGIN", new_y="NEXT", align='C')
         pdf.ln(5)
         
         # Report details
         pdf.set_font('Arial', '', 10)
         if start_date and end_date:
-            pdf.cell(0, 6, f'Period: {start_date.strftime("%Y-%m-%d")} to {end_date.strftime("%Y-%m-%d")}', ln=True)
-        pdf.cell(0, 6, f'Generated: {datetime.now().strftime("%Y-%m-%d %H:%M")}', ln=True)
+            pdf.cell(0, 6, f'Period: {start_date.strftime("%Y-%m-%d")} to {end_date.strftime("%Y-%m-%d")}', new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 6, f'Generated: {datetime.now().strftime("%Y-%m-%d %H:%M")}', new_x="LMARGIN", new_y="NEXT")
         pdf.ln(10)
         
         # Generate report data based on type
@@ -696,12 +696,12 @@ def generate_report_pdf():
         else:
             print(f"Unknown report type: {report_type}")
             pdf.set_font('Arial', '', 10)
-            pdf.cell(0, 6, 'No data available for this report type.', ln=True)
+            pdf.cell(0, 6, 'No data available for this report type.', new_x="LMARGIN", new_y="NEXT")
         
         # Footer
         pdf.ln(10)
         pdf.set_font('Arial', '', 8)
-        pdf.cell(0, 6, 'This is a computer generated report.', ln=True, align='C')
+        pdf.cell(0, 6, 'This is a computer generated report.', new_x="LMARGIN", new_y="NEXT", align='C')
         
         # Generate PDF bytes
         print("Generating reports PDF bytes...")
@@ -755,7 +755,7 @@ def _generate_attendance_report_pdf(pdf, start_date, end_date):
         
         # Page 1: Summary
         pdf.set_font('Arial', 'B', 14)
-        pdf.cell(0, 8, 'Attendance Summary', ln=True)
+        pdf.cell(0, 8, 'Attendance Summary', new_x="LMARGIN", new_y="NEXT")
         pdf.ln(5)
         
         total_employees = db.session.query(Employee).count()
@@ -765,16 +765,16 @@ def _generate_attendance_report_pdf(pdf, start_date, end_date):
         late_count = sum(1 for r in records if getattr(r, 'shift1_in', None) and getattr(r, 'shift1_in', None) > time(9, 30))
         
         pdf.set_font('Arial', '', 10)
-        pdf.cell(0, 6, f'Total Employees: {total_employees}', ln=True)
-        pdf.cell(0, 6, f'Total Records: {total_records}', ln=True)
-        pdf.cell(0, 6, f'Present: {present_count}', ln=True)
-        pdf.cell(0, 6, f'Absent: {absent_count}', ln=True)
-        pdf.cell(0, 6, f'Late: {late_count}', ln=True)
+        pdf.cell(0, 6, f'Total Employees: {total_employees}', new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 6, f'Total Records: {total_records}', new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 6, f'Present: {present_count}', new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 6, f'Absent: {absent_count}', new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 6, f'Late: {late_count}', new_x="LMARGIN", new_y="NEXT")
         
         # Page 2: Detailed records
         pdf.add_page()
         pdf.set_font('Arial', 'B', 14)
-        pdf.cell(0, 8, 'Daily Attendance Records', ln=True)
+        pdf.cell(0, 8, 'Daily Attendance Records', new_x="LMARGIN", new_y="NEXT")
         pdf.ln(5)
         
         # Table headers
@@ -825,7 +825,7 @@ def _generate_attendance_report_pdf(pdf, start_date, end_date):
     except Exception as e:
         print(f"Error generating attendance report PDF: {e}")
         pdf.set_font('Arial', '', 10)
-        pdf.cell(0, 6, f'Error loading attendance data: {str(e)}', ln=True)
+        pdf.cell(0, 6, f'Error loading attendance data: {str(e)}', new_x="LMARGIN", new_y="NEXT")
 
 def _generate_travel_expenses_report_pdf(pdf, start_date, end_date):
     """Generate travel expenses report data for PDF"""
@@ -840,7 +840,7 @@ def _generate_travel_expenses_report_pdf(pdf, start_date, end_date):
         
         # Page 1: Employee summary
         pdf.set_font('Arial', 'B', 14)
-        pdf.cell(0, 8, 'Travel Expenses - Employee Summary', ln=True)
+        pdf.cell(0, 8, 'Travel Expenses - Employee Summary', new_x="LMARGIN", new_y="NEXT")
         pdf.ln(5)
         
         # Group by employee
@@ -870,7 +870,7 @@ def _generate_travel_expenses_report_pdf(pdf, start_date, end_date):
         # Page 2: Daily details
         pdf.add_page()
         pdf.set_font('Arial', 'B', 14)
-        pdf.cell(0, 8, 'Travel Expenses - Daily Details', ln=True)
+        pdf.cell(0, 8, 'Travel Expenses - Daily Details', new_x="LMARGIN", new_y="NEXT")
         pdf.ln(5)
         
         # Group by date
@@ -886,7 +886,7 @@ def _generate_travel_expenses_report_pdf(pdf, start_date, end_date):
             day_total = sum(r.amount for r in day_records)
             
             pdf.set_font('Arial', 'B', 10)
-            pdf.cell(0, 6, f'Date: {date_key} (Total: ₹{day_total:,.2f})', ln=True)
+            pdf.cell(0, 6, f'Date: {date_key} (Total: ₹{day_total:,.2f})', new_x="LMARGIN", new_y="NEXT")
             pdf.ln(2)
             
             # Table headers
@@ -907,7 +907,7 @@ def _generate_travel_expenses_report_pdf(pdf, start_date, end_date):
     except Exception as e:
         print(f"Error generating travel expenses report PDF: {e}")
         pdf.set_font('Arial', '', 10)
-        pdf.cell(0, 6, f'Error loading travel expenses data: {str(e)}', ln=True)
+        pdf.cell(0, 6, f'Error loading travel expenses data: {str(e)}', new_x="LMARGIN", new_y="NEXT")
 
 def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
     """Generate general expenses report data for PDF"""
@@ -922,7 +922,7 @@ def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
         
         # Page 1: Employee summary
         pdf.set_font('Arial', 'B', 14)
-        pdf.cell(0, 8, 'General Expenses - Employee Summary', ln=True)
+        pdf.cell(0, 8, 'General Expenses - Employee Summary', new_x="LMARGIN", new_y="NEXT")
         pdf.ln(5)
         
         # Group by employee
@@ -952,7 +952,7 @@ def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
         # Page 2: Daily details
         pdf.add_page()
         pdf.set_font('Arial', 'B', 14)
-        pdf.cell(0, 8, 'General Expenses - Daily Details', ln=True)
+        pdf.cell(0, 8, 'General Expenses - Daily Details', new_x="LMARGIN", new_y="NEXT")
         pdf.ln(5)
         
         # Group by date
@@ -968,7 +968,7 @@ def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
             day_total = sum(r.amount for r in day_records)
             
             pdf.set_font('Arial', 'B', 10)
-            pdf.cell(0, 6, f'Date: {date_key} (Total: ₹{day_total:,.2f})', ln=True)
+            pdf.cell(0, 6, f'Date: {date_key} (Total: ₹{day_total:,.2f})', new_x="LMARGIN", new_y="NEXT")
             pdf.ln(2)
             
             # Table headers
@@ -989,7 +989,7 @@ def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
     except Exception as e:
         print(f"Error generating general expenses report PDF: {e}")
         pdf.set_font('Arial', '', 10)
-        pdf.cell(0, 6, f'Error loading general expenses data: {str(e)}', ln=True)
+        pdf.cell(0, 6, f'Error loading general expenses data: {str(e)}', new_x="LMARGIN", new_y="NEXT")
 
 # --- Expenses Summary ---
 @app.route('/api/expenses/summary', methods=['GET'])
