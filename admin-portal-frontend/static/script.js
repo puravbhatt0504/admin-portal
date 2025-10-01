@@ -125,6 +125,10 @@ function initMobileFeatures() {
         
         document.addEventListener('touchstart', (e) => {
             try {
+                // Don't interfere with text selection on input fields
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) {
+                    return;
+                }
                 if (e.touches && e.touches.length === 1) {
                     startX = e.touches[0].clientX;
                     startY = e.touches[0].clientY;
@@ -137,6 +141,10 @@ function initMobileFeatures() {
         
         document.addEventListener('touchend', (e) => {
             try {
+                // Don't interfere with text selection on input fields
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) {
+                    return;
+                }
                 if (!startX || !startY || !e.changedTouches) return;
                 
                 const touchDuration = Date.now() - touchStartTime;
@@ -609,8 +617,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     travelLoadBtn.addEventListener('click', loadTravel);
     travelViewBtn.addEventListener('click', viewTravel);
     travelDeleteLastBtn.addEventListener('click', () => setupConfirmationModal(deleteLastTravel, 'Confirm Deletion', 'Are you sure you want to delete the last travel entry for this employee?'));
+    
+    // Auto-clear travel fields when employee changes
+    document.getElementById('travel-employee-select').addEventListener('change', () => {
+        document.getElementById('travel-start-reading').value = '';
+        document.getElementById('travel-end-reading').value = '';
+    });
 
     genAddItemBtn.addEventListener('click', addGeneralExpenseItem);
+    genViewBtn.addEventListener('click', viewGeneral);
 
     advDeleteLastBtn.addEventListener('click', () => setupConfirmationModal(deleteLastAdvance, 'Confirm Deletion', 'Are you sure you want to delete the last advance for this employee?'));
     advViewDayBtn.addEventListener('click', viewAdvancesByDay);
@@ -2084,12 +2099,20 @@ function setupQuickAccessMobileFade() {
     let touchStartX = 0;
     let touchStartY = 0;
     document.addEventListener('touchstart', function(e) {
+        // Don't interfere with text selection on input fields
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) {
+            return;
+        }
         if (e.touches && e.touches.length === 1) {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
         }
     }, { passive: true });
     document.addEventListener('touchend', function(e) {
+        // Don't interfere with text selection on input fields
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) {
+            return;
+        }
         if (!touchStartX || !e.changedTouches) return;
         const endX = e.changedTouches[0].clientX;
         const endY = e.changedTouches[0].clientY;
