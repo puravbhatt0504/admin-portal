@@ -6,7 +6,10 @@ from flask import Flask, jsonify, request, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from sqlalchemy import func, desc, and_
-from fpdf2 import FPDF
+try:
+    from fpdf2 import FPDF
+except ImportError:
+    from fpdf import FPDF
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from dotenv import load_dotenv
