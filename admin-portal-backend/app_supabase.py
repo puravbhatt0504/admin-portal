@@ -85,6 +85,104 @@ def safe_db_query(query_func, default_return=None):
                 return default_return
     return default_return
 
+# --- Root Endpoint ---
+@app.route('/', methods=['GET'])
+def root():
+    """Root endpoint"""
+    return jsonify({
+        'message': 'Admin Portal Backend API',
+        'status': 'running',
+        'version': '2.0.0',
+        'endpoints': {
+            'health': '/api/health',
+            'database_status': '/api/database/status',
+            'employees': '/api/employees',
+            'attendance': '/api/attendance',
+            'expenses': '/api/expenses'
+        }
+    })
+
+# --- Health Check Endpoint ---
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """Health check endpoint"""
+    try:
+        # Test database connection
+        db.session.execute('SELECT 1')
+        return jsonify({
+            'status': 'healthy',
+            'database': 'connected',
+            'timestamp': datetime.now().isoformat()
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'unhealthy',
+            'database': 'disconnected',
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
+
+# --- Employees Endpoints ---
+@app.route('/api/employees', methods=['GET'])
+def get_employees():
+    """Get all employees"""
+    try:
+        employees = Employee.query.all()
+        return jsonify([{'id': emp.id, 'name': emp.name} for emp in employees])
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/employees', methods=['POST'])
+def add_employee():
+    """Add new employee"""
+    try:
+        data = request.get_json()
+        name = data.get('name')
+        if not name:
+            return jsonify({'error': 'Name is required'}), 400
+        
+        employee = Employee(name=name)
+        db.session.add(employee)
+        db.session.commit()
+        return jsonify({'id': employee.id, 'name': employee.name}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/employees/<int:employee_id>', methods=['DELETE'])
+def delete_employee(employee_id):
+    """Delete employee"""
+    try:
+        employee = Employee.query.get(employee_id)
+        if not employee:
+            return jsonify({'error': 'Employee not found'}), 404
+        
+        db.session.delete(employee)
+        db.session.commit()
+        return jsonify({'message': 'Employee deleted successfully'})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+# --- Config Endpoints ---
+@app.route('/api/config', methods=['GET'])
+def get_config():
+    """Get configuration"""
+    return jsonify({
+        'travel_rate_per_km': 2.0,  # Default rate
+        'version': '2.0.0'
+    })
+
+@app.route('/api/config', methods=['POST'])
+def update_config():
+    """Update configuration"""
+    try:
+        data = request.get_json()
+        # For now, just return success
+        return jsonify({'message': 'Configuration updated successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 # --- Database Status Endpoint ---
 @app.route('/api/database/status', methods=['GET'])
 def database_status():
