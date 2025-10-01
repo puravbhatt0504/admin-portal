@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "admin-portal-backend/vercel_app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "admin-portal-backend/vercel_app.py"
+    }
+  ],
+  "env": {
+    "SUPABASE_DB_USER": "postgres",
+    "SUPABASE_DB_PASSWORD": "puravbhatt0504",
+    "SUPABASE_DB_HOST": "db.sevlfbqydeludjfzatfe.supabase.co",
+    "SUPABASE_DB_NAME": "postgres",
+    "SUPABASE_DB_PORT": "5432"
+  }
+}
