@@ -148,7 +148,7 @@ def get_employees():
         result = [{'id': emp.id, 'name': emp.name} for emp in employees]
         print(f"Returning employees: {result}")
         print("=== GET EMPLOYEES DEBUG END ===")
-        return jsonify(result)
+        return jsonify({'employees': result})
     except Exception as e:
         print(f"=== GET EMPLOYEES ERROR ===")
         print(f"Error: {str(e)}")
