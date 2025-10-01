@@ -419,6 +419,35 @@ async function postJsonThenForm(endpoint, payload, { timeoutMs = 10000 } = {}) {
 
 // API_BASE_URL is now hardcoded to the backend URL
 
+// --- Debug Logging Function ---
+async function logDebug(level, message, error = null, additionalData = {}) {
+    try {
+        const debugData = {
+            level: level,
+            message: message,
+            error: error ? error.toString() : null,
+            stack: error ? error.stack : null,
+            url: window.location.href,
+            userAgent: navigator.userAgent,
+            timestamp: new Date().toISOString(),
+            ...additionalData
+        };
+        
+        console.log(`[${level}] ${message}`, error || '');
+        
+        // Send to backend for logging
+        await fetch(`${API_BASE_URL}/api/debug/logs`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(debugData)
+        }).catch(e => console.warn('Failed to send debug log to backend:', e));
+    } catch (e) {
+        console.error('Failed to log debug info:', e);
+    }
+}
+
 // --- Event Listeners Setup ---
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('DOM Content Loaded - Setting up event listeners...');
@@ -690,7 +719,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     salaryPeriodRadios.forEach(radio => radio.addEventListener('change', toggleSalaryPeriodView));
 
     reportGenerateBtn.addEventListener('click', () => generateReport());
-    reportExportBtn.addEventListener('click', () => exportReportPDF('export'));
+    // reportExportBtn removed - now using single generate button
     reportPresetToday.addEventListener('click', () => generateReport('today'));
     reportPresetWeek.addEventListener('click', () => generateReport('week'));
     reportPresetMonth.addEventListener('click', () => generateReport('month'));
@@ -971,7 +1000,7 @@ async function loadEmployees() {
         });
         
     } catch (error) {
-        console.error('Error loading employees:', error);
+        await logDebug('ERROR', 'Error loading employees', error, { function: 'loadEmployees' });
         showToast('Error loading employees', 'error');
     }
 }
@@ -1586,11 +1615,27 @@ function toggleSalaryPeriodView() {
 }
 
 async function generateReport(preset = null) {
-    const originalText = showButtonSpinner(reportGenerateBtn, 'Generating...');
+    const originalText = showButtonSpinner(reportGenerateBtn, 'Generating PDF...');
     try {
         let params = '';
         if (preset) {
-            params = `?preset=${preset}`;
+            // Handle preset dates
+            const today = new Date();
+            let startDate, endDate, reportType = 'Attendance';
+            
+            if (preset === 'today') {
+                startDate = endDate = today.toISOString().split('T')[0];
+            } else if (preset === 'week') {
+                const startOfWeek = new Date(today);
+                startOfWeek.setDate(today.getDate() - today.getDay());
+                startDate = startOfWeek.toISOString().split('T')[0];
+                endDate = today.toISOString().split('T')[0];
+            } else if (preset === 'month') {
+                startDate = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
+                endDate = today.toISOString().split('T')[0];
+            }
+            
+            params = `?type=${reportType}&start_date=${startDate}&end_date=${endDate}`;
         } else {
             const reportType = document.getElementById('report-type-select').value;
             const startDate = document.getElementById('report-start-date').value;
@@ -1605,13 +1650,30 @@ async function generateReport(preset = null) {
         
         // Add cache-busting parameter to ensure fresh request
         const cacheBuster = `&_t=${Date.now()}`;
-        const fullUrl = `/api/reports/generate${params}${cacheBuster}`;
-        console.log('Making reports generate request to:', fullUrl);
-        console.log('Request method: GET');
-        const data = await apiRequest(fullUrl, 'GET');
-        renderDataTable('report-table-container', data.records, data.columns);
-        showToast('Report generated successfully.', 'success');
+        const fullUrl = `/api/reports/pdf${params}${cacheBuster}`;
+        
+        await logDebug('INFO', 'Generating PDF report', null, { 
+            function: 'generateReport',
+            preset: preset,
+            params: params,
+            url: fullUrl
+        });
+        
+        console.log('Making PDF request to:', fullUrl);
+        const blob = await apiRequest(fullUrl, 'POST');
+        
+        // Generate filename
+        const reportType = params.includes('type=') ? params.split('type=')[1].split('&')[0] : 'Attendance';
+        const filename = `${reportType.replace('%20', '_')}_report.pdf`;
+        
+        await handlePdfResponse(blob, 'export', filename);
+        showToast('PDF report generated and downloaded successfully!', 'success');
+        
     } catch (error) {
+        await logDebug('ERROR', 'PDF report generation failed', error, { 
+            function: 'generateReport',
+            preset: preset
+        });
         showToast(error.message, 'error');
     } finally {
         hideButtonSpinner(reportGenerateBtn, originalText);
@@ -1649,9 +1711,13 @@ async function exportReportPDF(action = 'preview') {
         await handlePdfResponse(blob, action, `${reportType.replace(' ', '_')}_report.pdf`);
         console.log('Reports PDF response handled successfully');
     } catch (error) {
-        console.error('REPORTS PDF ERROR:', error);
-        console.error('Error type:', typeof error);
-        console.error('Error message:', error.message);
+        await logDebug('ERROR', 'Reports PDF generation failed', error, { 
+            function: 'exportReportPDF',
+            action: action,
+            reportType: document.getElementById('report-type-select').value,
+            startDate: document.getElementById('report-start-date').value,
+            endDate: document.getElementById('report-end-date').value
+        });
         showToast(error.message, 'error');
     } finally {
         hideButtonSpinner(reportExportBtn, originalText);

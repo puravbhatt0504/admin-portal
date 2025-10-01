@@ -1072,6 +1072,27 @@ def get_today_attendance():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# --- Debug Endpoint ---
+@app.route('/api/debug/logs', methods=['POST'])
+def debug_logs():
+    """Receive and log frontend debug information"""
+    try:
+        data = request.get_json()
+        print("=== FRONTEND DEBUG LOGS ===")
+        print(f"Timestamp: {datetime.now().isoformat()}")
+        print(f"Level: {data.get('level', 'INFO')}")
+        print(f"Message: {data.get('message', 'No message')}")
+        print(f"Error: {data.get('error', 'No error')}")
+        print(f"Stack: {data.get('stack', 'No stack trace')}")
+        print(f"URL: {data.get('url', 'No URL')}")
+        print(f"User Agent: {data.get('userAgent', 'No user agent')}")
+        print("=== END FRONTEND DEBUG LOGS ===")
+        
+        return jsonify({'status': 'logged', 'timestamp': datetime.now().isoformat()})
+    except Exception as e:
+        print(f"Error logging frontend debug: {e}")
+        return jsonify({'error': str(e)}), 500
+
 # --- General Expenses View ---
 @app.route('/api/expenses/general/view', methods=['GET'])
 def view_general():
