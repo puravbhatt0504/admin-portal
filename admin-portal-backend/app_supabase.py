@@ -26,8 +26,8 @@ CORS(app)
 
 # Supabase PostgreSQL Configuration
 db_user = os.environ.get('SUPABASE_DB_USER', 'postgres')
-db_password = os.environ.get('SUPABASE_DB_PASSWORD', 'your_supabase_password')
-db_host = os.environ.get('SUPABASE_DB_HOST', 'your_supabase_host')
+db_password = os.environ.get('SUPABASE_DB_PASSWORD', 'puravbhatt0504')
+db_host = os.environ.get('SUPABASE_DB_HOST', 'db.sevlfbqydeludjfzatfe.supabase.co')
 db_name = os.environ.get('SUPABASE_DB_NAME', 'postgres')
 db_port = os.environ.get('SUPABASE_DB_PORT', '5432')
 
