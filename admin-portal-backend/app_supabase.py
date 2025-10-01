@@ -209,6 +209,38 @@ def update_config():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# --- Simple PDF Test Endpoint ---
+@app.route('/api/simple-pdf', methods=['GET'])
+def simple_pdf():
+    """Simple PDF test without complex data"""
+    try:
+        print("=== SIMPLE PDF TEST ===")
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.set_font('Arial', 'B', 14)
+        pdf.cell(0, 10, 'Simple PDF Test', ln=True, align='C')
+        pdf.ln(10)
+        pdf.set_font('Arial', '', 10)
+        pdf.cell(0, 6, 'This is a simple PDF test.', ln=True)
+        pdf.cell(0, 6, f'Time: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', ln=True)
+        
+        # Generate PDF
+        pdf_output = pdf.output(dest='S')
+        pdf_bytes = pdf_output.encode('latin1')
+        
+        response = send_file(
+            io.BytesIO(pdf_bytes),
+            mimetype='application/pdf',
+            as_attachment=False,
+            download_name='simple_test.pdf'
+        )
+        
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response
+    except Exception as e:
+        print(f"Simple PDF error: {e}")
+        return jsonify({'error': str(e)}), 500
+
 # --- Test PDF Endpoint ---
 @app.route('/api/test-pdf', methods=['GET'])
 def test_pdf():
@@ -224,18 +256,30 @@ def test_pdf():
         pdf.cell(0, 8, 'This is a test PDF to verify FPDF is working correctly.', ln=True)
         pdf.cell(0, 8, f'Generated at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', ln=True)
         
-        # Generate PDF bytes
-        pdf_bytes = pdf.output(dest='S').encode('latin1')
+        # Generate PDF bytes with proper encoding
+        pdf_output = pdf.output(dest='S')
+        pdf_bytes = pdf_output.encode('latin1')
         
-        return send_file(
+        # Create response with proper headers
+        response = send_file(
             io.BytesIO(pdf_bytes),
             mimetype='application/pdf',
             as_attachment=False,
             download_name='test.pdf'
         )
+        
+        # Add CORS headers
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        
+        print("PDF generated successfully")
+        return response
     except Exception as e:
         print(f"PDF test error: {e}")
-        return jsonify({'error': str(e)}), 500
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
+        return jsonify({'error': f'PDF generation failed: {str(e)}'}), 500
 
 # --- Database Status Endpoint ---
 @app.route('/api/database/status', methods=['GET'])
@@ -511,9 +555,17 @@ def salary_pdf():
         print(f"Returning PDF file: {filename}")
         print("=== SALARY PDF DEBUG END ===")
         
-        return send_file(pdf_buffer, as_attachment=(action == 'export'), 
+        # Create response with proper headers
+        response = send_file(pdf_buffer, as_attachment=(action == 'export'), 
                         download_name=filename,
                         mimetype='application/pdf')
+        
+        # Add CORS headers
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        
+        return response
         
     except Exception as e:
         print(f"=== SALARY PDF ERROR ===")
@@ -670,9 +722,17 @@ def generate_report_pdf():
         print(f"Returning reports PDF file: {filename}")
         print("=== REPORTS PDF DEBUG END ===")
         
-        return send_file(pdf_buffer, as_attachment=(action == 'export'), 
+        # Create response with proper headers
+        response = send_file(pdf_buffer, as_attachment=(action == 'export'), 
                         download_name=filename,
                         mimetype='application/pdf')
+        
+        # Add CORS headers
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        
+        return response
         
     except Exception as e:
         print(f"=== REPORTS PDF ERROR ===")
