@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from sqlalchemy import func, desc, and_
-from fpdf import FPDF
+from fpdf2 import FPDF
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from dotenv import load_dotenv
@@ -808,4 +808,6 @@ if __name__ == '__main__':
         except Exception as e:
             print(f"❌ Error creating tables: {e}")
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Get port from environment variable (Render sets this)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)

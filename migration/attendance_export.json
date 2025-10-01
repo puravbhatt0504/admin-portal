@@ -1,0 +1,4898 @@
+[
+  {
+    "id": 1,
+    "employee_name": "Amit",
+    "date": "2025-09-01",
+    "shift1_in": "10:32:00",
+    "shift1_out": "19:28:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 2,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-01",
+    "shift1_in": "10:09:00",
+    "shift1_out": "18:38:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 3,
+    "employee_name": "Deepak",
+    "date": "2025-09-01",
+    "shift1_in": "10:23:00",
+    "shift1_out": "19:30:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 4,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-01",
+    "shift1_in": "10:00:00",
+    "shift1_out": "18:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 5,
+    "employee_name": "Jogender",
+    "date": "2025-09-01",
+    "shift1_in": "10:19:00",
+    "shift1_out": "18:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 6,
+    "employee_name": "Ombeer",
+    "date": "2025-09-01",
+    "shift1_in": "10:16:00",
+    "shift1_out": "19:07:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 7,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-01",
+    "shift1_in": "10:30:00",
+    "shift1_out": "18:14:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 8,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-01",
+    "shift1_in": "10:41:00",
+    "shift1_out": "18:58:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 9,
+    "employee_name": "Umesh",
+    "date": "2025-09-01",
+    "shift1_in": "10:19:00",
+    "shift1_out": "18:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 10,
+    "employee_name": "Abhishek",
+    "date": "2025-09-02",
+    "shift1_in": "09:59:00",
+    "shift1_out": "19:57:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 11,
+    "employee_name": "Amit",
+    "date": "2025-09-02",
+    "shift1_in": "09:59:00",
+    "shift1_out": "19:39:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 12,
+    "employee_name": "Ashish",
+    "date": "2025-09-02",
+    "shift1_in": "10:10:00",
+    "shift1_out": "18:41:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 13,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-02",
+    "shift1_in": "10:10:00",
+    "shift1_out": "19:03:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 14,
+    "employee_name": "Deepak",
+    "date": "2025-09-02",
+    "shift1_in": "11:15:00",
+    "shift1_out": "19:30:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 15,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-02",
+    "shift1_in": "10:43:00",
+    "shift1_out": "16:36:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 16,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-02",
+    "shift1_in": "09:39:00",
+    "shift1_out": "21:42:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 17,
+    "employee_name": "Inder",
+    "date": "2025-09-02",
+    "shift1_in": "09:39:00",
+    "shift1_out": "19:35:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 18,
+    "employee_name": "Jogender",
+    "date": "2025-09-02",
+    "shift1_in": "10:44:00",
+    "shift1_out": "18:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 19,
+    "employee_name": "Krishan",
+    "date": "2025-09-02",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 20,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-02",
+    "shift1_in": "10:11:00",
+    "shift1_out": "18:56:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 21,
+    "employee_name": "Ombeer",
+    "date": "2025-09-02",
+    "shift1_in": "11:26:00",
+    "shift1_out": "19:22:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 22,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-02",
+    "shift1_in": "09:56:00",
+    "shift1_out": "19:30:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 23,
+    "employee_name": "Ramesh",
+    "date": "2025-09-02",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 24,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-02",
+    "shift1_in": "10:07:00",
+    "shift1_out": "19:34:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 25,
+    "employee_name": "Sohit",
+    "date": "2025-09-02",
+    "shift1_in": "09:39:00",
+    "shift1_out": "21:42:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 26,
+    "employee_name": "Umesh",
+    "date": "2025-09-02",
+    "shift1_in": "10:52:00",
+    "shift1_out": "18:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 27,
+    "employee_name": "Abhishek",
+    "date": "2025-09-03",
+    "shift1_in": "09:37:00",
+    "shift1_out": "16:33:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 28,
+    "employee_name": "Amit",
+    "date": "2025-09-03",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 29,
+    "employee_name": "Ashish",
+    "date": "2025-09-03",
+    "shift1_in": "10:19:00",
+    "shift1_out": "16:33:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 30,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-03",
+    "shift1_in": "10:16:00",
+    "shift1_out": "18:41:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 31,
+    "employee_name": "Deepak",
+    "date": "2025-09-03",
+    "shift1_in": "10:43:00",
+    "shift1_out": "19:37:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 32,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-03",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 33,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-03",
+    "shift1_in": "09:35:00",
+    "shift1_out": "19:26:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 34,
+    "employee_name": "Inder",
+    "date": "2025-09-03",
+    "shift1_in": "10:00:00",
+    "shift1_out": "19:26:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 35,
+    "employee_name": "Jogender",
+    "date": "2025-09-03",
+    "shift1_in": "10:26:00",
+    "shift1_out": "18:06:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 36,
+    "employee_name": "Krishan",
+    "date": "2025-09-03",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 37,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-03",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 38,
+    "employee_name": "Ombeer",
+    "date": "2025-09-03",
+    "shift1_in": "10:25:00",
+    "shift1_out": "18:38:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 39,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-03",
+    "shift1_in": "09:53:00",
+    "shift1_out": "18:34:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 40,
+    "employee_name": "Ramesh",
+    "date": "2025-09-03",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 41,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-03",
+    "shift1_in": "10:10:00",
+    "shift1_out": "19:54:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 42,
+    "employee_name": "Sohit",
+    "date": "2025-09-03",
+    "shift1_in": "09:35:00",
+    "shift1_out": "19:21:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 43,
+    "employee_name": "Umesh",
+    "date": "2025-09-03",
+    "shift1_in": "10:21:00",
+    "shift1_out": "18:38:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 44,
+    "employee_name": "Abhishek",
+    "date": "2025-09-04",
+    "shift1_in": "09:48:00",
+    "shift1_out": "18:16:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 45,
+    "employee_name": "Amit",
+    "date": "2025-09-04",
+    "shift1_in": "09:48:00",
+    "shift1_out": "18:17:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 46,
+    "employee_name": "Ashish",
+    "date": "2025-09-04",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 47,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-04",
+    "shift1_in": "10:07:00",
+    "shift1_out": "19:24:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 48,
+    "employee_name": "Deepak",
+    "date": "2025-09-04",
+    "shift1_in": "11:09:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 49,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-04",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 50,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-04",
+    "shift1_in": "10:32:00",
+    "shift1_out": "19:04:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 51,
+    "employee_name": "Inder",
+    "date": "2025-09-04",
+    "shift1_in": "08:49:00",
+    "shift1_out": "18:13:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 52,
+    "employee_name": "Jogender",
+    "date": "2025-09-04",
+    "shift1_in": "10:18:00",
+    "shift1_out": "18:04:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 53,
+    "employee_name": "Krishan",
+    "date": "2025-09-04",
+    "shift1_in": "09:09:00",
+    "shift1_out": "18:10:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 54,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-04",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 55,
+    "employee_name": "Ombeer",
+    "date": "2025-09-04",
+    "shift1_in": "10:17:00",
+    "shift1_out": "18:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 56,
+    "employee_name": "Rahul",
+    "date": "2025-09-04",
+    "shift1_in": "08:12:00",
+    "shift1_out": "18:37:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 57,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-04",
+    "shift1_in": "09:51:00",
+    "shift1_out": "17:56:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 58,
+    "employee_name": "Ramesh",
+    "date": "2025-09-04",
+    "shift1_in": "10:30:00",
+    "shift1_out": "18:37:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 59,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-04",
+    "shift1_in": "10:17:00",
+    "shift1_out": "18:21:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 60,
+    "employee_name": "Sohit",
+    "date": "2025-09-04",
+    "shift1_in": "10:32:00",
+    "shift1_out": "19:10:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 61,
+    "employee_name": "Umesh",
+    "date": "2025-09-04",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 62,
+    "employee_name": "Abhishek",
+    "date": "2025-09-05",
+    "shift1_in": "09:38:00",
+    "shift1_out": "18:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 63,
+    "employee_name": "Amit",
+    "date": "2025-09-05",
+    "shift1_in": "09:38:00",
+    "shift1_out": "18:17:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 64,
+    "employee_name": "Ashish",
+    "date": "2025-09-05",
+    "shift1_in": "10:19:00",
+    "shift1_out": "18:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 65,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-05",
+    "shift1_in": "10:36:00",
+    "shift1_out": "20:54:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 66,
+    "employee_name": "Deepak",
+    "date": "2025-09-05",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 67,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-05",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 68,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-05",
+    "shift1_in": "10:52:00",
+    "shift1_out": "18:53:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 69,
+    "employee_name": "Inder",
+    "date": "2025-09-05",
+    "shift1_in": "10:52:00",
+    "shift1_out": "18:53:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 70,
+    "employee_name": "Jogender",
+    "date": "2025-09-05",
+    "shift1_in": "09:01:00",
+    "shift1_out": "18:13:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 71,
+    "employee_name": "Krishan",
+    "date": "2025-09-05",
+    "shift1_in": "09:17:00",
+    "shift1_out": "17:55:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 72,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-05",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 73,
+    "employee_name": "Ombeer",
+    "date": "2025-09-05",
+    "shift1_in": "09:12:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 74,
+    "employee_name": "Rahul",
+    "date": "2025-09-05",
+    "shift1_in": "10:01:00",
+    "shift1_out": "18:52:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 75,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-05",
+    "shift1_in": "09:48:00",
+    "shift1_out": "18:53:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 76,
+    "employee_name": "Ramesh",
+    "date": "2025-09-05",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 77,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-05",
+    "shift1_in": "10:05:00",
+    "shift1_out": "19:14:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 78,
+    "employee_name": "Sohit",
+    "date": "2025-09-05",
+    "shift1_in": "10:52:00",
+    "shift1_out": "06:13:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 79,
+    "employee_name": "Umesh",
+    "date": "2025-09-05",
+    "shift1_in": "09:25:00",
+    "shift1_out": "18:11:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 80,
+    "employee_name": "Abhishek",
+    "date": "2025-09-06",
+    "shift1_in": "09:47:00",
+    "shift1_out": "19:34:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 81,
+    "employee_name": "Amit",
+    "date": "2025-09-06",
+    "shift1_in": "09:47:00",
+    "shift1_out": "19:27:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 82,
+    "employee_name": "Ashish",
+    "date": "2025-09-06",
+    "shift1_in": "09:59:00",
+    "shift1_out": "18:19:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 83,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-06",
+    "shift1_in": "10:15:00",
+    "shift1_out": "19:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 84,
+    "employee_name": "Deepak",
+    "date": "2025-09-06",
+    "shift1_in": "10:42:00",
+    "shift1_out": "19:20:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 85,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-06",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 86,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-06",
+    "shift1_in": "10:00:00",
+    "shift1_out": "21:03:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 87,
+    "employee_name": "Inder",
+    "date": "2025-09-06",
+    "shift1_in": "09:28:00",
+    "shift1_out": "10:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 88,
+    "employee_name": "Jogender",
+    "date": "2025-09-06",
+    "shift1_in": "10:34:00",
+    "shift1_out": "18:22:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 89,
+    "employee_name": "Krishan",
+    "date": "2025-09-06",
+    "shift1_in": "09:47:00",
+    "shift1_out": "19:34:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 90,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-06",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 91,
+    "employee_name": "Ombeer",
+    "date": "2025-09-06",
+    "shift1_in": "10:35:00",
+    "shift1_out": "18:22:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 92,
+    "employee_name": "Rahul",
+    "date": "2025-09-06",
+    "shift1_in": "08:43:00",
+    "shift1_out": "10:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 93,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-06",
+    "shift1_in": "09:00:00",
+    "shift1_out": "18:15:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 94,
+    "employee_name": "Ramesh",
+    "date": "2025-09-06",
+    "shift1_in": "10:05:00",
+    "shift1_out": "18:25:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 95,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-06",
+    "shift1_in": "10:10:00",
+    "shift1_out": "18:39:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 96,
+    "employee_name": "Sohit",
+    "date": "2025-09-06",
+    "shift1_in": "09:28:00",
+    "shift1_out": "21:03:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 97,
+    "employee_name": "Umesh",
+    "date": "2025-09-06",
+    "shift1_in": "10:26:00",
+    "shift1_out": "18:51:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 98,
+    "employee_name": "Abhishek",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 99,
+    "employee_name": "Amit",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 100,
+    "employee_name": "Ashish",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 101,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 102,
+    "employee_name": "Deepak",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 103,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 104,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 105,
+    "employee_name": "Inder",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 106,
+    "employee_name": "Jogender",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 107,
+    "employee_name": "Krishan",
+    "date": "2025-09-07",
+    "shift1_in": "08:46:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 108,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 109,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 110,
+    "employee_name": "Ramesh",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 111,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-07",
+    "shift1_in": "10:35:00",
+    "shift1_out": "19:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 112,
+    "employee_name": "Sohit",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 113,
+    "employee_name": "Umesh",
+    "date": "2025-09-07",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 114,
+    "employee_name": "Abhishek",
+    "date": "2025-09-08",
+    "shift1_in": "10:22:00",
+    "shift1_out": "18:35:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 115,
+    "employee_name": "Amit",
+    "date": "2025-09-08",
+    "shift1_in": "09:53:00",
+    "shift1_out": "18:59:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 116,
+    "employee_name": "Ashish",
+    "date": "2025-09-08",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 117,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-08",
+    "shift1_in": "10:21:00",
+    "shift1_out": "19:47:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 118,
+    "employee_name": "Deepak",
+    "date": "2025-09-08",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 119,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-08",
+    "shift1_in": "08:58:00",
+    "shift1_out": "17:27:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 120,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-08",
+    "shift1_in": "10:03:00",
+    "shift1_out": "19:47:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 121,
+    "employee_name": "Jogender",
+    "date": "2025-09-08",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 122,
+    "employee_name": "Krishan",
+    "date": "2025-09-08",
+    "shift1_in": "08:50:00",
+    "shift1_out": "19:02:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 123,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-08",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 124,
+    "employee_name": "Ombeer",
+    "date": "2025-09-08",
+    "shift1_in": "09:00:00",
+    "shift1_out": "17:27:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 125,
+    "employee_name": "Rahul",
+    "date": "2025-09-08",
+    "shift1_in": "10:22:00",
+    "shift1_out": "20:46:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 126,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-08",
+    "shift1_in": "10:08:00",
+    "shift1_out": "19:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 127,
+    "employee_name": "Ramesh",
+    "date": "2025-09-08",
+    "shift1_in": "10:22:00",
+    "shift1_out": "18:33:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 128,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-08",
+    "shift1_in": "10:22:00",
+    "shift1_out": "18:50:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 129,
+    "employee_name": "Sohit",
+    "date": "2025-09-08",
+    "shift1_in": "09:42:00",
+    "shift1_out": "19:47:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 130,
+    "employee_name": "Umesh",
+    "date": "2025-09-08",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 131,
+    "employee_name": "Abhishek",
+    "date": "2025-09-09",
+    "shift1_in": "10:21:00",
+    "shift1_out": "17:59:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 132,
+    "employee_name": "Amit",
+    "date": "2025-09-09",
+    "shift1_in": "09:43:00",
+    "shift1_out": "19:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 133,
+    "employee_name": "Ashish",
+    "date": "2025-09-09",
+    "shift1_in": "09:51:00",
+    "shift1_out": "19:47:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 134,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-09",
+    "shift1_in": "10:28:00",
+    "shift1_out": "19:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 135,
+    "employee_name": "Deepak",
+    "date": "2025-09-09",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 136,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-09",
+    "shift1_in": "09:17:00",
+    "shift1_out": "18:58:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 137,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-09",
+    "shift1_in": "10:01:00",
+    "shift1_out": "18:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 138,
+    "employee_name": "Inder",
+    "date": "2025-09-09",
+    "shift1_in": "09:46:00",
+    "shift1_out": "18:50:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 139,
+    "employee_name": "Jogender",
+    "date": "2025-09-09",
+    "shift1_in": "09:48:00",
+    "shift1_out": "19:47:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 140,
+    "employee_name": "Krishan",
+    "date": "2025-09-09",
+    "shift1_in": "09:13:00",
+    "shift1_out": "18:33:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 141,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-09",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 142,
+    "employee_name": "Ombeer",
+    "date": "2025-09-09",
+    "shift1_in": "09:21:00",
+    "shift1_out": "19:26:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 143,
+    "employee_name": "Rahul",
+    "date": "2025-09-09",
+    "shift1_in": "09:22:00",
+    "shift1_out": "20:46:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 144,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-09",
+    "shift1_in": "10:01:00",
+    "shift1_out": "17:27:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 145,
+    "employee_name": "Ramesh",
+    "date": "2025-09-09",
+    "shift1_in": "10:14:00",
+    "shift1_out": "19:27:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 146,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-09",
+    "shift1_in": "10:09:00",
+    "shift1_out": "18:50:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 147,
+    "employee_name": "Sohit",
+    "date": "2025-09-09",
+    "shift1_in": "09:48:00",
+    "shift1_out": "18:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 148,
+    "employee_name": "Umesh",
+    "date": "2025-09-09",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 149,
+    "employee_name": "Abhishek",
+    "date": "2025-09-10",
+    "shift1_in": "10:05:00",
+    "shift1_out": "18:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 150,
+    "employee_name": "Amit",
+    "date": "2025-09-10",
+    "shift1_in": "10:02:00",
+    "shift1_out": "17:35:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 151,
+    "employee_name": "Ashish",
+    "date": "2025-09-10",
+    "shift1_in": "10:12:00",
+    "shift1_out": "18:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 152,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-10",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 153,
+    "employee_name": "Deepak",
+    "date": "2025-09-10",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 154,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-10",
+    "shift1_in": "10:17:00",
+    "shift1_out": "18:44:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 155,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-10",
+    "shift1_in": "09:46:00",
+    "shift1_out": "19:07:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 156,
+    "employee_name": "Inder",
+    "date": "2025-09-10",
+    "shift1_in": "09:55:00",
+    "shift1_out": "19:15:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 157,
+    "employee_name": "Jogender",
+    "date": "2025-09-10",
+    "shift1_in": "10:17:00",
+    "shift1_out": "17:59:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 158,
+    "employee_name": "Krishan",
+    "date": "2025-09-10",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 159,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-10",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 160,
+    "employee_name": "Ombeer",
+    "date": "2025-09-10",
+    "shift1_in": "09:28:00",
+    "shift1_out": "18:21:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 161,
+    "employee_name": "Rahul",
+    "date": "2025-09-10",
+    "shift1_in": "09:12:00",
+    "shift1_out": "19:45:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 162,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-10",
+    "shift1_in": "10:42:00",
+    "shift1_out": "17:39:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 163,
+    "employee_name": "Ramesh",
+    "date": "2025-09-10",
+    "shift1_in": "10:17:00",
+    "shift1_out": "18:20:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 164,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-10",
+    "shift1_in": "10:10:00",
+    "shift1_out": "19:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 165,
+    "employee_name": "Sohit",
+    "date": "2025-09-10",
+    "shift1_in": "09:46:00",
+    "shift1_out": "19:15:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 166,
+    "employee_name": "Umesh",
+    "date": "2025-09-10",
+    "shift1_in": "12:03:00",
+    "shift1_out": "17:59:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 167,
+    "employee_name": "Abhishek",
+    "date": "2025-09-11",
+    "shift1_in": "09:51:00",
+    "shift1_out": "18:13:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 168,
+    "employee_name": "Amit",
+    "date": "2025-09-11",
+    "shift1_in": "11:00:00",
+    "shift1_out": "18:11:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 169,
+    "employee_name": "Ashish",
+    "date": "2025-09-11",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 170,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-11",
+    "shift1_in": "10:27:00",
+    "shift1_out": "18:50:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 171,
+    "employee_name": "Deepak",
+    "date": "2025-09-11",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 172,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-11",
+    "shift1_in": "10:22:00",
+    "shift1_out": "18:29:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 173,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-11",
+    "shift1_in": "09:57:00",
+    "shift1_out": "18:57:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 174,
+    "employee_name": "Inder",
+    "date": "2025-09-11",
+    "shift1_in": "09:51:00",
+    "shift1_out": "18:57:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 175,
+    "employee_name": "Jogender",
+    "date": "2025-09-11",
+    "shift1_in": "10:22:00",
+    "shift1_out": "18:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 176,
+    "employee_name": "Krishan",
+    "date": "2025-09-11",
+    "shift1_in": "08:58:00",
+    "shift1_out": "18:44:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 177,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-11",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 178,
+    "employee_name": "Ombeer",
+    "date": "2025-09-11",
+    "shift1_in": "09:04:00",
+    "shift1_out": "19:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 179,
+    "employee_name": "Rahul",
+    "date": "2025-09-11",
+    "shift1_in": "08:53:00",
+    "shift1_out": "18:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 180,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-11",
+    "shift1_in": "09:57:00",
+    "shift1_out": "18:12:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 181,
+    "employee_name": "Ramesh",
+    "date": "2025-09-11",
+    "shift1_in": "10:07:00",
+    "shift1_out": "17:51:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 182,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-11",
+    "shift1_in": "10:11:00",
+    "shift1_out": "19:11:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 183,
+    "employee_name": "Sohit",
+    "date": "2025-09-11",
+    "shift1_in": "09:51:00",
+    "shift1_out": "18:57:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 184,
+    "employee_name": "Umesh",
+    "date": "2025-09-11",
+    "shift1_in": "10:22:00",
+    "shift1_out": "18:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 185,
+    "employee_name": "Abhishek",
+    "date": "2025-09-12",
+    "shift1_in": "09:56:00",
+    "shift1_out": "18:13:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 186,
+    "employee_name": "Amit",
+    "date": "2025-09-12",
+    "shift1_in": "10:46:00",
+    "shift1_out": "18:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 187,
+    "employee_name": "Ashish",
+    "date": "2025-09-12",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 188,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-12",
+    "shift1_in": "10:30:00",
+    "shift1_out": "18:58:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 189,
+    "employee_name": "Deepak",
+    "date": "2025-09-12",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 190,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-12",
+    "shift1_in": "10:17:00",
+    "shift1_out": "18:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 191,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-12",
+    "shift1_in": "09:31:00",
+    "shift1_out": "18:14:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 192,
+    "employee_name": "Inder",
+    "date": "2025-09-12",
+    "shift1_in": "09:17:00",
+    "shift1_out": "18:53:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 193,
+    "employee_name": "Jogender",
+    "date": "2025-09-12",
+    "shift1_in": "10:18:00",
+    "shift1_out": "17:50:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 194,
+    "employee_name": "Krishan",
+    "date": "2025-09-12",
+    "shift1_in": "08:50:00",
+    "shift1_out": "18:12:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 195,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-12",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 196,
+    "employee_name": "Ombeer",
+    "date": "2025-09-12",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 197,
+    "employee_name": "Rahul",
+    "date": "2025-09-12",
+    "shift1_in": "11:03:00",
+    "shift1_out": "17:52:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 198,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-12",
+    "shift1_in": "09:56:00",
+    "shift1_out": "18:25:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 199,
+    "employee_name": "Ramesh",
+    "date": "2025-09-12",
+    "shift1_in": "09:53:00",
+    "shift1_out": "17:59:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 200,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-12",
+    "shift1_in": "10:31:00",
+    "shift1_out": "19:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 201,
+    "employee_name": "Sohit",
+    "date": "2025-09-12",
+    "shift1_in": "09:17:00",
+    "shift1_out": "18:53:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 202,
+    "employee_name": "Umesh",
+    "date": "2025-09-12",
+    "shift1_in": "10:21:00",
+    "shift1_out": "18:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 203,
+    "employee_name": "Abhishek",
+    "date": "2025-09-13",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 204,
+    "employee_name": "Amit",
+    "date": "2025-09-13",
+    "shift1_in": "09:33:00",
+    "shift1_out": "17:57:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 205,
+    "employee_name": "Ashish",
+    "date": "2025-09-13",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 206,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-13",
+    "shift1_in": "10:26:00",
+    "shift1_out": "22:06:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 207,
+    "employee_name": "Deepak",
+    "date": "2025-09-13",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 208,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-13",
+    "shift1_in": "09:59:00",
+    "shift1_out": "18:12:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 209,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-13",
+    "shift1_in": "09:47:00",
+    "shift1_out": "18:06:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 210,
+    "employee_name": "Inder",
+    "date": "2025-09-13",
+    "shift1_in": "10:04:00",
+    "shift1_out": "18:02:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 211,
+    "employee_name": "Jogender",
+    "date": "2025-09-13",
+    "shift1_in": "10:18:00",
+    "shift1_out": "17:55:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 212,
+    "employee_name": "Krishan",
+    "date": "2025-09-13",
+    "shift1_in": null,
+    "shift1_out": "18:30:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 213,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-13",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 214,
+    "employee_name": "Ombeer",
+    "date": "2025-09-13",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 215,
+    "employee_name": "Rahul",
+    "date": "2025-09-13",
+    "shift1_in": "08:59:00",
+    "shift1_out": "17:57:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 216,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-13",
+    "shift1_in": "09:52:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 217,
+    "employee_name": "Ramesh",
+    "date": "2025-09-13",
+    "shift1_in": "09:57:00",
+    "shift1_out": "18:11:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 218,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-13",
+    "shift1_in": "10:10:00",
+    "shift1_out": "18:43:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 219,
+    "employee_name": "Sohit",
+    "date": "2025-09-13",
+    "shift1_in": "09:47:00",
+    "shift1_out": "18:06:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 220,
+    "employee_name": "Umesh",
+    "date": "2025-09-13",
+    "shift1_in": "10:00:00",
+    "shift1_out": "18:11:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 221,
+    "employee_name": "Abhishek",
+    "date": "2025-09-14",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 222,
+    "employee_name": "Amit",
+    "date": "2025-09-14",
+    "shift1_in": "10:52:00",
+    "shift1_out": "17:55:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 223,
+    "employee_name": "Ashish",
+    "date": "2025-09-14",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 224,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-14",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 225,
+    "employee_name": "Deepak",
+    "date": "2025-09-14",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 226,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-14",
+    "shift1_in": "10:15:00",
+    "shift1_out": "18:02:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 227,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-14",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 228,
+    "employee_name": "Inder",
+    "date": "2025-09-14",
+    "shift1_in": "09:23:00",
+    "shift1_out": "17:39:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 229,
+    "employee_name": "Jogender",
+    "date": "2025-09-14",
+    "shift1_in": "09:35:00",
+    "shift1_out": "17:47:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 230,
+    "employee_name": "Krishan",
+    "date": "2025-09-14",
+    "shift1_in": "09:13:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 231,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-14",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 232,
+    "employee_name": "Ombeer",
+    "date": "2025-09-14",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 233,
+    "employee_name": "Rahul",
+    "date": "2025-09-14",
+    "shift1_in": "09:13:00",
+    "shift1_out": "17:48:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 234,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-14",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 235,
+    "employee_name": "Ramesh",
+    "date": "2025-09-14",
+    "shift1_in": "09:51:00",
+    "shift1_out": "18:03:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 236,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-14",
+    "shift1_in": "09:41:00",
+    "shift1_out": "17:21:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 237,
+    "employee_name": "Sohit",
+    "date": "2025-09-14",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 238,
+    "employee_name": "Umesh",
+    "date": "2025-09-14",
+    "shift1_in": "10:15:00",
+    "shift1_out": "18:03:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 239,
+    "employee_name": "Abhishek",
+    "date": "2025-09-15",
+    "shift1_in": "09:59:00",
+    "shift1_out": "18:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 240,
+    "employee_name": "Amit",
+    "date": "2025-09-15",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 241,
+    "employee_name": "Ashish",
+    "date": "2025-09-15",
+    "shift1_in": "10:18:00",
+    "shift1_out": "18:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 242,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-15",
+    "shift1_in": "10:27:00",
+    "shift1_out": "19:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 243,
+    "employee_name": "Deepak",
+    "date": "2025-09-15",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 244,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-15",
+    "shift1_in": "09:14:00",
+    "shift1_out": "19:45:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 245,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-15",
+    "shift1_in": "09:41:00",
+    "shift1_out": "18:13:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 246,
+    "employee_name": "Inder",
+    "date": "2025-09-15",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 247,
+    "employee_name": "Jogender",
+    "date": "2025-09-15",
+    "shift1_in": "10:23:00",
+    "shift1_out": "18:04:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 248,
+    "employee_name": "Krishan",
+    "date": "2025-09-15",
+    "shift1_in": "09:02:00",
+    "shift1_out": "18:06:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 249,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-15",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 250,
+    "employee_name": "Ombeer",
+    "date": "2025-09-15",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 251,
+    "employee_name": "Rahul",
+    "date": "2025-09-15",
+    "shift1_in": "08:57:00",
+    "shift1_out": "17:58:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 252,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-15",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 253,
+    "employee_name": "Ramesh",
+    "date": "2025-09-15",
+    "shift1_in": "09:56:00",
+    "shift1_out": "17:58:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 254,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-15",
+    "shift1_in": "10:20:00",
+    "shift1_out": "21:50:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 255,
+    "employee_name": "Sohit",
+    "date": "2025-09-15",
+    "shift1_in": "09:41:00",
+    "shift1_out": "18:43:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 256,
+    "employee_name": "Umesh",
+    "date": "2025-09-15",
+    "shift1_in": "10:03:00",
+    "shift1_out": "18:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 257,
+    "employee_name": "Abhishek",
+    "date": "2025-09-16",
+    "shift1_in": "09:32:00",
+    "shift1_out": "18:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 258,
+    "employee_name": "Amit",
+    "date": "2025-09-16",
+    "shift1_in": "09:30:00",
+    "shift1_out": "18:07:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 259,
+    "employee_name": "Ashish",
+    "date": "2025-09-16",
+    "shift1_in": "10:02:00",
+    "shift1_out": "18:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 260,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-16",
+    "shift1_in": "10:30:00",
+    "shift1_out": "19:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 261,
+    "employee_name": "Deepak",
+    "date": "2025-09-16",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 262,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-16",
+    "shift1_in": "10:33:00",
+    "shift1_out": "18:03:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 263,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-16",
+    "shift1_in": "09:49:00",
+    "shift1_out": "18:56:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 264,
+    "employee_name": "Inder",
+    "date": "2025-09-16",
+    "shift1_in": "09:18:00",
+    "shift1_out": "19:03:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 265,
+    "employee_name": "Jogender",
+    "date": "2025-09-16",
+    "shift1_in": "10:27:00",
+    "shift1_out": "18:59:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 266,
+    "employee_name": "Krishan",
+    "date": "2025-09-16",
+    "shift1_in": "09:14:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 267,
+    "employee_name": "Manoj Kumar",
+    "date": "2025-09-16",
+    "shift1_in": "10:36:00",
+    "shift1_out": "18:02:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 268,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-16",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 269,
+    "employee_name": "Ombeer",
+    "date": "2025-09-16",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 270,
+    "employee_name": "Rahul",
+    "date": "2025-09-16",
+    "shift1_in": "09:13:00",
+    "shift1_out": "18:31:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 271,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-16",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 272,
+    "employee_name": "Ramesh",
+    "date": "2025-09-16",
+    "shift1_in": "09:53:00",
+    "shift1_out": "18:06:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 273,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-16",
+    "shift1_in": "10:21:00",
+    "shift1_out": "19:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 274,
+    "employee_name": "Sohit",
+    "date": "2025-09-16",
+    "shift1_in": "09:49:00",
+    "shift1_out": "18:56:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 275,
+    "employee_name": "Umesh",
+    "date": "2025-09-16",
+    "shift1_in": "10:36:00",
+    "shift1_out": "18:02:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 276,
+    "employee_name": "Abhishek",
+    "date": "2025-09-17",
+    "shift1_in": "09:22:00",
+    "shift1_out": "16:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 277,
+    "employee_name": "Amit",
+    "date": "2025-09-17",
+    "shift1_in": "10:25:00",
+    "shift1_out": "16:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 278,
+    "employee_name": "Ashish",
+    "date": "2025-09-17",
+    "shift1_in": "10:33:00",
+    "shift1_out": "13:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 279,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-17",
+    "shift1_in": "10:30:00",
+    "shift1_out": "18:42:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 280,
+    "employee_name": "Deepak",
+    "date": "2025-09-17",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 281,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-17",
+    "shift1_in": "09:56:00",
+    "shift1_out": "16:17:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 282,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-17",
+    "shift1_in": "09:57:00",
+    "shift1_out": "16:17:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 283,
+    "employee_name": "Inder",
+    "date": "2025-09-17",
+    "shift1_in": "09:22:00",
+    "shift1_out": "16:17:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 284,
+    "employee_name": "Jogender",
+    "date": "2025-09-17",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 285,
+    "employee_name": "Krishan",
+    "date": "2025-09-17",
+    "shift1_in": "08:24:00",
+    "shift1_out": "16:38:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 286,
+    "employee_name": "Manoj Kumar",
+    "date": "2025-09-17",
+    "shift1_in": "10:00:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 287,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-17",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 288,
+    "employee_name": "Ombeer",
+    "date": "2025-09-17",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 289,
+    "employee_name": "Rahul",
+    "date": "2025-09-17",
+    "shift1_in": "09:22:00",
+    "shift1_out": "16:17:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 290,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-17",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 291,
+    "employee_name": "Ramesh",
+    "date": "2025-09-17",
+    "shift1_in": "11:01:00",
+    "shift1_out": "16:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 292,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-17",
+    "shift1_in": "10:56:00",
+    "shift1_out": "17:48:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 293,
+    "employee_name": "Sohit",
+    "date": "2025-09-17",
+    "shift1_in": "09:22:00",
+    "shift1_out": "16:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 294,
+    "employee_name": "Umesh",
+    "date": "2025-09-17",
+    "shift1_in": "10:00:00",
+    "shift1_out": "16:38:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 295,
+    "employee_name": "Abhishek",
+    "date": "2025-09-18",
+    "shift1_in": "09:50:00",
+    "shift1_out": "18:49:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 296,
+    "employee_name": "Amit",
+    "date": "2025-09-18",
+    "shift1_in": null,
+    "shift1_out": "17:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 297,
+    "employee_name": "Ashish",
+    "date": "2025-09-18",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 298,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-18",
+    "shift1_in": "10:41:00",
+    "shift1_out": "19:06:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 299,
+    "employee_name": "Deepak",
+    "date": "2025-09-18",
+    "shift1_in": "10:10:00",
+    "shift1_out": "18:49:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 300,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-18",
+    "shift1_in": "09:32:00",
+    "shift1_out": "18:45:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 301,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-18",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 302,
+    "employee_name": "Inder",
+    "date": "2025-09-18",
+    "shift1_in": "09:03:00",
+    "shift1_out": "18:02:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 303,
+    "employee_name": "Jogender",
+    "date": "2025-09-18",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 304,
+    "employee_name": "Krishan",
+    "date": "2025-09-18",
+    "shift1_in": "10:03:00",
+    "shift1_out": "18:45:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 305,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-18",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 306,
+    "employee_name": "Ombeer",
+    "date": "2025-09-18",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 307,
+    "employee_name": "Rahul",
+    "date": "2025-09-18",
+    "shift1_in": "12:24:00",
+    "shift1_out": "17:55:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 308,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-18",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 309,
+    "employee_name": "Ramesh",
+    "date": "2025-09-18",
+    "shift1_in": "09:19:00",
+    "shift1_out": "17:55:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 310,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-18",
+    "shift1_in": "10:45:00",
+    "shift1_out": "18:54:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 311,
+    "employee_name": "Sohit",
+    "date": "2025-09-18",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 312,
+    "employee_name": "Umesh",
+    "date": "2025-09-18",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 313,
+    "employee_name": "Abhishek",
+    "date": "2025-09-19",
+    "shift1_in": null,
+    "shift1_out": "19:34:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 314,
+    "employee_name": "Amit",
+    "date": "2025-09-19",
+    "shift1_in": null,
+    "shift1_out": "19:08:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 315,
+    "employee_name": "Ashish",
+    "date": "2025-09-19",
+    "shift1_in": "10:15:00",
+    "shift1_out": "17:48:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 316,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-19",
+    "shift1_in": "10:27:00",
+    "shift1_out": "18:42:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 317,
+    "employee_name": "Deepak",
+    "date": "2025-09-19",
+    "shift1_in": null,
+    "shift1_out": "19:12:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 318,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-19",
+    "shift1_in": "09:18:00",
+    "shift1_out": "18:04:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 319,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-19",
+    "shift1_in": "09:54:00",
+    "shift1_out": "18:12:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 320,
+    "employee_name": "Inder",
+    "date": "2025-09-19",
+    "shift1_in": "09:55:00",
+    "shift1_out": "18:12:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 321,
+    "employee_name": "Jogender",
+    "date": "2025-09-19",
+    "shift1_in": "09:53:00",
+    "shift1_out": "18:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 322,
+    "employee_name": "Krishan",
+    "date": "2025-09-19",
+    "shift1_in": "09:17:00",
+    "shift1_out": "18:08:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 323,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-19",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 324,
+    "employee_name": "Ombeer",
+    "date": "2025-09-19",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 325,
+    "employee_name": "Rahul",
+    "date": "2025-09-19",
+    "shift1_in": "10:44:00",
+    "shift1_out": "18:04:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 326,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-19",
+    "shift1_in": "10:05:00",
+    "shift1_out": "18:12:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 327,
+    "employee_name": "Ramesh",
+    "date": "2025-09-19",
+    "shift1_in": null,
+    "shift1_out": "20:02:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 328,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-19",
+    "shift1_in": null,
+    "shift1_out": "20:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 329,
+    "employee_name": "Sohit",
+    "date": "2025-09-19",
+    "shift1_in": "09:56:00",
+    "shift1_out": "18:17:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 330,
+    "employee_name": "Umesh",
+    "date": "2025-09-19",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 331,
+    "employee_name": "Abhishek",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "18:16:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 332,
+    "employee_name": "Amit",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "18:27:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 333,
+    "employee_name": "Ashish",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "16:41:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 334,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-20",
+    "shift1_in": "10:29:00",
+    "shift1_out": "18:38:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 335,
+    "employee_name": "Deepak",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "18:28:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 336,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "18:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 337,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "17:45:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 338,
+    "employee_name": "Inder",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "17:45:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 339,
+    "employee_name": "Jogender",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "18:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 340,
+    "employee_name": "Krishan",
+    "date": "2025-09-20",
+    "shift1_in": "09:43:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 341,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 342,
+    "employee_name": "Ombeer",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 343,
+    "employee_name": "Rahul",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "18:57:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 344,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "17:06:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 345,
+    "employee_name": "Ramesh",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "18:08:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 346,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "18:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 347,
+    "employee_name": "Sohit",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": "18:33:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 348,
+    "employee_name": "Umesh",
+    "date": "2025-09-20",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 349,
+    "employee_name": "Abhishek",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 350,
+    "employee_name": "Amit",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 351,
+    "employee_name": "Ashish",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 352,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 353,
+    "employee_name": "Deepak",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 354,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 355,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 356,
+    "employee_name": "Inder",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 357,
+    "employee_name": "Jogender",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 358,
+    "employee_name": "Krishan",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 359,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 360,
+    "employee_name": "Ombeer",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 361,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 362,
+    "employee_name": "Ramesh",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 363,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 364,
+    "employee_name": "Sohit",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 365,
+    "employee_name": "Umesh",
+    "date": "2025-09-21",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 366,
+    "employee_name": "Abhishek",
+    "date": "2025-09-22",
+    "shift1_in": "10:10:00",
+    "shift1_out": "18:17:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 367,
+    "employee_name": "Amit",
+    "date": "2025-09-22",
+    "shift1_in": "10:10:00",
+    "shift1_out": "18:13:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 368,
+    "employee_name": "Ashish",
+    "date": "2025-09-22",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 369,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-22",
+    "shift1_in": "10:19:00",
+    "shift1_out": "20:46:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 370,
+    "employee_name": "Deepak",
+    "date": "2025-09-22",
+    "shift1_in": "10:19:00",
+    "shift1_out": "18:21:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 371,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-22",
+    "shift1_in": "11:02:00",
+    "shift1_out": "18:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 372,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-22",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 373,
+    "employee_name": "Inder",
+    "date": "2025-09-22",
+    "shift1_in": "10:38:00",
+    "shift1_out": "18:13:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 374,
+    "employee_name": "Jogender",
+    "date": "2025-09-22",
+    "shift1_in": "10:48:00",
+    "shift1_out": "18:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 375,
+    "employee_name": "Krishan",
+    "date": "2025-09-22",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 376,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-22",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 377,
+    "employee_name": "Ombeer",
+    "date": "2025-09-22",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 378,
+    "employee_name": "Rahul",
+    "date": "2025-09-22",
+    "shift1_in": "09:27:00",
+    "shift1_out": "18:02:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 379,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-22",
+    "shift1_in": "09:59:00",
+    "shift1_out": "17:56:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 380,
+    "employee_name": "Ramesh",
+    "date": "2025-09-22",
+    "shift1_in": "10:12:00",
+    "shift1_out": "18:01:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 381,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-22",
+    "shift1_in": "10:14:00",
+    "shift1_out": "19:47:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 382,
+    "employee_name": "Sohit",
+    "date": "2025-09-22",
+    "shift1_in": "10:38:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 383,
+    "employee_name": "Umesh",
+    "date": "2025-09-22",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 384,
+    "employee_name": "Abhishek",
+    "date": "2025-09-23",
+    "shift1_in": "09:37:00",
+    "shift1_out": "17:46:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 385,
+    "employee_name": "Amit",
+    "date": "2025-09-23",
+    "shift1_in": "09:37:00",
+    "shift1_out": "19:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 386,
+    "employee_name": "Ashish",
+    "date": "2025-09-23",
+    "shift1_in": "10:10:00",
+    "shift1_out": "18:14:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 387,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-23",
+    "shift1_in": "10:32:00",
+    "shift1_out": "19:07:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 388,
+    "employee_name": "Deepak",
+    "date": "2025-09-23",
+    "shift1_in": "11:01:00",
+    "shift1_out": "19:15:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 389,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-23",
+    "shift1_in": "09:15:00",
+    "shift1_out": "15:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 390,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-23",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 391,
+    "employee_name": "Inder",
+    "date": "2025-09-23",
+    "shift1_in": "09:35:00",
+    "shift1_out": "19:24:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 392,
+    "employee_name": "Jogender",
+    "date": "2025-09-23",
+    "shift1_in": "10:41:00",
+    "shift1_out": "18:10:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 393,
+    "employee_name": "Krishan",
+    "date": "2025-09-23",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 394,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-23",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 395,
+    "employee_name": "Ombeer",
+    "date": "2025-09-23",
+    "shift1_in": "09:09:00",
+    "shift1_out": "20:27:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 396,
+    "employee_name": "Rahul",
+    "date": "2025-09-23",
+    "shift1_in": "09:46:00",
+    "shift1_out": "18:09:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 397,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-23",
+    "shift1_in": "09:49:00",
+    "shift1_out": "19:25:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 398,
+    "employee_name": "Ramesh",
+    "date": "2025-09-23",
+    "shift1_in": "09:50:00",
+    "shift1_out": "20:26:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 399,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-23",
+    "shift1_in": "10:20:00",
+    "shift1_out": "19:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 400,
+    "employee_name": "Sohit",
+    "date": "2025-09-23",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 401,
+    "employee_name": "Umesh",
+    "date": "2025-09-23",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 402,
+    "employee_name": "Abhishek",
+    "date": "2025-09-24",
+    "shift1_in": "09:37:00",
+    "shift1_out": "18:20:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 403,
+    "employee_name": "Amit",
+    "date": "2025-09-24",
+    "shift1_in": "09:20:00",
+    "shift1_out": "17:57:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 404,
+    "employee_name": "Ashish",
+    "date": "2025-09-24",
+    "shift1_in": "10:07:00",
+    "shift1_out": "18:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 405,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-24",
+    "shift1_in": "07:36:00",
+    "shift1_out": "12:03:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 406,
+    "employee_name": "Deepak",
+    "date": "2025-09-24",
+    "shift1_in": "09:59:00",
+    "shift1_out": "18:24:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 407,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-24",
+    "shift1_in": "09:12:00",
+    "shift1_out": "18:08:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 408,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-24",
+    "shift1_in": "09:20:00",
+    "shift1_out": "17:57:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 409,
+    "employee_name": "Inder",
+    "date": "2025-09-24",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 410,
+    "employee_name": "Jogender",
+    "date": "2025-09-24",
+    "shift1_in": "10:30:00",
+    "shift1_out": "18:03:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 411,
+    "employee_name": "Krishan",
+    "date": "2025-09-24",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 412,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-24",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 413,
+    "employee_name": "Ombeer",
+    "date": "2025-09-24",
+    "shift1_in": "07:54:00",
+    "shift1_out": "22:22:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 414,
+    "employee_name": "Rahul",
+    "date": "2025-09-24",
+    "shift1_in": "09:05:00",
+    "shift1_out": "18:15:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 415,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-24",
+    "shift1_in": "09:49:00",
+    "shift1_out": "18:04:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 416,
+    "employee_name": "Ramesh",
+    "date": "2025-09-24",
+    "shift1_in": "07:59:00",
+    "shift1_out": "22:25:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 417,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-24",
+    "shift1_in": "11:12:00",
+    "shift1_out": "22:54:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 418,
+    "employee_name": "Sohit",
+    "date": "2025-09-24",
+    "shift1_in": "10:38:00",
+    "shift1_out": "18:15:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 419,
+    "employee_name": "Umesh",
+    "date": "2025-09-24",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 420,
+    "employee_name": "Abhishek",
+    "date": "2025-09-25",
+    "shift1_in": "09:47:00",
+    "shift1_out": "18:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 421,
+    "employee_name": "Amit",
+    "date": "2025-09-25",
+    "shift1_in": "10:05:00",
+    "shift1_out": "17:48:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 422,
+    "employee_name": "Ashish",
+    "date": "2025-09-25",
+    "shift1_in": "09:58:00",
+    "shift1_out": "17:48:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 423,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-25",
+    "shift1_in": "00:04:00",
+    "shift1_out": "10:54:00",
+    "shift2_in": "20:10:00",
+    "shift2_out": null
+  },
+  {
+    "id": 424,
+    "employee_name": "Deepak",
+    "date": "2025-09-25",
+    "shift1_in": "10:16:00",
+    "shift1_out": "18:21:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 425,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-25",
+    "shift1_in": "08:57:00",
+    "shift1_out": "18:02:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 426,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-25",
+    "shift1_in": "09:25:00",
+    "shift1_out": "16:34:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 427,
+    "employee_name": "Inder",
+    "date": "2025-09-25",
+    "shift1_in": "08:58:00",
+    "shift1_out": "18:13:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 428,
+    "employee_name": "Jogender",
+    "date": "2025-09-25",
+    "shift1_in": "09:16:00",
+    "shift1_out": "06:08:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 429,
+    "employee_name": "Krishan",
+    "date": "2025-09-25",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 430,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-25",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 431,
+    "employee_name": "Ombeer",
+    "date": "2025-09-25",
+    "shift1_in": "09:47:00",
+    "shift1_out": "18:48:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 432,
+    "employee_name": "Rahul",
+    "date": "2025-09-25",
+    "shift1_in": "09:18:00",
+    "shift1_out": "18:08:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 433,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-25",
+    "shift1_in": "10:22:00",
+    "shift1_out": "05:31:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 434,
+    "employee_name": "Ramesh",
+    "date": "2025-09-25",
+    "shift1_in": "09:46:00",
+    "shift1_out": "18:45:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 435,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-25",
+    "shift1_in": "10:31:00",
+    "shift1_out": "20:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 436,
+    "employee_name": "Sohit",
+    "date": "2025-09-25",
+    "shift1_in": "10:12:00",
+    "shift1_out": "18:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 437,
+    "employee_name": "Umesh",
+    "date": "2025-09-25",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 438,
+    "employee_name": "Abhishek",
+    "date": "2025-09-26",
+    "shift1_in": "09:46:00",
+    "shift1_out": "18:27:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 439,
+    "employee_name": "Amit",
+    "date": "2025-09-26",
+    "shift1_in": "09:20:00",
+    "shift1_out": "18:27:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 440,
+    "employee_name": "Ashish",
+    "date": "2025-09-26",
+    "shift1_in": "10:28:00",
+    "shift1_out": "17:13:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 441,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-26",
+    "shift1_in": "10:57:00",
+    "shift1_out": "19:08:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 442,
+    "employee_name": "Deepak",
+    "date": "2025-09-26",
+    "shift1_in": "10:29:00",
+    "shift1_out": "18:49:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 443,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-26",
+    "shift1_in": "09:23:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 444,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-26",
+    "shift1_in": "09:55:00",
+    "shift1_out": "18:56:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 445,
+    "employee_name": "Inder",
+    "date": "2025-09-26",
+    "shift1_in": "09:58:00",
+    "shift1_out": "20:16:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 446,
+    "employee_name": "Jogender",
+    "date": "2025-09-26",
+    "shift1_in": "10:29:00",
+    "shift1_out": "18:20:00",
+    "shift2_in": "18:40:00",
+    "shift2_out": "20:41:00"
+  },
+  {
+    "id": 447,
+    "employee_name": "Krishan",
+    "date": "2025-09-26",
+    "shift1_in": "08:56:00",
+    "shift1_out": "18:45:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 448,
+    "employee_name": "MR.UMESH",
+    "date": "2025-09-26",
+    "shift1_in": "09:30:00",
+    "shift1_out": "18:30:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 449,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-26",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 450,
+    "employee_name": "Ombeer",
+    "date": "2025-09-26",
+    "shift1_in": "09:59:00",
+    "shift1_out": "18:52:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 451,
+    "employee_name": "Rahul",
+    "date": "2025-09-26",
+    "shift1_in": "09:35:00",
+    "shift1_out": "18:20:00",
+    "shift2_in": "18:40:00",
+    "shift2_out": "20:41:00"
+  },
+  {
+    "id": 452,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-26",
+    "shift1_in": "09:38:00",
+    "shift1_out": "18:42:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 453,
+    "employee_name": "Ramesh",
+    "date": "2025-09-26",
+    "shift1_in": "10:04:00",
+    "shift1_out": "18:52:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 454,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-26",
+    "shift1_in": "09:23:00",
+    "shift1_out": "19:58:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 455,
+    "employee_name": "Sohit",
+    "date": "2025-09-26",
+    "shift1_in": "09:59:00",
+    "shift1_out": "20:16:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 456,
+    "employee_name": "Umesh",
+    "date": "2025-09-26",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 457,
+    "employee_name": "Abhishek",
+    "date": "2025-09-27",
+    "shift1_in": "09:48:00",
+    "shift1_out": "19:05:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 458,
+    "employee_name": "Amit",
+    "date": "2025-09-27",
+    "shift1_in": "09:48:00",
+    "shift1_out": "18:17:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 459,
+    "employee_name": "Ashish",
+    "date": "2025-09-27",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 460,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-27",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 461,
+    "employee_name": "Deepak",
+    "date": "2025-09-27",
+    "shift1_in": "10:20:00",
+    "shift1_out": "18:44:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 462,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-27",
+    "shift1_in": "09:24:00",
+    "shift1_out": "16:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 463,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-27",
+    "shift1_in": "10:58:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 464,
+    "employee_name": "Inder",
+    "date": "2025-09-27",
+    "shift1_in": "10:58:00",
+    "shift1_out": "19:08:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 465,
+    "employee_name": "Jogender",
+    "date": "2025-09-27",
+    "shift1_in": "12:40:00",
+    "shift1_out": "18:15:00",
+    "shift2_in": "18:30:00",
+    "shift2_out": "01:23:00"
+  },
+  {
+    "id": 466,
+    "employee_name": "Krishan",
+    "date": "2025-09-27",
+    "shift1_in": "08:47:00",
+    "shift1_out": "18:41:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 467,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-27",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 468,
+    "employee_name": "Ombeer",
+    "date": "2025-09-27",
+    "shift1_in": "08:25:00",
+    "shift1_out": "20:11:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 469,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-27",
+    "shift1_in": "10:27:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 470,
+    "employee_name": "Ramesh",
+    "date": "2025-09-27",
+    "shift1_in": "08:25:00",
+    "shift1_out": "20:11:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 471,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-27",
+    "shift1_in": "10:27:00",
+    "shift1_out": "19:06:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 472,
+    "employee_name": "Sohit",
+    "date": "2025-09-27",
+    "shift1_in": "10:18:00",
+    "shift1_out": "19:09:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 473,
+    "employee_name": "Umesh",
+    "date": "2025-09-27",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 474,
+    "employee_name": "Abhishek",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 475,
+    "employee_name": "Amit",
+    "date": "2025-09-28",
+    "shift1_in": "09:38:00",
+    "shift1_out": "17:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 476,
+    "employee_name": "Ashish",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 477,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 478,
+    "employee_name": "Deepak",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 479,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 480,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-28",
+    "shift1_in": "09:39:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 481,
+    "employee_name": "Inder",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 482,
+    "employee_name": "Jogender",
+    "date": "2025-09-28",
+    "shift1_in": "08:44:00",
+    "shift1_out": "17:22:00",
+    "shift2_in": "19:29:00",
+    "shift2_out": "01:05:00"
+  },
+  {
+    "id": 483,
+    "employee_name": "Krishan",
+    "date": "2025-09-28",
+    "shift1_in": "08:53:00",
+    "shift1_out": "18:29:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 484,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 485,
+    "employee_name": "Ombeer",
+    "date": "2025-09-28",
+    "shift1_in": "08:22:00",
+    "shift1_out": "17:11:00",
+    "shift2_in": "19:29:00",
+    "shift2_out": "01:05:00"
+  },
+  {
+    "id": 486,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 487,
+    "employee_name": "Ramesh",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 488,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 489,
+    "employee_name": "Sohit",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 490,
+    "employee_name": "Umesh",
+    "date": "2025-09-28",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 508,
+    "employee_name": "Abhishek",
+    "date": "2025-09-30",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 509,
+    "employee_name": "Amit",
+    "date": "2025-09-30",
+    "shift1_in": "09:51:00",
+    "shift1_out": "17:34:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 510,
+    "employee_name": "Ashish",
+    "date": "2025-09-30",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 511,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-30",
+    "shift1_in": "10:14:00",
+    "shift1_out": "18:30:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 512,
+    "employee_name": "Deepak",
+    "date": "2025-09-30",
+    "shift1_in": "10:51:00",
+    "shift1_out": "18:18:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 513,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-30",
+    "shift1_in": "09:14:00",
+    "shift1_out": "17:52:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 514,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-30",
+    "shift1_in": "11:34:00",
+    "shift1_out": "19:25:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 515,
+    "employee_name": "Inder",
+    "date": "2025-09-30",
+    "shift1_in": "09:48:00",
+    "shift1_out": "19:22:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 516,
+    "employee_name": "Jogender",
+    "date": "2025-09-30",
+    "shift1_in": "09:21:00",
+    "shift1_out": "17:53:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 517,
+    "employee_name": "Krishan",
+    "date": "2025-09-30",
+    "shift1_in": "09:03:00",
+    "shift1_out": "18:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 518,
+    "employee_name": "Narender Lal",
+    "date": "2025-09-30",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 519,
+    "employee_name": "Ombeer",
+    "date": "2025-09-30",
+    "shift1_in": "10:02:00",
+    "shift1_out": "22:34:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 520,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-30",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 521,
+    "employee_name": "Ramesh",
+    "date": "2025-09-30",
+    "shift1_in": "11:07:00",
+    "shift1_out": "17:34:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 522,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-30",
+    "shift1_in": "10:23:00",
+    "shift1_out": "19:25:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 523,
+    "employee_name": "Sohit",
+    "date": "2025-09-30",
+    "shift1_in": "10:04:00",
+    "shift1_out": "19:22:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 524,
+    "employee_name": "Umesh",
+    "date": "2025-09-30",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 525,
+    "employee_name": "Abhishek",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 526,
+    "employee_name": "Amit",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 527,
+    "employee_name": "Ashish",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 528,
+    "employee_name": "Dan Singh Bisht",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 529,
+    "employee_name": "Deepak",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 530,
+    "employee_name": "Divyanshu",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 531,
+    "employee_name": "Gautam Gulati",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 532,
+    "employee_name": "Inder",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 533,
+    "employee_name": "Jogender",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 534,
+    "employee_name": "Krishan",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 535,
+    "employee_name": "Narender Lal",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 536,
+    "employee_name": "Ombeer",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 537,
+    "employee_name": "Ram Singh Rawat",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 538,
+    "employee_name": "Ramesh",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 539,
+    "employee_name": "Shivam Chaudhary",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 540,
+    "employee_name": "Sohit",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 541,
+    "employee_name": "Umesh",
+    "date": "0001-01-01",
+    "shift1_in": null,
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 542,
+    "employee_name": "MR.UMESH",
+    "date": "2025-09-27",
+    "shift1_in": "09:46:00",
+    "shift1_out": "18:48:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 543,
+    "employee_name": "Rahul",
+    "date": "2025-09-27",
+    "shift1_in": "10:48:00",
+    "shift1_out": "18:15:00",
+    "shift2_in": "18:30:00",
+    "shift2_out": "01:23:00"
+  },
+  {
+    "id": 544,
+    "employee_name": "Rahul",
+    "date": "2025-09-28",
+    "shift1_in": "08:44:00",
+    "shift1_out": "17:19:00",
+    "shift2_in": "19:29:00",
+    "shift2_out": "01:05:00"
+  },
+  {
+    "id": 545,
+    "employee_name": "Krishan",
+    "date": "2025-09-29",
+    "shift1_in": "08:58:00",
+    "shift1_out": "18:31:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 546,
+    "employee_name": "Divyanshu",
+    "date": "2025-09-29",
+    "shift1_in": "09:06:00",
+    "shift1_out": "19:00:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 547,
+    "employee_name": "Jogender",
+    "date": "2025-09-29",
+    "shift1_in": "09:15:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 548,
+    "employee_name": "Rahul",
+    "date": "2025-09-29",
+    "shift1_in": "09:16:00",
+    "shift1_out": "18:42:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 549,
+    "employee_name": "Ombeer",
+    "date": "2025-09-29",
+    "shift1_in": "09:30:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 550,
+    "employee_name": "MR.UMESH",
+    "date": "2025-09-29",
+    "shift1_in": "09:36:00",
+    "shift1_out": "18:42:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 551,
+    "employee_name": "Inder",
+    "date": "2025-09-29",
+    "shift1_in": "09:37:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 552,
+    "employee_name": "Sohit",
+    "date": "2025-09-29",
+    "shift1_in": "09:45:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 553,
+    "employee_name": "Ramesh",
+    "date": "2025-09-29",
+    "shift1_in": "10:02:00",
+    "shift1_out": "12:42:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 554,
+    "employee_name": "Amit",
+    "date": "2025-09-29",
+    "shift1_in": "10:13:00",
+    "shift1_out": null,
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 555,
+    "employee_name": "Abhishek",
+    "date": "2025-09-29",
+    "shift1_in": "10:13:00",
+    "shift1_out": "13:16:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 556,
+    "employee_name": "Shivam Chaudhary",
+    "date": "2025-09-29",
+    "shift1_in": "10:27:00",
+    "shift1_out": "19:23:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 557,
+    "employee_name": "Deepak",
+    "date": "2025-09-29",
+    "shift1_in": "10:55:00",
+    "shift1_out": "18:39:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 558,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-29",
+    "shift1_in": "09:45:00",
+    "shift1_out": "18:37:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 559,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-29",
+    "shift1_in": "10:54:00",
+    "shift1_out": "18:52:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 560,
+    "employee_name": "MR.UMESH",
+    "date": "2025-09-30",
+    "shift1_in": "09:31:00",
+    "shift1_out": "18:30:00",
+    "shift2_in": null,
+    "shift2_out": null
+  },
+  {
+    "id": 561,
+    "employee_name": "Rahul",
+    "date": "2025-09-30",
+    "shift1_in": "09:49:00",
+    "shift1_out": "19:22:00",
+    "shift2_in": null,
+    "shift2_out": null
+  }
+]

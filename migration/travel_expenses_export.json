@@ -1,0 +1,1232 @@
+[
+  {
+    "id": 1,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-01",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 12.0,
+    "rate": null,
+    "amount": 42.0
+  },
+  {
+    "id": 2,
+    "employee_name": "Deepak",
+    "date": "2025-09-01",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 50.0,
+    "rate": null,
+    "amount": 175.0
+  },
+  {
+    "id": 3,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-01",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 37.0,
+    "rate": null,
+    "amount": 129.5
+  },
+  {
+    "id": 4,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-02",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 15.0,
+    "rate": null,
+    "amount": 52.5
+  },
+  {
+    "id": 5,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-02",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 113.0,
+    "rate": null,
+    "amount": 395.5
+  },
+  {
+    "id": 6,
+    "employee_name": "Inder",
+    "date": "2025-09-02",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 47.0,
+    "rate": null,
+    "amount": 164.5
+  },
+  {
+    "id": 7,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-02",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 26.0,
+    "rate": null,
+    "amount": 91.0
+  },
+  {
+    "id": 8,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-03",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 15.0,
+    "rate": null,
+    "amount": 52.5
+  },
+  {
+    "id": 9,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-03",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 52.0,
+    "rate": null,
+    "amount": 182.0
+  },
+  {
+    "id": 10,
+    "employee_name": "Inder",
+    "date": "2025-09-03",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 48.0,
+    "rate": null,
+    "amount": 168.0
+  },
+  {
+    "id": 11,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-03",
+    "start_reading": null,
+    "end_reading": null,
+    "distance": 21.0,
+    "rate": null,
+    "amount": 73.5
+  },
+  {
+    "id": 12,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-04",
+    "start_reading": 31166.0,
+    "end_reading": 31178.0,
+    "distance": 12.0,
+    "rate": 3.5,
+    "amount": 42.0
+  },
+  {
+    "id": 13,
+    "employee_name": "Deepak",
+    "date": "2025-09-04",
+    "start_reading": 33758.0,
+    "end_reading": 33869.0,
+    "distance": 111.0,
+    "rate": 3.5,
+    "amount": 388.5
+  },
+  {
+    "id": 14,
+    "employee_name": "Inder",
+    "date": "2025-09-04",
+    "start_reading": 948.0,
+    "end_reading": 1015.0,
+    "distance": 67.0,
+    "rate": 3.5,
+    "amount": 234.5
+  },
+  {
+    "id": 15,
+    "employee_name": "Krishan",
+    "date": "2025-09-04",
+    "start_reading": 4708.0,
+    "end_reading": 4724.0,
+    "distance": 16.0,
+    "rate": 3.5,
+    "amount": 56.0
+  },
+  {
+    "id": 16,
+    "employee_name": "Sohit",
+    "date": "2025-09-04",
+    "start_reading": 44432.0,
+    "end_reading": 44511.0,
+    "distance": 79.0,
+    "rate": 3.5,
+    "amount": 276.5
+  },
+  {
+    "id": 17,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-05",
+    "start_reading": 31188.0,
+    "end_reading": 31203.0,
+    "distance": 15.0,
+    "rate": 3.5,
+    "amount": 52.5
+  },
+  {
+    "id": 18,
+    "employee_name": "Inder",
+    "date": "2025-09-05",
+    "start_reading": 31787.0,
+    "end_reading": 31808.0,
+    "distance": 21.0,
+    "rate": 3.5,
+    "amount": 73.5
+  },
+  {
+    "id": 19,
+    "employee_name": "Krishan",
+    "date": "2025-09-05",
+    "start_reading": 4727.0,
+    "end_reading": 4745.0,
+    "distance": 18.0,
+    "rate": 3.5,
+    "amount": 63.0
+  },
+  {
+    "id": 20,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-05",
+    "start_reading": 54680.0,
+    "end_reading": 54740.0,
+    "distance": 60.0,
+    "rate": 3.5,
+    "amount": 210.0
+  },
+  {
+    "id": 21,
+    "employee_name": "Ashish",
+    "date": "2025-09-06",
+    "start_reading": 48791.0,
+    "end_reading": 48845.0,
+    "distance": 54.0,
+    "rate": 3.5,
+    "amount": 189.0
+  },
+  {
+    "id": 22,
+    "employee_name": "Deepak",
+    "date": "2025-09-06",
+    "start_reading": 33893.0,
+    "end_reading": 33961.0,
+    "distance": 68.0,
+    "rate": 3.5,
+    "amount": 238.0
+  },
+  {
+    "id": 23,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-06",
+    "start_reading": 26951.0,
+    "end_reading": 27030.0,
+    "distance": 79.0,
+    "rate": 3.5,
+    "amount": 276.5
+  },
+  {
+    "id": 24,
+    "employee_name": "Inder",
+    "date": "2025-09-06",
+    "start_reading": 41522.0,
+    "end_reading": 41603.0,
+    "distance": 81.0,
+    "rate": 3.5,
+    "amount": 283.5
+  },
+  {
+    "id": 25,
+    "employee_name": "Krishan",
+    "date": "2025-09-06",
+    "start_reading": 31203.0,
+    "end_reading": 31204.0,
+    "distance": 1.0,
+    "rate": 3.5,
+    "amount": 3.5
+  },
+  {
+    "id": 26,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-06",
+    "start_reading": 54740.0,
+    "end_reading": 54791.0,
+    "distance": 51.0,
+    "rate": 3.5,
+    "amount": 178.5
+  },
+  {
+    "id": 27,
+    "employee_name": "Krishan",
+    "date": "2025-09-07",
+    "start_reading": 4759.0,
+    "end_reading": 4847.0,
+    "distance": 88.0,
+    "rate": 3.5,
+    "amount": 308.0
+  },
+  {
+    "id": 28,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-08",
+    "start_reading": 31247.0,
+    "end_reading": 31270.0,
+    "distance": 23.0,
+    "rate": 3.5,
+    "amount": 80.5
+  },
+  {
+    "id": 29,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-08",
+    "start_reading": 27060.0,
+    "end_reading": 27113.0,
+    "distance": 53.0,
+    "rate": 3.5,
+    "amount": 185.5
+  },
+  {
+    "id": 30,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-08",
+    "start_reading": 54791.0,
+    "end_reading": 54837.0,
+    "distance": 46.0,
+    "rate": 3.5,
+    "amount": 161.0
+  },
+  {
+    "id": 31,
+    "employee_name": "Ashish",
+    "date": "2025-09-09",
+    "start_reading": 48848.0,
+    "end_reading": 48963.0,
+    "distance": 115.0,
+    "rate": 3.5,
+    "amount": 402.5
+  },
+  {
+    "id": 32,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-09",
+    "start_reading": 31279.0,
+    "end_reading": 31295.0,
+    "distance": 16.0,
+    "rate": 3.5,
+    "amount": 56.0
+  },
+  {
+    "id": 33,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-09",
+    "start_reading": 27119.0,
+    "end_reading": 27157.0,
+    "distance": 38.0,
+    "rate": 3.5,
+    "amount": 133.0
+  },
+  {
+    "id": 34,
+    "employee_name": "Inder",
+    "date": "2025-09-09",
+    "start_reading": 1061.0,
+    "end_reading": 1118.0,
+    "distance": 57.0,
+    "rate": 3.5,
+    "amount": 199.5
+  },
+  {
+    "id": 35,
+    "employee_name": "Krishan",
+    "date": "2025-09-09",
+    "start_reading": 4850.0,
+    "end_reading": 4866.0,
+    "distance": 16.0,
+    "rate": 3.5,
+    "amount": 56.0
+  },
+  {
+    "id": 36,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-09",
+    "start_reading": 54837.0,
+    "end_reading": 54867.0,
+    "distance": 30.0,
+    "rate": 3.5,
+    "amount": 105.0
+  },
+  {
+    "id": 37,
+    "employee_name": "Ashish",
+    "date": "2025-09-10",
+    "start_reading": 48963.0,
+    "end_reading": 49054.0,
+    "distance": 91.0,
+    "rate": 3.5,
+    "amount": 318.5
+  },
+  {
+    "id": 38,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-10",
+    "start_reading": 31295.0,
+    "end_reading": 31323.0,
+    "distance": 28.0,
+    "rate": 3.5,
+    "amount": 98.0
+  },
+  {
+    "id": 39,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-10",
+    "start_reading": 27163.0,
+    "end_reading": 27247.0,
+    "distance": 84.0,
+    "rate": 3.5,
+    "amount": 294.0
+  },
+  {
+    "id": 40,
+    "employee_name": "Inder",
+    "date": "2025-09-10",
+    "start_reading": 1139.0,
+    "end_reading": 1210.0,
+    "distance": 71.0,
+    "rate": 3.5,
+    "amount": 248.5
+  },
+  {
+    "id": 41,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-10",
+    "start_reading": 54869.0,
+    "end_reading": 54916.0,
+    "distance": 47.0,
+    "rate": 3.5,
+    "amount": 164.5
+  },
+  {
+    "id": 42,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-11",
+    "start_reading": 31335.0,
+    "end_reading": 31347.0,
+    "distance": 12.0,
+    "rate": 3.5,
+    "amount": 42.0
+  },
+  {
+    "id": 43,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-11",
+    "start_reading": 27254.0,
+    "end_reading": 27346.0,
+    "distance": 92.0,
+    "rate": 3.5,
+    "amount": 322.0
+  },
+  {
+    "id": 44,
+    "employee_name": "Inder",
+    "date": "2025-09-11",
+    "start_reading": 1215.0,
+    "end_reading": 1270.0,
+    "distance": 55.0,
+    "rate": 3.5,
+    "amount": 192.5
+  },
+  {
+    "id": 45,
+    "employee_name": "Krishan",
+    "date": "2025-09-11",
+    "start_reading": 4896.0,
+    "end_reading": 4921.0,
+    "distance": 25.0,
+    "rate": 3.5,
+    "amount": 87.5
+  },
+  {
+    "id": 46,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-11",
+    "start_reading": 54916.0,
+    "end_reading": 54947.0,
+    "distance": 31.0,
+    "rate": 3.5,
+    "amount": 108.5
+  },
+  {
+    "id": 47,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-12",
+    "start_reading": 31357.0,
+    "end_reading": 31376.0,
+    "distance": 19.0,
+    "rate": 3.5,
+    "amount": 66.5
+  },
+  {
+    "id": 48,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-12",
+    "start_reading": 27353.0,
+    "end_reading": 27406.0,
+    "distance": 53.0,
+    "rate": 3.5,
+    "amount": 185.5
+  },
+  {
+    "id": 49,
+    "employee_name": "Inder",
+    "date": "2025-09-12",
+    "start_reading": 31886.0,
+    "end_reading": 31942.0,
+    "distance": 56.0,
+    "rate": 3.5,
+    "amount": 196.0
+  },
+  {
+    "id": 50,
+    "employee_name": "Krishan",
+    "date": "2025-09-12",
+    "start_reading": 4921.0,
+    "end_reading": 4955.0,
+    "distance": 34.0,
+    "rate": 3.5,
+    "amount": 119.0
+  },
+  {
+    "id": 51,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-12",
+    "start_reading": 54948.0,
+    "end_reading": 55011.0,
+    "distance": 63.0,
+    "rate": 3.5,
+    "amount": 220.5
+  },
+  {
+    "id": 52,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-13",
+    "start_reading": 31376.0,
+    "end_reading": 31399.0,
+    "distance": 23.0,
+    "rate": 3.5,
+    "amount": 80.5
+  },
+  {
+    "id": 53,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-13",
+    "start_reading": 27435.0,
+    "end_reading": 27497.0,
+    "distance": 62.0,
+    "rate": 3.5,
+    "amount": 217.0
+  },
+  {
+    "id": 54,
+    "employee_name": "Inder",
+    "date": "2025-09-13",
+    "start_reading": 1273.0,
+    "end_reading": 1352.0,
+    "distance": 79.0,
+    "rate": 3.5,
+    "amount": 276.5
+  },
+  {
+    "id": 55,
+    "employee_name": "Krishan",
+    "date": "2025-09-13",
+    "start_reading": 4958.0,
+    "end_reading": 4974.0,
+    "distance": 16.0,
+    "rate": 3.5,
+    "amount": 56.0
+  },
+  {
+    "id": 56,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-13",
+    "start_reading": 55011.0,
+    "end_reading": 55072.0,
+    "distance": 61.0,
+    "rate": 3.5,
+    "amount": 213.5
+  },
+  {
+    "id": 57,
+    "employee_name": "Inder",
+    "date": "2025-09-14",
+    "start_reading": 1422.0,
+    "end_reading": 1501.0,
+    "distance": 79.0,
+    "rate": 3.5,
+    "amount": 276.5
+  },
+  {
+    "id": 58,
+    "employee_name": "Krishan",
+    "date": "2025-09-14",
+    "start_reading": 4978.0,
+    "end_reading": 5015.0,
+    "distance": 37.0,
+    "rate": 3.5,
+    "amount": 129.5
+  },
+  {
+    "id": 59,
+    "employee_name": "Ashish",
+    "date": "2025-09-15",
+    "start_reading": 49063.0,
+    "end_reading": 49175.0,
+    "distance": 112.0,
+    "rate": 3.5,
+    "amount": 392.0
+  },
+  {
+    "id": 60,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-15",
+    "start_reading": 31444.0,
+    "end_reading": 31462.0,
+    "distance": 18.0,
+    "rate": 3.5,
+    "amount": 63.0
+  },
+  {
+    "id": 61,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-15",
+    "start_reading": 27520.0,
+    "end_reading": 27576.0,
+    "distance": 56.0,
+    "rate": 3.5,
+    "amount": 196.0
+  },
+  {
+    "id": 62,
+    "employee_name": "Krishan",
+    "date": "2025-09-15",
+    "start_reading": 5015.0,
+    "end_reading": 5034.0,
+    "distance": 19.0,
+    "rate": 3.5,
+    "amount": 66.5
+  },
+  {
+    "id": 63,
+    "employee_name": "Ashish",
+    "date": "2025-09-16",
+    "start_reading": 49175.0,
+    "end_reading": 49259.0,
+    "distance": 84.0,
+    "rate": 3.5,
+    "amount": 294.0
+  },
+  {
+    "id": 64,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-16",
+    "start_reading": 31472.0,
+    "end_reading": 31502.0,
+    "distance": 30.0,
+    "rate": 3.5,
+    "amount": 105.0
+  },
+  {
+    "id": 65,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-16",
+    "start_reading": 27582.0,
+    "end_reading": 27662.0,
+    "distance": 80.0,
+    "rate": 3.5,
+    "amount": 280.0
+  },
+  {
+    "id": 66,
+    "employee_name": "Inder",
+    "date": "2025-09-16",
+    "start_reading": 1531.0,
+    "end_reading": 1578.0,
+    "distance": 47.0,
+    "rate": 3.5,
+    "amount": 164.5
+  },
+  {
+    "id": 67,
+    "employee_name": "Krishan",
+    "date": "2025-09-16",
+    "start_reading": 5039.0,
+    "end_reading": 5063.0,
+    "distance": 24.0,
+    "rate": 3.5,
+    "amount": 84.0
+  },
+  {
+    "id": 68,
+    "employee_name": "Ashish",
+    "date": "2025-09-17",
+    "start_reading": 49261.0,
+    "end_reading": 49306.0,
+    "distance": 45.0,
+    "rate": 3.5,
+    "amount": 157.5
+  },
+  {
+    "id": 69,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-17",
+    "start_reading": 31522.0,
+    "end_reading": 31534.0,
+    "distance": 12.0,
+    "rate": 3.5,
+    "amount": 42.0
+  },
+  {
+    "id": 70,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-17",
+    "start_reading": 27667.0,
+    "end_reading": 27688.0,
+    "distance": 21.0,
+    "rate": 3.5,
+    "amount": 73.5
+  },
+  {
+    "id": 71,
+    "employee_name": "Inder",
+    "date": "2025-09-17",
+    "start_reading": 1595.0,
+    "end_reading": 1612.0,
+    "distance": 17.0,
+    "rate": 3.5,
+    "amount": 59.5
+  },
+  {
+    "id": 72,
+    "employee_name": "Krishan",
+    "date": "2025-09-17",
+    "start_reading": 5067.0,
+    "end_reading": 5095.0,
+    "distance": 28.0,
+    "rate": 3.5,
+    "amount": 98.0
+  },
+  {
+    "id": 73,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-18",
+    "start_reading": 31534.0,
+    "end_reading": 31539.0,
+    "distance": 5.0,
+    "rate": 3.5,
+    "amount": 17.5
+  },
+  {
+    "id": 74,
+    "employee_name": "Deepak",
+    "date": "2025-09-18",
+    "start_reading": 33969.0,
+    "end_reading": 33970.0,
+    "distance": 1.0,
+    "rate": 3.5,
+    "amount": 3.5
+  },
+  {
+    "id": 75,
+    "employee_name": "Inder",
+    "date": "2025-09-18",
+    "start_reading": 1681.0,
+    "end_reading": 1730.0,
+    "distance": 49.0,
+    "rate": 3.5,
+    "amount": 171.5
+  },
+  {
+    "id": 76,
+    "employee_name": "Krishan",
+    "date": "2025-09-18",
+    "start_reading": 5125.0,
+    "end_reading": 5158.0,
+    "distance": 33.0,
+    "rate": 3.5,
+    "amount": 115.5
+  },
+  {
+    "id": 77,
+    "employee_name": "Ashish",
+    "date": "2025-09-19",
+    "start_reading": 49323.0,
+    "end_reading": 49384.0,
+    "distance": 61.0,
+    "rate": 3.5,
+    "amount": 213.5
+  },
+  {
+    "id": 78,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-19",
+    "start_reading": 31539.0,
+    "end_reading": 31556.0,
+    "distance": 17.0,
+    "rate": 3.5,
+    "amount": 59.5
+  },
+  {
+    "id": 79,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-19",
+    "start_reading": 27829.0,
+    "end_reading": 27912.0,
+    "distance": 83.0,
+    "rate": 3.5,
+    "amount": 290.5
+  },
+  {
+    "id": 80,
+    "employee_name": "Inder",
+    "date": "2025-09-19",
+    "start_reading": 1742.0,
+    "end_reading": 1788.0,
+    "distance": 46.0,
+    "rate": 3.5,
+    "amount": 161.0
+  },
+  {
+    "id": 81,
+    "employee_name": "Krishan",
+    "date": "2025-09-19",
+    "start_reading": 5159.0,
+    "end_reading": 5218.0,
+    "distance": 59.0,
+    "rate": 3.5,
+    "amount": 206.5
+  },
+  {
+    "id": 82,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-19",
+    "start_reading": 55079.0,
+    "end_reading": 55106.0,
+    "distance": 27.0,
+    "rate": 3.5,
+    "amount": 94.5
+  },
+  {
+    "id": 83,
+    "employee_name": "Ashish",
+    "date": "2025-09-20",
+    "start_reading": 49384.0,
+    "end_reading": 49450.0,
+    "distance": 66.0,
+    "rate": 3.5,
+    "amount": 231.0
+  },
+  {
+    "id": 84,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-20",
+    "start_reading": 31576.0,
+    "end_reading": 31593.0,
+    "distance": 17.0,
+    "rate": 3.5,
+    "amount": 59.5
+  },
+  {
+    "id": 85,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-20",
+    "start_reading": 27920.0,
+    "end_reading": 27991.0,
+    "distance": 71.0,
+    "rate": 3.5,
+    "amount": 248.5
+  },
+  {
+    "id": 86,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-20",
+    "start_reading": 55106.0,
+    "end_reading": 55110.0,
+    "distance": 4.0,
+    "rate": 3.5,
+    "amount": 14.0
+  },
+  {
+    "id": 87,
+    "employee_name": "Sohit",
+    "date": "2025-09-20",
+    "start_reading": 44936.0,
+    "end_reading": 45000.0,
+    "distance": 64.0,
+    "rate": 3.5,
+    "amount": 224.0
+  },
+  {
+    "id": 88,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-22",
+    "start_reading": 31647.0,
+    "end_reading": 31673.0,
+    "distance": 26.0,
+    "rate": 3.5,
+    "amount": 91.0
+  },
+  {
+    "id": 89,
+    "employee_name": "Inder",
+    "date": "2025-09-22",
+    "start_reading": 1862.0,
+    "end_reading": 1963.0,
+    "distance": 101.0,
+    "rate": 3.5,
+    "amount": 353.5
+  },
+  {
+    "id": 90,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-22",
+    "start_reading": 55147.0,
+    "end_reading": 55183.0,
+    "distance": 36.0,
+    "rate": 3.5,
+    "amount": 126.0
+  },
+  {
+    "id": 92,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-23",
+    "start_reading": 55183.0,
+    "end_reading": 55254.0,
+    "distance": 71.0,
+    "rate": 3.5,
+    "amount": 248.5
+  },
+  {
+    "id": 93,
+    "employee_name": "Ashish",
+    "date": "2025-09-23",
+    "start_reading": 49466.0,
+    "end_reading": 49607.0,
+    "distance": 141.0,
+    "rate": 3.5,
+    "amount": 493.5
+  },
+  {
+    "id": 94,
+    "employee_name": "Inder",
+    "date": "2025-09-23",
+    "start_reading": 1967.0,
+    "end_reading": 2065.0,
+    "distance": 98.0,
+    "rate": 3.5,
+    "amount": 343.0
+  },
+  {
+    "id": 95,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-23",
+    "start_reading": 31682.0,
+    "end_reading": 31708.0,
+    "distance": 26.0,
+    "rate": 3.5,
+    "amount": 91.0
+  },
+  {
+    "id": 96,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-24",
+    "start_reading": 31709.0,
+    "end_reading": 31742.0,
+    "distance": 33.0,
+    "rate": 3.5,
+    "amount": 115.5
+  },
+  {
+    "id": 97,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-24",
+    "start_reading": 28126.0,
+    "end_reading": 28222.0,
+    "distance": 96.0,
+    "rate": 3.5,
+    "amount": 336.0
+  },
+  {
+    "id": 98,
+    "employee_name": "Ashish",
+    "date": "2025-09-24",
+    "start_reading": 49607.0,
+    "end_reading": 49687.0,
+    "distance": 80.0,
+    "rate": 3.5,
+    "amount": 280.0
+  },
+  {
+    "id": 99,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-24",
+    "start_reading": 55254.0,
+    "end_reading": 55288.0,
+    "distance": 34.0,
+    "rate": 3.5,
+    "amount": 119.0
+  },
+  {
+    "id": 100,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-25",
+    "start_reading": 31742.0,
+    "end_reading": 31765.0,
+    "distance": 23.0,
+    "rate": 3.5,
+    "amount": 80.5
+  },
+  {
+    "id": 101,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-25",
+    "start_reading": 55288.0,
+    "end_reading": 55343.0,
+    "distance": 55.0,
+    "rate": 3.5,
+    "amount": 192.5
+  },
+  {
+    "id": 102,
+    "employee_name": "Ashish",
+    "date": "2025-09-25",
+    "start_reading": 49687.0,
+    "end_reading": 49790.0,
+    "distance": 103.0,
+    "rate": 3.5,
+    "amount": 360.5
+  },
+  {
+    "id": 103,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-25",
+    "start_reading": 28230.0,
+    "end_reading": 28327.0,
+    "distance": 97.0,
+    "rate": 3.5,
+    "amount": 339.5
+  },
+  {
+    "id": 104,
+    "employee_name": "Inder",
+    "date": "2025-09-25",
+    "start_reading": 2073.0,
+    "end_reading": 2137.0,
+    "distance": 64.0,
+    "rate": 3.5,
+    "amount": 224.0
+  },
+  {
+    "id": 105,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-26",
+    "start_reading": 55343.0,
+    "end_reading": 55379.0,
+    "distance": 36.0,
+    "rate": 3.5,
+    "amount": 126.0
+  },
+  {
+    "id": 106,
+    "employee_name": "Ashish",
+    "date": "2025-09-26",
+    "start_reading": 49791.0,
+    "end_reading": 49919.0,
+    "distance": 128.0,
+    "rate": 3.5,
+    "amount": 448.0
+  },
+  {
+    "id": 107,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-26",
+    "start_reading": 31765.0,
+    "end_reading": 31781.0,
+    "distance": 16.0,
+    "rate": 3.5,
+    "amount": 56.0
+  },
+  {
+    "id": 108,
+    "employee_name": "Inder",
+    "date": "2025-09-26",
+    "start_reading": 2165.0,
+    "end_reading": 2223.0,
+    "distance": 58.0,
+    "rate": 3.5,
+    "amount": 203.0
+  },
+  {
+    "id": 109,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-26",
+    "start_reading": 28359.0,
+    "end_reading": 28443.0,
+    "distance": 84.0,
+    "rate": 3.5,
+    "amount": 294.0
+  },
+  {
+    "id": 110,
+    "employee_name": "Krishan",
+    "date": "2025-09-27",
+    "start_reading": 5755.0,
+    "end_reading": 5761.0,
+    "distance": 6.0,
+    "rate": 3.5,
+    "amount": 21.0
+  },
+  {
+    "id": 111,
+    "employee_name": "Ram Singh Rawat",
+    "date": "2025-09-27",
+    "start_reading": 55379.0,
+    "end_reading": 55404.0,
+    "distance": 25.0,
+    "rate": 3.5,
+    "amount": 87.5
+  },
+  {
+    "id": 112,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-27",
+    "start_reading": 31790.0,
+    "end_reading": 31805.0,
+    "distance": 15.0,
+    "rate": 3.5,
+    "amount": 52.5
+  },
+  {
+    "id": 113,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-27",
+    "start_reading": 28467.0,
+    "end_reading": 28530.0,
+    "distance": 63.0,
+    "rate": 3.5,
+    "amount": 220.5
+  },
+  {
+    "id": 114,
+    "employee_name": "Inder",
+    "date": "2025-09-27",
+    "start_reading": 32193.0,
+    "end_reading": 32254.0,
+    "distance": 61.0,
+    "rate": 3.5,
+    "amount": 213.5
+  },
+  {
+    "id": 115,
+    "employee_name": "Krishan",
+    "date": "2025-09-28",
+    "start_reading": 5761.0,
+    "end_reading": 5764.0,
+    "distance": 3.0,
+    "rate": 3.5,
+    "amount": 10.5
+  },
+  {
+    "id": 116,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-28",
+    "start_reading": 28541.0,
+    "end_reading": 28613.0,
+    "distance": 72.0,
+    "rate": 3.5,
+    "amount": 252.0
+  },
+  {
+    "id": 117,
+    "employee_name": "Krishan",
+    "date": "2025-09-29",
+    "start_reading": 5764.0,
+    "end_reading": 5765.0,
+    "distance": 1.0,
+    "rate": 3.5,
+    "amount": 3.5
+  },
+  {
+    "id": 118,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-29",
+    "start_reading": 28625.0,
+    "end_reading": 28672.0,
+    "distance": 47.0,
+    "rate": 3.5,
+    "amount": 164.5
+  },
+  {
+    "id": 119,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-29",
+    "start_reading": 31858.0,
+    "end_reading": 31869.0,
+    "distance": 11.0,
+    "rate": 3.5,
+    "amount": 38.5
+  },
+  {
+    "id": 120,
+    "employee_name": "Inder",
+    "date": "2025-09-29",
+    "start_reading": 2277.0,
+    "end_reading": 2326.0,
+    "distance": 49.0,
+    "rate": 3.5,
+    "amount": 171.5
+  },
+  {
+    "id": 121,
+    "employee_name": "Krishan",
+    "date": "2025-09-30",
+    "start_reading": 5766.0,
+    "end_reading": 5770.0,
+    "distance": 4.0,
+    "rate": 3.5,
+    "amount": 14.0
+  },
+  {
+    "id": 122,
+    "employee_name": "Inder",
+    "date": "2025-09-30",
+    "start_reading": 2330.0,
+    "end_reading": 2373.0,
+    "distance": 43.0,
+    "rate": 3.5,
+    "amount": 150.5
+  },
+  {
+    "id": 123,
+    "employee_name": "Dan Singh Bisht",
+    "date": "2025-09-30",
+    "start_reading": 31869.0,
+    "end_reading": 31870.0,
+    "distance": 1.0,
+    "rate": 3.5,
+    "amount": 3.5
+  },
+  {
+    "id": 126,
+    "employee_name": "Gautam Gulati",
+    "date": "2025-09-30",
+    "start_reading": 28693.0,
+    "end_reading": 28733.0,
+    "distance": 40.0,
+    "rate": 3.5,
+    "amount": 140.0
+  }
+]
