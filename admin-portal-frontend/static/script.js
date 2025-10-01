@@ -625,7 +625,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     genAddItemBtn.addEventListener('click', addGeneralExpenseItem);
-    genViewBtn.addEventListener('click', viewGeneral);
+    
+    // Debug: Check if genViewBtn exists
+    if (genViewBtn) {
+        console.log('genViewBtn found, adding event listener');
+        genViewBtn.addEventListener('click', viewGeneral);
+    } else {
+        console.error('genViewBtn not found!');
+    }
 
     advDeleteLastBtn.addEventListener('click', () => setupConfirmationModal(deleteLastAdvance, 'Confirm Deletion', 'Are you sure you want to delete the last advance for this employee?'));
     advViewDayBtn.addEventListener('click', viewAdvancesByDay);
@@ -1317,14 +1324,20 @@ async function loadGeneral() {
 }
 
 async function viewGeneral() {
+    console.log('viewGeneral function called');
     const date = document.getElementById('gen-date').value;
+    console.log('Selected date:', date);
     if (!date) return showToast('Please select a date.', 'error');
     
     const originalText = showButtonSpinner(genViewBtn, 'Loading...');
     try {
+        console.log('Making API request to:', `/api/expenses/general/view?date=${date}`);
         const data = await apiRequest(`/api/expenses/general/view?date=${date}`);
+        console.log('API response:', data);
         renderDataTable('general-table-container', data.records, data.columns);
+        showToast('General expenses loaded successfully.', 'success');
     } catch (error) {
+        console.error('Error in viewGeneral:', error);
         showToast(error.message, 'error');
     } finally {
         hideButtonSpinner(genViewBtn, originalText);
