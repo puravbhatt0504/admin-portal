@@ -589,7 +589,11 @@ def generate_report():
     # Handle OPTIONS request for CORS
     if request.method == 'OPTIONS':
         print("Handling OPTIONS request")
-        return jsonify({'status': 'OK'}), 200
+        response = jsonify({'status': 'OK'})
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        return response
     
     try:
         # Handle both GET and POST requests
@@ -612,7 +616,11 @@ def generate_report():
         records = [['2024-01-01', 'John Doe', 1000], ['2024-01-02', 'Jane Smith', 1500]]
         
         print("=== REPORTS GENERATE DEBUG END ===")
-        return jsonify({'columns': columns, 'records': records})
+        response = jsonify({'columns': columns, 'records': records})
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        return response
         
     except Exception as e:
         print(f"=== REPORTS GENERATE ERROR ===")
