@@ -1088,6 +1088,41 @@ def get_today_attendance():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# --- Test PDF Endpoint ---
+@app.route('/api/test-pdf', methods=['GET'])
+def test_pdf_simple():
+    """Simple PDF test to debug FPDF2 issues"""
+    try:
+        print("=== TEST PDF DEBUG START ===")
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.set_font('Arial', 'B', 16)
+        pdf.cell(0, 10, 'Test PDF', new_x="LMARGIN", new_y="NEXT", align='C')
+        pdf.ln(10)
+        pdf.set_font('Arial', '', 12)
+        pdf.cell(0, 8, 'This is a test PDF to verify FPDF2 is working.', new_x="LMARGIN", new_y="NEXT")
+        
+        pdf_bytes = pdf.output()
+        print(f"PDF generated successfully, size: {len(pdf_bytes)}")
+        
+        response = send_file(
+            io.BytesIO(pdf_bytes),
+            mimetype='application/pdf',
+            as_attachment=False,
+            download_name='test.pdf'
+        )
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        print("=== TEST PDF DEBUG END ===")
+        return response
+        
+    except Exception as e:
+        print(f"=== TEST PDF ERROR ===")
+        print(f"Error: {str(e)}")
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
+        print("=== TEST PDF ERROR END ===")
+        return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
+
 # --- Debug Endpoint ---
 @app.route('/api/debug/logs', methods=['POST'])
 def debug_logs():
