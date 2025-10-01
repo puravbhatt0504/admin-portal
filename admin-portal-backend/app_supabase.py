@@ -1072,31 +1072,6 @@ def get_today_attendance():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# --- Config Endpoints ---
-@app.route('/api/config', methods=['GET'])
-def get_config():
-    """Get application configuration"""
-    try:
-        # Return default config for now
-        return jsonify({
-            'travel_rate_per_km': 10.0,
-            'currency': 'INR',
-            'company_name': 'Admin Portal'
-        })
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/api/config', methods=['POST'])
-def update_config():
-    """Update application configuration"""
-    try:
-        data = request.get_json()
-        # For now, just return success
-        # In a real app, you'd save this to database
-        return jsonify({'message': 'Configuration updated successfully'})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
 # --- General Expenses View ---
 @app.route('/api/expenses/general/view', methods=['GET'])
 def view_general():
