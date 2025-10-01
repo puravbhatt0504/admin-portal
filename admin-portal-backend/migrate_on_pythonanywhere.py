@@ -40,13 +40,13 @@ def create_supabase_connection():
         import psycopg2
         from psycopg2 import sql
         
-        # Supabase PostgreSQL connection
+        # Supabase PostgreSQL connection (direct connection)
         connection = psycopg2.connect(
-            host='aws-1-ap-south-1.pooler.supabase.com',
+            host='db.sevlfbqydeludjfzatfe.supabase.co',
             database='postgres',
-            user='postgres.sevlfbqydeludjfzatfe',
+            user='postgres',
             password='puravbhatt0504',
-            port='6543',
+            port='5432',
             sslmode='require'
         )
         
