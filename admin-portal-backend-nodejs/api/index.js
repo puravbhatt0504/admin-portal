@@ -1,38 +1,27 @@
 const express = require('express');
-const cors = require('cors');
 const { Pool } = require('pg');
 require('dotenv').config();
 
 const app = express();
 
-// CORS configuration - More permissive for testing
-const corsOptions = {
-  origin: true, // Allow all origins for now
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'Accept']
-};
-
-app.use(cors(corsOptions));
-app.use(express.json());
-
-// Manual CORS handling for preflight requests
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.sendStatus(200);
-});
-
-// Add CORS headers to all responses
+// Vercel-specific CORS handling
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Origin, Accept');
-  res.header('Access-Control-Allow-Credentials', 'true');
+  // Set CORS headers for all responses
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Origin, Accept');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+  
   next();
 });
+
+app.use(express.json());
 
 // Supabase PostgreSQL Configuration - Using Shared Pooler
 const pool = new Pool({
@@ -58,6 +47,15 @@ app.get('/', (req, res) => {
     status: 'running',
     version: '2.0.0',
     database: 'Supabase PostgreSQL'
+  });
+});
+
+// Test endpoint for CORS
+app.get('/test', (req, res) => {
+  res.json({
+    message: 'CORS Test Successful',
+    timestamp: new Date().toISOString(),
+    origin: req.headers.origin || 'No origin header'
   });
 });
 
