@@ -31,17 +31,24 @@ db_host = os.environ.get('SUPABASE_DB_HOST', 'db.sevlfbqydeludjfzatfe.supabase.c
 db_name = os.environ.get('SUPABASE_DB_NAME', 'postgres')
 db_port = os.environ.get('SUPABASE_DB_PORT', '5432')
 
+# Use direct connection instead of pooler for better reliability
+# Replace pooler host with direct host
+if 'pooler' in db_host or '6543' in str(db_port):
+    db_host = db_host.replace('pooler', 'db').replace('aws-1-ap-south-1.pooler', 'db')
+    db_port = '5432'
+
 # Construct PostgreSQL connection string
 app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'pool_pre_ping': True,
     'pool_recycle': 300,
-    'pool_timeout': 20,
+    'pool_timeout': 10,
     'max_overflow': 0,
-    'pool_size': 5,
+    'pool_size': 1,  # Reduced for free tier
     'connect_args': {
-        'sslmode': 'require'
+        'sslmode': 'require',
+        'connect_timeout': 10
     }
 }
 
