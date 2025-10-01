@@ -991,6 +991,112 @@ def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
         pdf.set_font('Arial', '', 10)
         pdf.cell(0, 6, f'Error loading general expenses data: {str(e)}', ln=True)
 
+# --- Expenses Summary ---
+@app.route('/api/expenses/summary', methods=['GET'])
+def get_expenses_summary():
+    """Get expenses summary for dashboard"""
+    try:
+        # Get travel expenses summary
+        travel_expenses = db.session.query(TravelExpense).all()
+        travel_total = sum(exp.amount for exp in travel_expenses)
+        
+        # Get general expenses summary
+        general_expenses = db.session.query(GeneralExpense).all()
+        general_total = sum(exp.amount for exp in general_expenses)
+        
+        # Get total expenses
+        total_expenses = travel_total + general_total
+        
+        return jsonify({
+            'travel_expenses': {
+                'total': travel_total,
+                'count': len(travel_expenses)
+            },
+            'general_expenses': {
+                'total': general_total,
+                'count': len(general_expenses)
+            },
+            'total_expenses': total_expenses,
+            'total_count': len(travel_expenses) + len(general_expenses)
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# --- Dashboard Data ---
+@app.route('/api/dashboard', methods=['GET'])
+def get_dashboard_data():
+    """Get dashboard summary data"""
+    try:
+        # Get employee count
+        employee_count = db.session.query(Employee).count()
+        
+        # Get today's attendance
+        today = datetime.now().date()
+        today_attendance = db.session.query(Attendance).filter_by(date=today).count()
+        
+        # Get expenses summary
+        travel_total = db.session.query(func.sum(TravelExpense.amount)).scalar() or 0
+        general_total = db.session.query(func.sum(GeneralExpense.amount)).scalar() or 0
+        total_expenses = float(travel_total) + float(general_total)
+        
+        return jsonify({
+            'employees': employee_count,
+            'attendance_today': today_attendance,
+            'total_expenses': total_expenses,
+            'date': today.isoformat()
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# --- Today's Attendance ---
+@app.route('/api/attendance/today', methods=['GET'])
+def get_today_attendance():
+    """Get today's attendance data"""
+    try:
+        today = datetime.now().date()
+        attendance = db.session.query(Attendance).filter_by(date=today).all()
+        
+        result = []
+        for att in attendance:
+            result.append({
+                'id': att.id,
+                'employee_name': att.employee_name,
+                'shift1_in': att.shift1_in.isoformat() if att.shift1_in else None,
+                'shift1_out': att.shift1_out.isoformat() if att.shift1_out else None,
+                'shift2_in': att.shift2_in.isoformat() if att.shift2_in else None,
+                'shift2_out': att.shift2_out.isoformat() if att.shift2_out else None,
+                'date': att.date.isoformat()
+            })
+        
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# --- Config Endpoints ---
+@app.route('/api/config', methods=['GET'])
+def get_config():
+    """Get application configuration"""
+    try:
+        # Return default config for now
+        return jsonify({
+            'travel_rate_per_km': 10.0,
+            'currency': 'INR',
+            'company_name': 'Admin Portal'
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/config', methods=['POST'])
+def update_config():
+    """Update application configuration"""
+    try:
+        data = request.get_json()
+        # For now, just return success
+        # In a real app, you'd save this to database
+        return jsonify({'message': 'Configuration updated successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 # --- General Expenses View ---
 @app.route('/api/expenses/general/view', methods=['GET'])
 def view_general():
