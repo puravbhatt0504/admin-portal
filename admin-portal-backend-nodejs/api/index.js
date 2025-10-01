@@ -5,18 +5,12 @@ require('dotenv').config();
 
 const app = express();
 
-// CORS configuration
+// CORS configuration - More permissive for testing
 const corsOptions = {
-  origin: [
-    'https://admin-portal-dusky.vercel.app',
-    'https://admin-portal-psi-five.vercel.app',
-    'http://localhost:3000',
-    'http://127.0.0.1:5500',
-    'file://'
-  ],
+  origin: true, // Allow all origins for now
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'Accept']
 };
 
 app.use(cors(corsOptions));
