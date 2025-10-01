@@ -1,6 +1,7 @@
 import os
 import io
 from datetime import datetime, date, timedelta, time
+import time as time_module
 from flask import Flask, jsonify, request, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
@@ -51,9 +52,14 @@ def check_db_connection():
     """Check if database connection is available"""
     try:
         db.session.execute('SELECT 1')
+        db.session.commit()
         return True
     except Exception as e:
         print(f"Database connection check failed: {e}")
+        try:
+            db.session.rollback()
+        except:
+            pass
         return False
 
 def safe_db_query(query_func, default_return=None):
@@ -64,7 +70,7 @@ def safe_db_query(query_func, default_return=None):
             if not check_db_connection():
                 print(f"Database not available, attempt {attempt + 1}/{max_retries}")
                 if attempt < max_retries - 1:
-                    time.sleep(1)  # Wait 1 second before retry
+                    time_module.sleep(1)  # Wait 1 second before retry
                     continue
                 else:
                     return default_return
@@ -72,7 +78,7 @@ def safe_db_query(query_func, default_return=None):
         except Exception as e:
             print(f"Database query failed on attempt {attempt + 1}: {e}")
             if attempt < max_retries - 1:
-                time.sleep(1)
+                time_module.sleep(1)
                 continue
             else:
                 return default_return
