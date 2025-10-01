@@ -5,7 +5,7 @@ import time as time_module
 from flask import Flask, jsonify, request, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from sqlalchemy import func, desc, and_
+from sqlalchemy import func, desc, and_, text
 try:
     from fpdf2 import FPDF
 except ImportError:
@@ -52,7 +52,7 @@ db.Model = Base
 def check_db_connection():
     """Check if database connection is available"""
     try:
-        db.session.execute('SELECT 1')
+        db.session.execute(text('SELECT 1'))
         db.session.commit()
         return True
     except Exception as e:
@@ -108,7 +108,7 @@ def health_check():
     """Health check endpoint"""
     try:
         # Test database connection
-        db.session.execute('SELECT 1')
+        db.session.execute(text('SELECT 1'))
         return jsonify({
             'status': 'healthy',
             'database': 'connected',
