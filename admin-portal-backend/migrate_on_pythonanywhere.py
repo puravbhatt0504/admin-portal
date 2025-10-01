@@ -8,10 +8,6 @@ import os
 import sys
 import json
 from datetime import datetime, date, time
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
 
 def create_mysql_connection():
     """Create connection to local MySQL database on PythonAnywhere"""
@@ -24,7 +20,7 @@ def create_mysql_connection():
             host='finalboss0504.mysql.pythonanywhere-services.com',
             database='finalboss0504$default',
             user='finalboss0504',
-            password=os.environ.get('OLD_MYSQL_PASSWORD', 'your_old_password')
+            password='puravbhatt0504'
         )
         
         if connection.is_connected():
@@ -46,11 +42,11 @@ def create_supabase_connection():
         
         # Supabase PostgreSQL connection
         connection = psycopg2.connect(
-            host=os.environ.get('SUPABASE_DB_HOST'),
-            database=os.environ.get('SUPABASE_DB_NAME', 'postgres'),
-            user=os.environ.get('SUPABASE_DB_USER'),
-            password=os.environ.get('SUPABASE_DB_PASSWORD'),
-            port=os.environ.get('SUPABASE_DB_PORT', '5432'),
+            host='aws-1-ap-south-1.pooler.supabase.com',
+            database='postgres',
+            user='postgres.sevlfbqydeludjfzatfe',
+            password='puravbhatt0504',
+            port='6543',
             sslmode='require'
         )
         
