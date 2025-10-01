@@ -421,6 +421,7 @@ async function postJsonThenForm(endpoint, payload, { timeoutMs = 10000 } = {}) {
 
 // --- Event Listeners Setup ---
 document.addEventListener('DOMContentLoaded', async () => {
+    console.log('DOM Content Loaded - Setting up event listeners...');
     try {
         // Initialize mobile error handling first
         handleMobileErrors();
@@ -627,12 +628,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     genAddItemBtn.addEventListener('click', addGeneralExpenseItem);
     
     // Debug: Check if genViewBtn exists
+    console.log('Setting up general view button...');
+    console.log('genViewBtn element:', genViewBtn);
     if (genViewBtn) {
         console.log('genViewBtn found, adding event listener');
-        genViewBtn.addEventListener('click', viewGeneral);
+        genViewBtn.addEventListener('click', function(e) {
+            console.log('General view button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            viewGeneral();
+        });
+        console.log('Event listener added successfully');
     } else {
-        console.error('genViewBtn not found!');
+        console.error('genViewBtn not found! Trying to find by ID...');
+        const btn = document.getElementById('gen-view-btn');
+        console.log('Found by ID:', btn);
+        if (btn) {
+            console.log('Adding event listener to found button');
+            btn.addEventListener('click', function(e) {
+                console.log('General view button clicked (found by ID)!');
+                e.preventDefault();
+                e.stopPropagation();
+                viewGeneral();
+            });
+        }
     }
+    
+    // Add a test button click after a delay to see if everything is working
+    setTimeout(() => {
+        console.log('Testing general view button setup...');
+        const testBtn = document.getElementById('gen-view-btn');
+        if (testBtn) {
+            console.log('Test: Button found and ready');
+            // Make the function available globally for testing
+            window.testViewGeneral = viewGeneral;
+            console.log('Test: You can now call testViewGeneral() in console to test the function');
+        } else {
+            console.error('Test: Button still not found after delay');
+        }
+    }, 2000);
 
     advDeleteLastBtn.addEventListener('click', () => setupConfirmationModal(deleteLastAdvance, 'Confirm Deletion', 'Are you sure you want to delete the last advance for this employee?'));
     advViewDayBtn.addEventListener('click', viewAdvancesByDay);
@@ -1324,18 +1358,44 @@ async function loadGeneral() {
 }
 
 async function viewGeneral() {
+    console.log('=== VIEW GENERAL FUNCTION CALLED ===');
     console.log('viewGeneral function called');
-    const date = document.getElementById('gen-date').value;
+    
+    const dateElement = document.getElementById('gen-date');
+    console.log('Date element:', dateElement);
+    
+    if (!dateElement) {
+        console.error('gen-date element not found!');
+        showToast('Date input not found. Please refresh the page.', 'error');
+        return;
+    }
+    
+    const date = dateElement.value;
     console.log('Selected date:', date);
-    if (!date) return showToast('Please select a date.', 'error');
+    
+    if (!date) {
+        console.log('No date selected');
+        return showToast('Please select a date.', 'error');
+    }
     
     const originalText = showButtonSpinner(genViewBtn, 'Loading...');
     try {
         console.log('Making API request to:', `/api/expenses/general/view?date=${date}`);
         const data = await apiRequest(`/api/expenses/general/view?date=${date}`);
         console.log('API response:', data);
+        
+        const tableContainer = document.getElementById('general-table-container');
+        console.log('Table container:', tableContainer);
+        
+        if (!tableContainer) {
+            console.error('general-table-container not found!');
+            showToast('Table container not found. Please refresh the page.', 'error');
+            return;
+        }
+        
         renderDataTable('general-table-container', data.records, data.columns);
         showToast('General expenses loaded successfully.', 'success');
+        console.log('=== VIEW GENERAL SUCCESS ===');
     } catch (error) {
         console.error('Error in viewGeneral:', error);
         showToast(error.message, 'error');
