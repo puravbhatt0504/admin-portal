@@ -594,16 +594,42 @@ def salary_pdf():
         print("=== SALARY PDF ERROR END ===")
         return jsonify({'error': f'PDF generation failed: {str(e)}'}), 500
 
-@app.route('/api/reports/generate', methods=['POST'])
+@app.route('/api/reports/generate', methods=['GET', 'POST'])
 def generate_report():
-    # Return a simple table structure for the frontend to render
-    data = request.json or {}
-    report_type = data.get('type') or request.args.get('type')
-    start_date = data.get('start_date') or request.args.get('start_date')
-    end_date = data.get('end_date') or request.args.get('end_date')
-    columns = [{'title': 'Date'}, {'title': 'Employee'}, {'title': 'Amount'}]
-    records = [['2024-01-01', 'John Doe', 1000], ['2024-01-02', 'Jane Smith', 1500]]
-    return jsonify({'columns': columns, 'records': records})
+    print("=== REPORTS GENERATE DEBUG START ===")
+    print(f"Request method: {request.method}")
+    print(f"Request args: {request.args}")
+    print(f"Request JSON: {request.json}")
+    
+    try:
+        # Handle both GET and POST requests
+        if request.method == 'GET':
+            report_type = request.args.get('type')
+            start_date = request.args.get('start_date')
+            end_date = request.args.get('end_date')
+        else:  # POST
+            data = request.json or {}
+            report_type = data.get('type') or request.args.get('type')
+            start_date = data.get('start_date') or request.args.get('start_date')
+            end_date = data.get('end_date') or request.args.get('end_date')
+        
+        print(f"Parsed parameters - report_type: {report_type}, start_date: {start_date}, end_date: {end_date}")
+        
+        # Return a simple table structure for the frontend to render
+        columns = [{'title': 'Date'}, {'title': 'Employee'}, {'title': 'Amount'}]
+        records = [['2024-01-01', 'John Doe', 1000], ['2024-01-02', 'Jane Smith', 1500]]
+        
+        print("=== REPORTS GENERATE DEBUG END ===")
+        return jsonify({'columns': columns, 'records': records})
+        
+    except Exception as e:
+        print(f"=== REPORTS GENERATE ERROR ===")
+        print(f"Error type: {type(e).__name__}")
+        print(f"Error message: {str(e)}")
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
+        print("=== REPORTS GENERATE ERROR END ===")
+        return jsonify({'error': f'Report generation failed: {str(e)}'}), 500
 
 @app.route('/api/reports/pdf', methods=['POST'])
 def generate_report_pdf():

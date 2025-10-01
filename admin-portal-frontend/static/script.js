@@ -1531,7 +1531,7 @@ async function generateReport(preset = null) {
             params = `?type=${reportType}&start_date=${startDate}&end_date=${endDate}`;
         }
         
-        const data = await apiRequest(`/api/reports/generate${params}`, 'POST');
+        const data = await apiRequest(`/api/reports/generate${params}`, 'GET');
         renderDataTable('report-table-container', data.records, data.columns);
         showToast('Report generated successfully.', 'success');
     } catch (error) {
