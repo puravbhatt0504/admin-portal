@@ -38,13 +38,13 @@ print(f"Environment check - RENDER: {os.environ.get('RENDER')}, PORT: {os.enviro
 
 # If we're in production (Render), use the correct Supabase credentials
 if is_render:
-    # Try pooler connection first (more reliable for Render)
+    # Try direct connection with IPv4 preference
     db_user = 'postgres'
     db_password = 'puravbhatt0504'
-    db_host = 'aws-1-ap-south-1.pooler.supabase.com'
+    db_host = 'db.sevlfbqydeludjfzatfe.supabase.co'
     db_name = 'postgres'
-    db_port = '6543'
-    print("Using Supabase pooler connection for Render")
+    db_port = '5432'
+    print("Using Supabase direct connection for Render with IPv4 preference")
 else:
     print("Using local development configuration")
 
@@ -63,7 +63,12 @@ if not os.environ.get('RENDER') and ('pooler' in db_host or '6543' in str(db_por
     print(f"Converted to direct connection: {db_host}:{db_port}")
 
 # Construct PostgreSQL connection string
-connection_string = f"postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+if is_render:
+    # Add IPv4 preference in connection string for Render
+    connection_string = f"postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}?options=-c%20default_transaction_isolation%3Dread_committed"
+else:
+    connection_string = f"postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+
 app.config['SQLALCHEMY_DATABASE_URI'] = connection_string
 print(f"Connection string: {connection_string}")
 print(f"=== END DATABASE CONFIG DEBUG ===")
@@ -88,6 +93,8 @@ engine_options = {
 if is_render:
     print("Adding IPv4 preference for Render...")
     engine_options['connect_args']['options'] = '-c default_transaction_isolation=read_committed -c tcp_keepalives_idle=600'
+    # Force IPv4 by setting family parameter
+    engine_options['connect_args']['family'] = 2  # AF_INET for IPv4
 
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = engine_options
 
