@@ -76,17 +76,16 @@ def import_attendance(cursor, data):
             shift2_out = parse_datetime(record['shift2_out'])
             
             cursor.execute("""
-                INSERT INTO attendance (id, employee_id, employee_name, date, shift1_in, shift1_out, shift2_in, shift2_out) 
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s) 
+                INSERT INTO attendance (id, employee_name, date, shift1_in, shift1_out, shift2_in, shift2_out) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s) 
                 ON CONFLICT (id) DO UPDATE SET
-                    employee_id = EXCLUDED.employee_id,
                     employee_name = EXCLUDED.employee_name,
                     date = EXCLUDED.date,
                     shift1_in = EXCLUDED.shift1_in,
                     shift1_out = EXCLUDED.shift1_out,
                     shift2_in = EXCLUDED.shift2_in,
                     shift2_out = EXCLUDED.shift2_out
-            """, (record['id'], record['employee_id'], record['employee_name'], 
+            """, (record['id'], record['employee_name'], 
                   date_val, shift1_in, shift1_out, shift2_in, shift2_out))
             print(f"✅ Imported attendance: {record['employee_name']} - {record['date']}")
         except Exception as e:
@@ -100,19 +99,19 @@ def import_travel_expenses(cursor, data):
         try:
             date_val = parse_datetime(record['date'])
             cursor.execute("""
-                INSERT INTO travel_expenses (id, employee_id, employee_name, date, start_reading, end_reading, amount, purpose) 
+                INSERT INTO travel_expenses (id, employee_name, date, start_reading, end_reading, distance, rate, amount) 
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s) 
                 ON CONFLICT (id) DO UPDATE SET
-                    employee_id = EXCLUDED.employee_id,
                     employee_name = EXCLUDED.employee_name,
                     date = EXCLUDED.date,
                     start_reading = EXCLUDED.start_reading,
                     end_reading = EXCLUDED.end_reading,
-                    amount = EXCLUDED.amount,
-                    purpose = EXCLUDED.purpose
-            """, (record['id'], record['employee_id'], record['employee_name'], 
+                    distance = EXCLUDED.distance,
+                    rate = EXCLUDED.rate,
+                    amount = EXCLUDED.amount
+            """, (record['id'], record['employee_name'], 
                   date_val, record['start_reading'], record['end_reading'], 
-                  record['amount'], record['purpose']))
+                  record['distance'], record['rate'], record['amount']))
             print(f"✅ Imported travel expense: {record['employee_name']} - {record['date']}")
         except Exception as e:
             print(f"❌ Error importing travel expense {record['employee_name']}: {e}")
@@ -125,17 +124,15 @@ def import_general_expenses(cursor, data):
         try:
             date_val = parse_datetime(record['date'])
             cursor.execute("""
-                INSERT INTO general_expenses (id, employee_id, employee_name, date, amount, purpose, category) 
-                VALUES (%s, %s, %s, %s, %s, %s, %s) 
+                INSERT INTO general_expenses (id, employee_name, date, description, amount) 
+                VALUES (%s, %s, %s, %s, %s) 
                 ON CONFLICT (id) DO UPDATE SET
-                    employee_id = EXCLUDED.employee_id,
                     employee_name = EXCLUDED.employee_name,
                     date = EXCLUDED.date,
-                    amount = EXCLUDED.amount,
-                    purpose = EXCLUDED.purpose,
-                    category = EXCLUDED.category
-            """, (record['id'], record['employee_id'], record['employee_name'], 
-                  date_val, record['amount'], record['purpose'], record['category']))
+                    description = EXCLUDED.description,
+                    amount = EXCLUDED.amount
+            """, (record['id'], record['employee_name'], 
+                  date_val, record['description'], record['amount']))
             print(f"✅ Imported general expense: {record['employee_name']} - {record['date']}")
         except Exception as e:
             print(f"❌ Error importing general expense {record['employee_name']}: {e}")
@@ -148,17 +145,15 @@ def import_advances(cursor, data):
         try:
             date_val = parse_datetime(record['date'])
             cursor.execute("""
-                INSERT INTO advances (id, employee_id, employee_name, date, amount, purpose, status) 
-                VALUES (%s, %s, %s, %s, %s, %s, %s) 
+                INSERT INTO advances (id, employee_name, date, amount, notes) 
+                VALUES (%s, %s, %s, %s, %s) 
                 ON CONFLICT (id) DO UPDATE SET
-                    employee_id = EXCLUDED.employee_id,
                     employee_name = EXCLUDED.employee_name,
                     date = EXCLUDED.date,
                     amount = EXCLUDED.amount,
-                    purpose = EXCLUDED.purpose,
-                    status = EXCLUDED.status
-            """, (record['id'], record['employee_id'], record['employee_name'], 
-                  date_val, record['amount'], record['purpose'], record['status']))
+                    notes = EXCLUDED.notes
+            """, (record['id'], record['employee_name'], 
+                  date_val, record['amount'], record['notes']))
             print(f"✅ Imported advance: {record['employee_name']} - {record['date']}")
         except Exception as e:
             print(f"❌ Error importing advance {record['employee_name']}: {e}")
