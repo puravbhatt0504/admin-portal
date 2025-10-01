@@ -600,14 +600,18 @@ def generate_report():
     print(f"Request method: {request.method}")
     print(f"Request args: {request.args}")
     print(f"Request JSON: {request.json}")
+    print(f"Request headers: {dict(request.headers)}")
+    print(f"Content-Type: {request.content_type}")
     
     try:
         # Handle both GET and POST requests
         if request.method == 'GET':
+            print("Processing GET request")
             report_type = request.args.get('type')
             start_date = request.args.get('start_date')
             end_date = request.args.get('end_date')
         else:  # POST
+            print("Processing POST request")
             data = request.json or {}
             report_type = data.get('type') or request.args.get('type')
             start_date = data.get('start_date') or request.args.get('start_date')

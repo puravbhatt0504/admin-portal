@@ -1591,7 +1591,12 @@ async function generateReport(preset = null) {
             params = `?type=${reportType}&start_date=${startDate}&end_date=${endDate}`;
         }
         
-        const data = await apiRequest(`/api/reports/generate${params}`, 'GET');
+        // Add cache-busting parameter to ensure fresh request
+        const cacheBuster = `&_t=${Date.now()}`;
+        const fullUrl = `/api/reports/generate${params}${cacheBuster}`;
+        console.log('Making reports generate request to:', fullUrl);
+        console.log('Request method: GET');
+        const data = await apiRequest(fullUrl, 'GET');
         renderDataTable('report-table-container', data.records, data.columns);
         showToast('Report generated successfully.', 'success');
     } catch (error) {
