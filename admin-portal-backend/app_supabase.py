@@ -127,9 +127,35 @@ def health_check():
 def get_employees():
     """Get all employees"""
     try:
+        print("=== GET EMPLOYEES DEBUG START ===")
+        print("Querying employees from Supabase database...")
+        
         employees = Employee.query.all()
-        return jsonify([{'id': emp.id, 'name': emp.name} for emp in employees])
+        print(f"Found {len(employees)} employees")
+        
+        if not employees:
+            print("No employees found, adding test employee...")
+            # Add a test employee if none exist
+            test_employee = Employee(name="Test Employee")
+            db.session.add(test_employee)
+            db.session.commit()
+            print("Test employee added")
+            
+            # Query again
+            employees = Employee.query.all()
+            print(f"Now found {len(employees)} employees")
+        
+        result = [{'id': emp.id, 'name': emp.name} for emp in employees]
+        print(f"Returning employees: {result}")
+        print("=== GET EMPLOYEES DEBUG END ===")
+        return jsonify(result)
     except Exception as e:
+        print(f"=== GET EMPLOYEES ERROR ===")
+        print(f"Error: {str(e)}")
+        print(f"Error type: {type(e).__name__}")
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
+        print("=== GET EMPLOYEES ERROR END ===")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/employees', methods=['POST'])
@@ -931,12 +957,34 @@ def view_general():
 if __name__ == '__main__':
     with app.app_context():
         try:
-            # Create all tables
+            print("=== DATABASE INITIALIZATION START ===")
+            print("Creating all tables...")
             db.create_all()
             print("✅ Supabase database tables created successfully!")
+            
+            # Test database connection
+            print("Testing database connection...")
+            try:
+                db.session.execute(text('SELECT 1'))
+                print("✅ Database connection test successful!")
+            except Exception as conn_error:
+                print(f"❌ Database connection test failed: {conn_error}")
+            
+            # Check if employees table has data
+            print("Checking employees table...")
+            try:
+                employee_count = Employee.query.count()
+                print(f"Employees in database: {employee_count}")
+            except Exception as emp_error:
+                print(f"❌ Error checking employees: {emp_error}")
+            
+            print("=== DATABASE INITIALIZATION END ===")
         except Exception as e:
             print(f"❌ Error creating tables: {e}")
+            import traceback
+            print(f"Traceback: {traceback.format_exc()}")
     
     # Get port from environment variable (Render sets this)
     port = int(os.environ.get('PORT', 5000))
+    print(f"Starting Flask app on port {port}")
     app.run(debug=False, host='0.0.0.0', port=port)
