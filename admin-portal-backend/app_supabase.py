@@ -25,20 +25,41 @@ app = Flask(__name__)
 CORS(app)
 
 # Supabase PostgreSQL Configuration
-db_user = os.environ.get('SUPABASE_DB_USER', 'postgres')
-db_password = os.environ.get('SUPABASE_DB_PASSWORD', 'puravbhatt0504')
-db_host = os.environ.get('SUPABASE_DB_HOST', 'db.sevlfbqydeludjfzatfe.supabase.co')
-db_name = os.environ.get('SUPABASE_DB_NAME', 'postgres')
-db_port = os.environ.get('SUPABASE_DB_PORT', '5432')
+# Try to get from environment variables first, then use hardcoded values
+db_user = os.environ.get('SUPABASE_DB_USER') or 'postgres'
+db_password = os.environ.get('SUPABASE_DB_PASSWORD') or 'puravbhatt0504'
+db_host = os.environ.get('SUPABASE_DB_HOST') or 'db.sevlfbqydeludjfzatfe.supabase.co'
+db_name = os.environ.get('SUPABASE_DB_NAME') or 'postgres'
+db_port = os.environ.get('SUPABASE_DB_PORT') or '5432'
+
+# If we're in production (Render), use the correct Supabase credentials
+if os.environ.get('RENDER'):
+    # These are the correct Supabase credentials for your project
+    db_user = 'postgres'
+    db_password = 'puravbhatt0504'
+    db_host = 'db.sevlfbqydeludjfzatfe.supabase.co'
+    db_name = 'postgres'
+    db_port = '5432'
+
+print(f"=== DATABASE CONFIG DEBUG ===")
+print(f"DB_USER: {db_user}")
+print(f"DB_HOST: {db_host}")
+print(f"DB_NAME: {db_name}")
+print(f"DB_PORT: {db_port}")
+print(f"DB_PASSWORD: {'*' * len(db_password) if db_password else 'None'}")
 
 # Use direct connection instead of pooler for better reliability
 # Replace pooler host with direct host
 if 'pooler' in db_host or '6543' in str(db_port):
     db_host = db_host.replace('pooler', 'db').replace('aws-1-ap-south-1.pooler', 'db')
     db_port = '5432'
+    print(f"Converted to direct connection: {db_host}:{db_port}")
 
 # Construct PostgreSQL connection string
-app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+connection_string = f"postgresql+psycopg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+app.config['SQLALCHEMY_DATABASE_URI'] = connection_string
+print(f"Connection string: {connection_string}")
+print(f"=== END DATABASE CONFIG DEBUG ===")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'pool_pre_ping': True,
