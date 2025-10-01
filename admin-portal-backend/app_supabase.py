@@ -92,7 +92,7 @@ def root():
     return jsonify({
         'message': 'Admin Portal Backend API',
         'status': 'running',
-        'version': '2.0.0',
+        'version': '2.0.1',
         'endpoints': {
             'health': '/api/health',
             'database_status': '/api/database/status',
