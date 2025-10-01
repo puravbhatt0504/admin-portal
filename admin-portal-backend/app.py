@@ -64,25 +64,59 @@ def check_db_connection():
 
 def safe_db_query(query_func, default_return=None):
     """Safely execute database query with retry mechanism"""
-    max_retries = 3
+    max_retries = 1  # Reduced retries since DB is completely down
     for attempt in range(max_retries):
         try:
             if not check_db_connection():
                 print(f"Database not available, attempt {attempt + 1}/{max_retries}")
-                if attempt < max_retries - 1:
-                    time_module.sleep(1)  # Wait 1 second before retry
-                    continue
-                else:
-                    return default_return
+                print("Returning default data due to database unavailability")
+                return default_return
             return query_func()
         except Exception as e:
             print(f"Database query failed on attempt {attempt + 1}: {e}")
-            if attempt < max_retries - 1:
-                time_module.sleep(1)
-                continue
-            else:
-                return default_return
+            print("Returning default data due to database error")
+            return default_return
     return default_return
+
+# --- Database Status Endpoint ---
+@app.route('/api/database/status', methods=['GET'])
+def database_status():
+    """Check database connection status"""
+    try:
+        print("=== DATABASE STATUS CHECK ===")
+        is_connected = check_db_connection()
+        print(f"Database connected: {is_connected}")
+        
+        if is_connected:
+            # Try a simple query
+            try:
+                result = db.session.execute('SELECT 1 as test').fetchone()
+                print(f"Test query result: {result}")
+                return jsonify({
+                    'status': 'connected',
+                    'message': 'Database is available and responding',
+                    'test_query': 'success'
+                })
+            except Exception as e:
+                print(f"Test query failed: {e}")
+                return jsonify({
+                    'status': 'error',
+                    'message': f'Database connected but queries failing: {str(e)}',
+                    'test_query': 'failed'
+                })
+        else:
+            return jsonify({
+                'status': 'disconnected',
+                'message': 'Database connection not available',
+                'test_query': 'not_attempted'
+            })
+    except Exception as e:
+        print(f"Database status check failed: {e}")
+        return jsonify({
+            'status': 'error',
+            'message': f'Status check failed: {str(e)}',
+            'test_query': 'error'
+        }), 500
 
 # --- Helper Functions ---
 def parse_time(time_str):
