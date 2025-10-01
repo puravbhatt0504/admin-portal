@@ -9,7 +9,7 @@ from sqlalchemy import func, desc, and_, text
 try:
     from fpdf2 import FPDF
 except ImportError:
-    from fpdf import FPDF
+from fpdf import FPDF
 import json
 from sqlalchemy.exc import SQLAlchemyError
 from dotenv import load_dotenv
@@ -517,19 +517,19 @@ def salary_pdf():
         
         # Table headers
         pdf.set_font('Arial', 'B', 10)
-        pdf.cell(60, 8, 'Component', 1, 0, 'L')
-        pdf.cell(40, 8, 'Amount', 1, 1, 'R')
+        pdf.cell(60, 8, 'Component', border=1, new_x="RIGHT", new_y="TOP", align='L')
+        pdf.cell(40, 8, 'Amount', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
         
         # Table data
         pdf.set_font('Arial', '', 10)
-        pdf.cell(60, 8, 'Basic Salary', 1, 0, 'L')
-        pdf.cell(40, 8, '₹25,000', 1, 1, 'R')
-        pdf.cell(60, 8, 'HRA', 1, 0, 'L')
-        pdf.cell(40, 8, '₹5,000', 1, 1, 'R')
-        pdf.cell(60, 8, 'PF', 1, 0, 'L')
-        pdf.cell(40, 8, '₹2,000', 1, 1, 'R')
-        pdf.cell(60, 8, 'Net Salary', 1, 0, 'L')
-        pdf.cell(40, 8, '₹28,000', 1, 1, 'R')
+        pdf.cell(60, 8, 'Basic Salary', border=1, new_x="RIGHT", new_y="TOP", align='L')
+        pdf.cell(40, 8, '₹25,000', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
+        pdf.cell(60, 8, 'HRA', border=1, new_x="RIGHT", new_y="TOP", align='L')
+        pdf.cell(40, 8, '₹5,000', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
+        pdf.cell(60, 8, 'PF', border=1, new_x="RIGHT", new_y="TOP", align='L')
+        pdf.cell(40, 8, '₹2,000', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
+        pdf.cell(60, 8, 'Net Salary', border=1, new_x="RIGHT", new_y="TOP", align='L')
+        pdf.cell(40, 8, '₹28,000', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
         
         # Footer
         pdf.ln(10)
@@ -869,19 +869,19 @@ def _generate_travel_expenses_report_pdf(pdf, start_date, end_date):
         
         # Summary table
         pdf.set_font('Arial', 'B', 10)
-        pdf.cell(60, 8, 'Employee', 1, 0, 'C')
-        pdf.cell(40, 8, 'Total Amount', 1, 1, 'C')
+        pdf.cell(60, 8, 'Employee', border=1, new_x="RIGHT", new_y="TOP", align='C')
+        pdf.cell(40, 8, 'Total Amount', border=1, new_x="LMARGIN", new_y="NEXT", align='C')
         
         pdf.set_font('Arial', '', 10)
         grand_total = 0
         for emp_name, total in employee_totals.items():
-            pdf.cell(60, 8, emp_name, 1, 0, 'L')
-            pdf.cell(40, 8, f'₹{total:,.2f}', 1, 1, 'R')
+            pdf.cell(60, 8, emp_name, border=1, new_x="RIGHT", new_y="TOP", align='L')
+            pdf.cell(40, 8, f'₹{total:,.2f}', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
             grand_total += total
         
         pdf.set_font('Arial', 'B', 10)
         pdf.cell(60, 8, 'GRAND TOTAL', 1, 0, 'C')
-        pdf.cell(40, 8, f'₹{grand_total:,.2f}', 1, 1, 'R')
+        pdf.cell(40, 8, f'₹{grand_total:,.2f}', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
         
         # Page 2: Daily details
         pdf.add_page()
@@ -915,8 +915,8 @@ def _generate_travel_expenses_report_pdf(pdf, start_date, end_date):
             pdf.set_font('Arial', '', 8)
             for record in day_records:
                 pdf.cell(50, 6, record.employee_name, 1, 0, 'L')
-                pdf.cell(30, 6, record.description[:25], 1, 0, 'L')
-                pdf.cell(30, 6, f'₹{record.amount:,.2f}', 1, 1, 'R')
+                pdf.cell(30, 6, record.description[:25], border=1, new_x="RIGHT", new_y="TOP", align='L')
+                pdf.cell(30, 6, f'₹{record.amount:,.2f}', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
             
             pdf.ln(3)
         
@@ -951,19 +951,19 @@ def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
         
         # Summary table
         pdf.set_font('Arial', 'B', 10)
-        pdf.cell(60, 8, 'Employee', 1, 0, 'C')
-        pdf.cell(40, 8, 'Total Amount', 1, 1, 'C')
+        pdf.cell(60, 8, 'Employee', border=1, new_x="RIGHT", new_y="TOP", align='C')
+        pdf.cell(40, 8, 'Total Amount', border=1, new_x="LMARGIN", new_y="NEXT", align='C')
         
         pdf.set_font('Arial', '', 10)
         grand_total = 0
         for emp_name, total in employee_totals.items():
-            pdf.cell(60, 8, emp_name, 1, 0, 'L')
-            pdf.cell(40, 8, f'₹{total:,.2f}', 1, 1, 'R')
+            pdf.cell(60, 8, emp_name, border=1, new_x="RIGHT", new_y="TOP", align='L')
+            pdf.cell(40, 8, f'₹{total:,.2f}', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
             grand_total += total
         
         pdf.set_font('Arial', 'B', 10)
         pdf.cell(60, 8, 'GRAND TOTAL', 1, 0, 'C')
-        pdf.cell(40, 8, f'₹{grand_total:,.2f}', 1, 1, 'R')
+        pdf.cell(40, 8, f'₹{grand_total:,.2f}', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
         
         # Page 2: Daily details
         pdf.add_page()
@@ -997,8 +997,8 @@ def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
             pdf.set_font('Arial', '', 8)
             for record in day_records:
                 pdf.cell(50, 6, record.employee_name, 1, 0, 'L')
-                pdf.cell(30, 6, record.description[:25], 1, 0, 'L')
-                pdf.cell(30, 6, f'₹{record.amount:,.2f}', 1, 1, 'R')
+                pdf.cell(30, 6, record.description[:25], border=1, new_x="RIGHT", new_y="TOP", align='L')
+                pdf.cell(30, 6, f'₹{record.amount:,.2f}', border=1, new_x="LMARGIN", new_y="NEXT", align='R')
             
             pdf.ln(3)
         
