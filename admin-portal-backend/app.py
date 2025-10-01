@@ -484,18 +484,88 @@ def fetch_salary():
 
 @app.route('/api/salary/pdf', methods=['POST'])
 def salary_pdf():
-    # Minimal PDF generation compatible with frontend preview/export
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_font('Arial', size=12)
-    pdf.cell(0, 10, 'Salary Report', ln=True, align='C')
-    pdf_bytes = pdf.output(dest='S')
-    # Fix: check if bytes need encoding
-    if isinstance(pdf_bytes, str):
-        pdf_bytes = pdf_bytes.encode('latin1')
-    pdf_buffer = io.BytesIO(pdf_bytes)
-    pdf_buffer.seek(0)
-    return send_file(pdf_buffer, as_attachment=False, mimetype='application/pdf')
+    try:
+        # Get parameters from request
+        data = request.json or {}
+        employee_id = data.get('employee_id') or request.args.get('employee_id')
+        period = data.get('period') or request.args.get('period', 'month')
+        action = data.get('action') or request.args.get('action', 'preview')
+        
+        # Get employee details
+        employee = db.session.query(Employee).get(employee_id) if employee_id else None
+        if not employee:
+            return jsonify({'error': 'Employee not found'}), 404
+        
+        # Create PDF
+        pdf = FPDF()
+        pdf.add_page()
+        
+        # Header
+        pdf.set_font('Arial', 'B', 16)
+        pdf.cell(0, 10, 'SALARY SLIP', ln=True, align='C')
+        pdf.ln(5)
+        
+        # Company details
+        pdf.set_font('Arial', 'B', 12)
+        pdf.cell(0, 8, 'Company Name: Admin Portal System', ln=True)
+        pdf.set_font('Arial', '', 10)
+        pdf.cell(0, 6, f'Period: {period.title()}', ln=True)
+        pdf.cell(0, 6, f'Generated: {datetime.now().strftime("%Y-%m-%d %H:%M")}', ln=True)
+        pdf.ln(10)
+        
+        # Employee details
+        pdf.set_font('Arial', 'B', 12)
+        pdf.cell(0, 8, 'Employee Details:', ln=True)
+        pdf.set_font('Arial', '', 10)
+        pdf.cell(0, 6, f'Name: {employee.name}', ln=True)
+        pdf.cell(0, 6, f'ID: {employee.id}', ln=True)
+        pdf.ln(10)
+        
+        # Salary breakdown (placeholder data - replace with actual calculations)
+        pdf.set_font('Arial', 'B', 12)
+        pdf.cell(0, 8, 'Salary Breakdown:', ln=True)
+        pdf.set_font('Arial', '', 10)
+        
+        # Basic salary
+        basic_salary = 25000  # Placeholder
+        pdf.cell(100, 6, 'Basic Salary:', 0, 0)
+        pdf.cell(50, 6, f'₹{basic_salary:,}', 0, 1, 'R')
+        
+        # Allowances
+        hra = basic_salary * 0.4  # 40% of basic
+        pdf.cell(100, 6, 'HRA (40%):', 0, 0)
+        pdf.cell(50, 6, f'₹{hra:,.0f}', 0, 1, 'R')
+        
+        # Deductions
+        pf = basic_salary * 0.12  # 12% PF
+        pdf.cell(100, 6, 'PF (12%):', 0, 0)
+        pdf.cell(50, 6, f'₹{pf:,.0f}', 0, 1, 'R')
+        
+        # Net salary
+        net_salary = basic_salary + hra - pf
+        pdf.set_font('Arial', 'B', 10)
+        pdf.cell(100, 8, 'Net Salary:', 0, 0)
+        pdf.cell(50, 8, f'₹{net_salary:,.0f}', 0, 1, 'R')
+        
+        pdf.ln(10)
+        pdf.set_font('Arial', '', 8)
+        pdf.cell(0, 6, 'This is a computer generated salary slip.', ln=True, align='C')
+        
+        # Generate PDF bytes
+        pdf_bytes = pdf.output(dest='S')
+        if isinstance(pdf_bytes, str):
+            pdf_bytes = pdf_bytes.encode('latin1')
+        
+        pdf_buffer = io.BytesIO(pdf_bytes)
+        pdf_buffer.seek(0)
+        
+        return send_file(pdf_buffer, as_attachment=(action == 'export'), 
+                        download_name=f'salary_slip_{employee.name.replace(" ", "_")}_{period}.pdf',
+                        mimetype='application/pdf')
+        
+    except Exception as e:
+        print(f"Error generating salary PDF: {str(e)}")
+        return jsonify({'error': f'PDF generation failed: {str(e)}'}), 500
 
 @app.route('/api/reports/generate', methods=['POST'])
 def generate_report():
@@ -507,6 +577,203 @@ def generate_report():
     columns = [{'title': 'Date'}, {'title': 'Employee'}, {'title': 'Amount'}]
     records = [['2024-01-01', 'John Doe', 1000], ['2024-01-02', 'Jane Smith', 1500]]
     return jsonify({'columns': columns, 'records': records})
+
+@app.route('/api/reports/pdf', methods=['POST'])
+def generate_report_pdf():
+    try:
+        # Get parameters from request
+        data = request.json or {}
+        report_type = data.get('type') or request.args.get('type', 'attendance')
+        start_date = data.get('start_date') or request.args.get('start_date')
+        end_date = data.get('end_date') or request.args.get('end_date')
+        action = data.get('action') or request.args.get('action', 'preview')
+        
+        # Parse dates
+        if start_date:
+            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+        if end_date:
+            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+        
+        # Create PDF
+        pdf = FPDF()
+        pdf.add_page()
+        
+        # Header
+        pdf.set_font('Arial', 'B', 16)
+        pdf.cell(0, 10, f'{report_type.title()} Report', ln=True, align='C')
+        pdf.ln(5)
+        
+        # Report details
+        pdf.set_font('Arial', 'B', 12)
+        pdf.cell(0, 8, 'Report Details:', ln=True)
+        pdf.set_font('Arial', '', 10)
+        pdf.cell(0, 6, f'Type: {report_type.title()}', ln=True)
+        if start_date and end_date:
+            pdf.cell(0, 6, f'Period: {start_date.strftime("%Y-%m-%d")} to {end_date.strftime("%Y-%m-%d")}', ln=True)
+        pdf.cell(0, 6, f'Generated: {datetime.now().strftime("%Y-%m-%d %H:%M")}', ln=True)
+        pdf.ln(10)
+        
+        # Generate report data based on type
+        if report_type.lower() == 'attendance':
+            _generate_attendance_report_pdf(pdf, start_date, end_date)
+        elif report_type.lower() == 'travel expenses':
+            _generate_travel_expenses_report_pdf(pdf, start_date, end_date)
+        elif report_type.lower() == 'general expenses':
+            _generate_general_expenses_report_pdf(pdf, start_date, end_date)
+        else:
+            pdf.set_font('Arial', '', 10)
+            pdf.cell(0, 6, 'No data available for this report type.', ln=True)
+        
+        # Footer
+        pdf.ln(10)
+        pdf.set_font('Arial', '', 8)
+        pdf.cell(0, 6, 'This is a computer generated report.', ln=True, align='C')
+        
+        # Generate PDF bytes
+        pdf_bytes = pdf.output(dest='S')
+        if isinstance(pdf_bytes, str):
+            pdf_bytes = pdf_bytes.encode('latin1')
+        
+        pdf_buffer = io.BytesIO(pdf_bytes)
+        pdf_buffer.seek(0)
+        
+        filename = f'{report_type.replace(" ", "_")}_report_{start_date}_{end_date}.pdf' if start_date and end_date else f'{report_type.replace(" ", "_")}_report.pdf'
+        
+        return send_file(pdf_buffer, as_attachment=(action == 'export'), 
+                        download_name=filename,
+                        mimetype='application/pdf')
+        
+    except Exception as e:
+        print(f"Error generating report PDF: {str(e)}")
+        return jsonify({'error': f'PDF generation failed: {str(e)}'}), 500
+
+def _generate_attendance_report_pdf(pdf, start_date, end_date):
+    """Generate attendance report data for PDF"""
+    pdf.set_font('Arial', 'B', 12)
+    pdf.cell(0, 8, 'Attendance Summary:', ln=True)
+    pdf.set_font('Arial', '', 10)
+    
+    try:
+        # Query attendance data
+        query = db.session.query(Attendance)
+        if start_date:
+            query = query.filter(Attendance.date >= start_date)
+        if end_date:
+            query = query.filter(Attendance.date <= end_date)
+        
+        records = query.limit(20).all()  # Limit for PDF readability
+        
+        if records:
+            # Table header
+            pdf.set_font('Arial', 'B', 9)
+            pdf.cell(30, 6, 'Date', 1, 0, 'C')
+            pdf.cell(50, 6, 'Employee', 1, 0, 'C')
+            pdf.cell(25, 6, 'Check In', 1, 0, 'C')
+            pdf.cell(25, 6, 'Check Out', 1, 0, 'C')
+            pdf.cell(20, 6, 'Status', 1, 1, 'C')
+            
+            # Table data
+            pdf.set_font('Arial', '', 8)
+            for record in records:
+                pdf.cell(30, 6, str(record.date), 1, 0, 'C')
+                pdf.cell(50, 6, record.employee_name[:20], 1, 0, 'L')
+                pdf.cell(25, 6, str(record.shift1_in or '-'), 1, 0, 'C')
+                pdf.cell(25, 6, str(record.shift1_out or '-'), 1, 0, 'C')
+                status = 'Present' if record.shift1_in else 'Absent'
+                pdf.cell(20, 6, status, 1, 1, 'C')
+        else:
+            pdf.cell(0, 6, 'No attendance records found for the selected period.', ln=True)
+            
+    except Exception as e:
+        pdf.cell(0, 6, f'Error loading attendance data: {str(e)}', ln=True)
+
+def _generate_travel_expenses_report_pdf(pdf, start_date, end_date):
+    """Generate travel expenses report data for PDF"""
+    pdf.set_font('Arial', 'B', 12)
+    pdf.cell(0, 8, 'Travel Expenses Summary:', ln=True)
+    pdf.set_font('Arial', '', 10)
+    
+    try:
+        # Query travel expenses data
+        query = db.session.query(TravelExpense)
+        if start_date:
+            query = query.filter(TravelExpense.date >= start_date)
+        if end_date:
+            query = query.filter(TravelExpense.date <= end_date)
+        
+        records = query.limit(20).all()
+        
+        if records:
+            # Table header
+            pdf.set_font('Arial', 'B', 9)
+            pdf.cell(30, 6, 'Date', 1, 0, 'C')
+            pdf.cell(50, 6, 'Employee', 1, 0, 'C')
+            pdf.cell(40, 6, 'Purpose', 1, 0, 'C')
+            pdf.cell(30, 6, 'Amount', 1, 1, 'C')
+            
+            # Table data
+            pdf.set_font('Arial', '', 8)
+            total_amount = 0
+            for record in records:
+                pdf.cell(30, 6, str(record.date), 1, 0, 'C')
+                pdf.cell(50, 6, record.employee_name[:20], 1, 0, 'L')
+                pdf.cell(40, 6, (record.purpose or 'N/A')[:15], 1, 0, 'L')
+                pdf.cell(30, 6, f'₹{record.amount:,.0f}', 1, 1, 'R')
+                total_amount += record.amount
+            
+            # Total
+            pdf.set_font('Arial', 'B', 9)
+            pdf.cell(120, 6, 'Total:', 1, 0, 'R')
+            pdf.cell(30, 6, f'₹{total_amount:,.0f}', 1, 1, 'R')
+        else:
+            pdf.cell(0, 6, 'No travel expense records found for the selected period.', ln=True)
+            
+    except Exception as e:
+        pdf.cell(0, 6, f'Error loading travel expenses data: {str(e)}', ln=True)
+
+def _generate_general_expenses_report_pdf(pdf, start_date, end_date):
+    """Generate general expenses report data for PDF"""
+    pdf.set_font('Arial', 'B', 12)
+    pdf.cell(0, 8, 'General Expenses Summary:', ln=True)
+    pdf.set_font('Arial', '', 10)
+    
+    try:
+        # Query general expenses data
+        query = db.session.query(GeneralExpense)
+        if start_date:
+            query = query.filter(GeneralExpense.date >= start_date)
+        if end_date:
+            query = query.filter(GeneralExpense.date <= end_date)
+        
+        records = query.limit(20).all()
+        
+        if records:
+            # Table header
+            pdf.set_font('Arial', 'B', 9)
+            pdf.cell(30, 6, 'Date', 1, 0, 'C')
+            pdf.cell(50, 6, 'Employee', 1, 0, 'C')
+            pdf.cell(40, 6, 'Description', 1, 0, 'C')
+            pdf.cell(30, 6, 'Amount', 1, 1, 'C')
+            
+            # Table data
+            pdf.set_font('Arial', '', 8)
+            total_amount = 0
+            for record in records:
+                pdf.cell(30, 6, str(record.date), 1, 0, 'C')
+                pdf.cell(50, 6, record.employee_name[:20], 1, 0, 'L')
+                pdf.cell(40, 6, (record.description or 'N/A')[:15], 1, 0, 'L')
+                pdf.cell(30, 6, f'₹{record.amount:,.0f}', 1, 1, 'R')
+                total_amount += record.amount
+            
+            # Total
+            pdf.set_font('Arial', 'B', 9)
+            pdf.cell(120, 6, 'Total:', 1, 0, 'R')
+            pdf.cell(30, 6, f'₹{total_amount:,.0f}', 1, 1, 'R')
+        else:
+            pdf.cell(0, 6, 'No general expense records found for the selected period.', ln=True)
+            
+    except Exception as e:
+        pdf.cell(0, 6, f'Error loading general expenses data: {str(e)}', ln=True)
 
 # --- AI (match frontend endpoints) ---
 @app.route('/api/ai/scan-expenses', methods=['POST'])

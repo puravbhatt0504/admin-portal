@@ -229,6 +229,7 @@ const salaryPeriodRadios = document.querySelectorAll('input[name="salaryPeriod"]
 const salaryMonthContainer = document.getElementById('salary-month-container');
 const salaryCustomContainer = document.getElementById('salary-custom-container');
 const reportGenerateBtn = document.getElementById('report-generate-btn');
+const reportExportBtn = document.getElementById('report-export-btn');
 const reportPresetToday = document.getElementById('report-preset-today');
 const reportPresetWeek = document.getElementById('report-preset-week');
 const reportPresetMonth = document.getElementById('report-preset-month');
@@ -621,6 +622,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     salaryPeriodRadios.forEach(radio => radio.addEventListener('change', toggleSalaryPeriodView));
 
     reportGenerateBtn.addEventListener('click', () => generateReport());
+    reportExportBtn.addEventListener('click', () => exportReportPDF('export'));
     reportPresetToday.addEventListener('click', () => generateReport('today'));
     reportPresetWeek.addEventListener('click', () => generateReport('week'));
     reportPresetMonth.addEventListener('click', () => generateReport('month'));
@@ -1485,6 +1487,27 @@ async function generateReport(preset = null) {
         showToast(error.message, 'error');
     } finally {
         hideButtonSpinner(reportGenerateBtn, originalText);
+    }
+}
+
+async function exportReportPDF(action = 'preview') {
+    const originalText = showButtonSpinner(reportExportBtn, action === 'preview' ? 'Generating...' : 'Exporting...');
+    try {
+        const reportType = document.getElementById('report-type-select').value;
+        const startDate = document.getElementById('report-start-date').value;
+        const endDate = document.getElementById('report-end-date').value;
+        
+        if (!startDate || !endDate) {
+            return showToast('Please select start and end dates.', 'error');
+        }
+        
+        const params = `?type=${reportType}&start_date=${startDate}&end_date=${endDate}&action=${action}`;
+        const blob = await apiRequest(`/api/reports/pdf${params}`, 'POST');
+        await handlePdfResponse(blob, action, `${reportType.replace(' ', '_')}_report.pdf`);
+    } catch (error) {
+        showToast(error.message, 'error');
+    } finally {
+        hideButtonSpinner(reportExportBtn, originalText);
     }
 }
 
