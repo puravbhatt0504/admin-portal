@@ -747,7 +747,15 @@ def generate_report_pdf():
         import traceback
         print(f"Traceback: {traceback.format_exc()}")
         print("=== REPORTS PDF ERROR END ===")
-        return jsonify({'error': f'PDF generation failed: {str(e)}'}), 500
+        
+        # Return detailed error for debugging
+        error_response = jsonify({
+            'error': f'PDF generation failed: {str(e)}',
+            'error_type': type(e).__name__,
+            'traceback': traceback.format_exc()
+        })
+        error_response.headers['Access-Control-Allow-Origin'] = '*'
+        return error_response, 500
 
 # --- PDF Report Generators (Same as before) ---
 def _generate_attendance_report_pdf(pdf, start_date, end_date):
