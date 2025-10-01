@@ -673,7 +673,7 @@ def salary_pdf():
         print("=== SALARY PDF ERROR END ===")
         return jsonify({'error': f'PDF generation failed: {str(e)}'}), 500
 
-@app.route('/api/reports/generate', methods=['GET', 'POST'])
+@app.route('/api/reports/generate', methods=['GET', 'POST', 'OPTIONS'])
 def generate_report():
     print("=== REPORTS GENERATE DEBUG START ===")
     print(f"Request method: {request.method}")
@@ -681,6 +681,13 @@ def generate_report():
     print(f"Request JSON: {request.json}")
     print(f"Request headers: {dict(request.headers)}")
     print(f"Content-Type: {request.content_type}")
+    print(f"Request URL: {request.url}")
+    print(f"Request data: {request.data}")
+    
+    # Handle OPTIONS request for CORS
+    if request.method == 'OPTIONS':
+        print("Handling OPTIONS request")
+        return jsonify({'status': 'OK'}), 200
     
     try:
         # Handle both GET and POST requests
@@ -714,20 +721,34 @@ def generate_report():
         print("=== REPORTS GENERATE ERROR END ===")
         return jsonify({'error': f'Report generation failed: {str(e)}'}), 500
 
-@app.route('/api/reports/pdf', methods=['POST'])
+@app.route('/api/reports/pdf', methods=['GET', 'POST', 'OPTIONS'])
 def generate_report_pdf():
     try:
         print("=== REPORTS PDF DEBUG START ===")
         print(f"Request method: {request.method}")
         print(f"Request args: {request.args}")
         print(f"Request JSON: {request.json}")
+        print(f"Request headers: {dict(request.headers)}")
+        print(f"Content-Type: {request.content_type}")
+        print(f"Request URL: {request.url}")
+        
+        # Handle OPTIONS request for CORS
+        if request.method == 'OPTIONS':
+            print("Handling OPTIONS request for PDF")
+            return jsonify({'status': 'OK'}), 200
         
         # Get parameters from request
-        data = request.json or {}
-        report_type = data.get('type') or request.args.get('type', 'attendance')
-        start_date = data.get('start_date') or request.args.get('start_date')
-        end_date = data.get('end_date') or request.args.get('end_date')
-        action = data.get('action') or request.args.get('action', 'preview')
+        if request.method == 'GET':
+            report_type = request.args.get('type', 'attendance')
+            start_date = request.args.get('start_date')
+            end_date = request.args.get('end_date')
+            action = request.args.get('action', 'preview')
+        else:  # POST
+            data = request.json or {}
+            report_type = data.get('type') or request.args.get('type', 'attendance')
+            start_date = data.get('start_date') or request.args.get('start_date')
+            end_date = data.get('end_date') or request.args.get('end_date')
+            action = data.get('action') or request.args.get('action', 'preview')
         
         print(f"Parsed parameters - report_type: {report_type}, start_date: {start_date}, end_date: {end_date}, action: {action}")
         
