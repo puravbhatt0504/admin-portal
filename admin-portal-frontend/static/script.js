@@ -1,6 +1,6 @@
 // --- Configuration ---
 // API base URL for the backend
-let API_BASE_URL = 'https://admin-portal-backend-nodejs-drqgjizs4-purav-bhatts-projects.vercel.app';
+let API_BASE_URL = 'https://admin-portal-backend-nodejs-jwlpykdbv-purav-bhatts-projects.vercel.app';
 console.log('🔗 Backend URL:', API_BASE_URL);
 console.log('📅 Script loaded at:', new Date().toISOString());
 console.log('🌐 Frontend URL:', window.location.origin);
