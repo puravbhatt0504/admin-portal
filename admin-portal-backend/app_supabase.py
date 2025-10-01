@@ -218,15 +218,14 @@ def simple_pdf():
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font('Arial', 'B', 14)
-        pdf.cell(0, 10, 'Simple PDF Test', ln=True, align='C')
+        pdf.cell(0, 10, 'Simple PDF Test', new_x="LMARGIN", new_y="NEXT", align='C')
         pdf.ln(10)
         pdf.set_font('Arial', '', 10)
-        pdf.cell(0, 6, 'This is a simple PDF test.', ln=True)
-        pdf.cell(0, 6, f'Time: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', ln=True)
+        pdf.cell(0, 6, 'This is a simple PDF test.', new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 6, f'Time: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', new_x="LMARGIN", new_y="NEXT")
         
-        # Generate PDF
-        pdf_output = pdf.output(dest='S')
-        pdf_bytes = pdf_output.encode('latin1')
+        # Generate PDF using FPDF2 syntax
+        pdf_bytes = pdf.output()
         
         response = send_file(
             io.BytesIO(pdf_bytes),
@@ -256,9 +255,8 @@ def test_pdf():
         pdf.cell(0, 8, 'This is a test PDF to verify FPDF is working correctly.', ln=True)
         pdf.cell(0, 8, f'Generated at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', ln=True)
         
-        # Generate PDF bytes with proper encoding
-        pdf_output = pdf.output(dest='S')
-        pdf_bytes = pdf_output.encode('latin1')
+        # Generate PDF using FPDF2 syntax
+        pdf_bytes = pdf.output()
         
         # Create response with proper headers
         response = send_file(
@@ -540,7 +538,7 @@ def salary_pdf():
         
         # Generate PDF bytes
         print("Generating PDF bytes...")
-        pdf_bytes = pdf.output(dest='S')
+        pdf_bytes = pdf.output()
         print(f"PDF bytes type: {type(pdf_bytes)}, length: {len(pdf_bytes) if pdf_bytes else 0}")
         
         if isinstance(pdf_bytes, str):
@@ -707,7 +705,7 @@ def generate_report_pdf():
         
         # Generate PDF bytes
         print("Generating reports PDF bytes...")
-        pdf_bytes = pdf.output(dest='S')
+        pdf_bytes = pdf.output()
         print(f"Reports PDF bytes type: {type(pdf_bytes)}, length: {len(pdf_bytes) if pdf_bytes else 0}")
         
         if isinstance(pdf_bytes, str):
@@ -1033,7 +1031,7 @@ if __name__ == '__main__':
             # Check if employees table has data
             print("Checking employees table...")
             try:
-                employee_count = Employee.query.count()
+                employee_count = db.session.query(Employee).count()
                 print(f"Employees in database: {employee_count}")
             except Exception as emp_error:
                 print(f"❌ Error checking employees: {emp_error}")
