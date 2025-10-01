@@ -1,6 +1,6 @@
 // --- Configuration ---
 // API base URL for the backend
-let API_BASE_URL = 'https://finalboss0504.pythonanywhere.com';
+let API_BASE_URL = 'https://admin-portal-uax8.onrender.com';
 
 // --- Mobile Error Handling ---
 function handleMobileErrors() {
