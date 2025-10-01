@@ -34,12 +34,13 @@ db_port = os.environ.get('SUPABASE_DB_PORT') or '5432'
 
 # If we're in production (Render), use the correct Supabase credentials
 if os.environ.get('RENDER'):
-    # These are the correct Supabase credentials for your project
+    # Try pooler connection first (more reliable for Render)
     db_user = 'postgres'
     db_password = 'puravbhatt0504'
-    db_host = 'db.sevlfbqydeludjfzatfe.supabase.co'
+    db_host = 'aws-1-ap-south-1.pooler.supabase.com'
     db_name = 'postgres'
-    db_port = '5432'
+    db_port = '6543'
+    print("Using Supabase pooler connection for Render")
 
 print(f"=== DATABASE CONFIG DEBUG ===")
 print(f"DB_USER: {db_user}")
@@ -48,9 +49,9 @@ print(f"DB_NAME: {db_name}")
 print(f"DB_PORT: {db_port}")
 print(f"DB_PASSWORD: {'*' * len(db_password) if db_password else 'None'}")
 
-# Use direct connection instead of pooler for better reliability
+# Use direct connection instead of pooler for better reliability (only for local dev)
 # Replace pooler host with direct host
-if 'pooler' in db_host or '6543' in str(db_port):
+if not os.environ.get('RENDER') and ('pooler' in db_host or '6543' in str(db_port)):
     db_host = db_host.replace('pooler', 'db').replace('aws-1-ap-south-1.pooler', 'db')
     db_port = '5432'
     print(f"Converted to direct connection: {db_host}:{db_port}")
@@ -69,7 +70,8 @@ app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     'pool_size': 1,  # Reduced for free tier
     'connect_args': {
         'sslmode': 'require',
-        'connect_timeout': 10
+        'connect_timeout': 10,
+        'options': '-c default_transaction_isolation=read_committed'
     }
 }
 
@@ -1193,35 +1195,43 @@ def view_general():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-if __name__ == '__main__':
-    with app.app_context():
+def initialize_database():
+    """Initialize database tables - non-blocking"""
+    try:
+        print("=== DATABASE INITIALIZATION START ===")
+        print("Creating all tables...")
+        db.create_all()
+        print("✅ Supabase database tables created successfully!")
+        
+        # Test database connection
+        print("Testing database connection...")
         try:
-            print("=== DATABASE INITIALIZATION START ===")
-            print("Creating all tables...")
-            db.create_all()
-            print("✅ Supabase database tables created successfully!")
-            
-            # Test database connection
-            print("Testing database connection...")
-            try:
-                db.session.execute(text('SELECT 1'))
-                print("✅ Database connection test successful!")
-            except Exception as conn_error:
-                print(f"❌ Database connection test failed: {conn_error}")
-            
-            # Check if employees table has data
-            print("Checking employees table...")
-            try:
-                employee_count = db.session.query(Employee).count()
-                print(f"Employees in database: {employee_count}")
-            except Exception as emp_error:
-                print(f"❌ Error checking employees: {emp_error}")
-            
-            print("=== DATABASE INITIALIZATION END ===")
-        except Exception as e:
-            print(f"❌ Error creating tables: {e}")
-            import traceback
-            print(f"Traceback: {traceback.format_exc()}")
+            db.session.execute(text('SELECT 1'))
+            print("✅ Database connection test successful!")
+        except Exception as conn_error:
+            print(f"❌ Database connection test failed: {conn_error}")
+        
+        # Check if employees table has data
+        print("Checking employees table...")
+        try:
+            employee_count = db.session.query(Employee).count()
+            print(f"Employees in database: {employee_count}")
+        except Exception as emp_error:
+            print(f"❌ Error checking employees: {emp_error}")
+        
+        print("=== DATABASE INITIALIZATION END ===")
+    except Exception as e:
+        print(f"❌ Error creating tables: {e}")
+        import traceback
+        print(f"Traceback: {traceback.format_exc()}")
+        print("⚠️ Database initialization failed, but app will continue running")
+
+if __name__ == '__main__':
+    # Initialize database in background (non-blocking)
+    import threading
+    db_thread = threading.Thread(target=initialize_database)
+    db_thread.daemon = True
+    db_thread.start()
     
     # Get port from environment variable (Render sets this)
     port = int(os.environ.get('PORT', 5000))
