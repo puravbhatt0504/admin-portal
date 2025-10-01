@@ -31,9 +31,52 @@ db_name = "finalboss0504$default"
 app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{db_user}:{db_password}@{db_host}/{db_name}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_POOL_RECYCLE'] = 280
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 280,
+    'pool_timeout': 20,
+    'max_overflow': 0,
+    'pool_size': 5,
+    'connect_args': {
+        'autocommit': True,
+        'charset': 'utf8mb4'
+    }
+}
 
 db = SQLAlchemy(app)
 db.Model = Base
+
+# --- Database Health Check ---
+def check_db_connection():
+    """Check if database connection is available"""
+    try:
+        db.session.execute('SELECT 1')
+        return True
+    except Exception as e:
+        print(f"Database connection check failed: {e}")
+        return False
+
+def safe_db_query(query_func, default_return=None):
+    """Safely execute database query with retry mechanism"""
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            if not check_db_connection():
+                print(f"Database not available, attempt {attempt + 1}/{max_retries}")
+                if attempt < max_retries - 1:
+                    time.sleep(1)  # Wait 1 second before retry
+                    continue
+                else:
+                    return default_return
+            return query_func()
+        except Exception as e:
+            print(f"Database query failed on attempt {attempt + 1}: {e}")
+            if attempt < max_retries - 1:
+                time.sleep(1)
+                continue
+            else:
+                return default_return
+    return default_return
 
 # --- Helper Functions ---
 def parse_time(time_str):
@@ -214,27 +257,42 @@ def delete_attendance():
 
 @app.route('/api/attendance/today', methods=['GET'])
 def attendance_today():
-    today = date.today()
-    all_emps = [name for (name,) in db.session.query(Employee.name).order_by(Employee.name).all()]
-    todays = db.session.query(Attendance).filter(Attendance.date == today).all()
-    present_map = {rec.employee_name: rec for rec in todays if getattr(rec, 'shift1_in', None) is not None}
-    records = []
-    for emp in all_emps:
-        rec = present_map.get(emp)
-        status = 'Absent'
-        check_in = '-'
-        check_out = '-'
-        if rec:
-            shift1_in = getattr(rec, 'shift1_in', None)
-            shift1_out = getattr(rec, 'shift1_out', None)
-            if shift1_in and shift1_in != time(0, 0, 0):
-                status = 'Late' if shift1_in > time(10,0) else 'Present'
-                check_in = shift1_in.strftime('%I:%M %p')
-            if shift1_out and shift1_out != time(0, 0, 0):
-                check_out = shift1_out.strftime('%I:%M %p')
-        records.append({'employee_name': emp, 'status': status, 'check_in': check_in, 'check_out': check_out})
-    absent_employees = [{'name': emp} for emp in all_emps if emp not in present_map]
-    return jsonify({'records': records, 'absent_employees': absent_employees})
+    try:
+        print("=== ATTENDANCE TODAY DEBUG START ===")
+        print("Checking database connection...")
+        
+        def get_attendance_data():
+            today = date.today()
+            all_emps = [name for (name,) in db.session.query(Employee.name).order_by(Employee.name).all()]
+            todays = db.session.query(Attendance).filter(Attendance.date == today).all()
+            present_map = {rec.employee_name: rec for rec in todays if getattr(rec, 'shift1_in', None) is not None}
+            records = []
+            for emp in all_emps:
+                rec = present_map.get(emp)
+                status = 'Absent'
+                check_in = '-'
+                check_out = '-'
+                if rec:
+                    shift1_in = getattr(rec, 'shift1_in', None)
+                    shift1_out = getattr(rec, 'shift1_out', None)
+                    if shift1_in and shift1_in != time(0, 0, 0):
+                        status = 'Late' if shift1_in > time(10,0) else 'Present'
+                        check_in = shift1_in.strftime('%I:%M %p')
+                    if shift1_out and shift1_out != time(0, 0, 0):
+                        check_out = shift1_out.strftime('%I:%M %p')
+                records.append({'employee_name': emp, 'status': status, 'check_in': check_in, 'check_out': check_out})
+            absent_employees = [{'name': emp} for emp in all_emps if emp not in present_map]
+            return {'records': records, 'absent_employees': absent_employees}
+        
+        result = safe_db_query(get_attendance_data, {'records': [], 'absent_employees': []})
+        print(f"Attendance data: {len(result.get('records', []))} records")
+        print("=== ATTENDANCE TODAY DEBUG END ===")
+        return jsonify(result)
+    except Exception as e:
+        print(f"=== ATTENDANCE TODAY ERROR ===")
+        print(f"Error: {e}")
+        print("=== ATTENDANCE TODAY ERROR END ===")
+        return jsonify({'error': str(e), 'records': [], 'absent_employees': []}), 500
 
 @app.route('/api/attendance/delete-all', methods=['DELETE'])
 def attendance_delete_all():
@@ -249,31 +307,46 @@ def attendance_delete_all():
 # --- Dashboard ---
 @app.route('/api/dashboard', methods=['GET'])
 def get_dashboard():
-    today = date.today()
-    total = db.session.query(Employee).count()
-    
-    # Get all employees who have attendance records for today
-    attendance_records = db.session.query(Attendance).filter(
-        Attendance.date == today
-    ).all()
-    
-    # Count unique employees who actually checked in (have valid shift1_in)
-    present_employees = set()
-    late_employees = set()
-    
-    for record in attendance_records:
-        shift1_in = getattr(record, 'shift1_in', None)
-        if shift1_in and shift1_in != time(0, 0, 0):
-            present_employees.add(record.employee_name)
-            # Check if they were late (after 10:00 AM)
-            if shift1_in > time(10, 0):
-                late_employees.add(record.employee_name)
-    
-    present = len(present_employees)
-    late = len(late_employees)
-    absent = max(0, total - present)
-    
-    return jsonify({'present_count': present, 'late_count': late, 'absent_count': absent})
+    try:
+        print("=== DASHBOARD DEBUG START ===")
+        print("Checking database connection...")
+        
+        def get_dashboard_data():
+            today = date.today()
+            total = db.session.query(Employee).count()
+            
+            # Get all employees who have attendance records for today
+            attendance_records = db.session.query(Attendance).filter(
+                Attendance.date == today
+            ).all()
+            
+            # Count unique employees who actually checked in (have valid shift1_in)
+            present_employees = set()
+            late_employees = set()
+            
+            for record in attendance_records:
+                shift1_in = getattr(record, 'shift1_in', None)
+                if shift1_in and shift1_in != time(0, 0, 0):
+                    present_employees.add(record.employee_name)
+                    # Check if they were late (after 10:00 AM)
+                    if shift1_in > time(10, 0):
+                        late_employees.add(record.employee_name)
+            
+            present = len(present_employees)
+            late = len(late_employees)
+            absent = max(0, total - present)
+            
+            return {'present_count': present, 'late_count': late, 'absent_count': absent}
+        
+        result = safe_db_query(get_dashboard_data, {'present_count': 0, 'late_count': 0, 'absent_count': 0})
+        print(f"Dashboard data: {result}")
+        print("=== DASHBOARD DEBUG END ===")
+        return jsonify(result)
+    except Exception as e:
+        print(f"=== DASHBOARD ERROR ===")
+        print(f"Error: {e}")
+        print("=== DASHBOARD ERROR END ===")
+        return jsonify({'error': str(e), 'present_count': 0, 'late_count': 0, 'absent_count': 0}), 500
 
 # --- Travel Expenses ---
 @app.route('/api/expenses/travel', methods=['POST'])
