@@ -17,16 +17,21 @@ export default function Reports() {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       
-      // Get the PDF blob directly
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `${reportType}_report_${startDate}_to_${endDate}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      window.URL.revokeObjectURL(url)
-      document.body.removeChild(a)
+      // Get the HTML content
+      const htmlContent = await response.text()
+      
+      // Open in new window and trigger print
+      const printWindow = window.open('', '_blank')
+      if (printWindow) {
+        printWindow.document.write(htmlContent)
+        printWindow.document.close()
+        printWindow.focus()
+        
+        // Wait for content to load, then trigger print
+        setTimeout(() => {
+          printWindow.print()
+        }, 500)
+      }
       
     } catch (error) {
       console.error('Error generating report:', error)
@@ -45,16 +50,21 @@ export default function Reports() {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       
-      // Get the PDF blob directly
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `detailed_expense_report_${startDate}_to_${endDate}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      window.URL.revokeObjectURL(url)
-      document.body.removeChild(a)
+      // Get the HTML content
+      const htmlContent = await response.text()
+      
+      // Open in new window and trigger print
+      const printWindow = window.open('', '_blank')
+      if (printWindow) {
+        printWindow.document.write(htmlContent)
+        printWindow.document.close()
+        printWindow.focus()
+        
+        // Wait for content to load, then trigger print
+        setTimeout(() => {
+          printWindow.print()
+        }, 500)
+      }
       
     } catch (error) {
       console.error('Error generating detailed expense report:', error)
@@ -73,16 +83,21 @@ export default function Reports() {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       
-      // Get the PDF blob directly
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `general_expense_report_${startDate}_to_${endDate}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      window.URL.revokeObjectURL(url)
-      document.body.removeChild(a)
+      // Get the HTML content
+      const htmlContent = await response.text()
+      
+      // Open in new window and trigger print
+      const printWindow = window.open('', '_blank')
+      if (printWindow) {
+        printWindow.document.write(htmlContent)
+        printWindow.document.close()
+        printWindow.focus()
+        
+        // Wait for content to load, then trigger print
+        setTimeout(() => {
+          printWindow.print()
+        }, 500)
+      }
       
     } catch (error) {
       console.error('Error generating general expense report:', error)
@@ -101,16 +116,21 @@ export default function Reports() {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       
-      // Get the PDF blob directly
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `travel_expense_report_${startDate}_to_${endDate}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      window.URL.revokeObjectURL(url)
-      document.body.removeChild(a)
+      // Get the HTML content
+      const htmlContent = await response.text()
+      
+      // Open in new window and trigger print
+      const printWindow = window.open('', '_blank')
+      if (printWindow) {
+        printWindow.document.write(htmlContent)
+        printWindow.document.close()
+        printWindow.focus()
+        
+        // Wait for content to load, then trigger print
+        setTimeout(() => {
+          printWindow.print()
+        }, 500)
+      }
       
     } catch (error) {
       console.error('Error generating travel expense report:', error)
@@ -129,16 +149,21 @@ export default function Reports() {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       
-      // Get the PDF blob directly
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `${type}_report_${startDate}_to_${endDate}.pdf`
-      document.body.appendChild(a)
-      a.click()
-      window.URL.revokeObjectURL(url)
-      document.body.removeChild(a)
+      // Get the HTML content
+      const htmlContent = await response.text()
+      
+      // Open in new window and trigger print
+      const printWindow = window.open('', '_blank')
+      if (printWindow) {
+        printWindow.document.write(htmlContent)
+        printWindow.document.close()
+        printWindow.focus()
+        
+        // Wait for content to load, then trigger print
+        setTimeout(() => {
+          printWindow.print()
+        }, 500)
+      }
       
     } catch (error) {
       console.error(`Error generating ${type} report:`, error)

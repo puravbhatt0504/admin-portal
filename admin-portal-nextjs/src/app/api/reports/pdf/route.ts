@@ -9,8 +9,7 @@ export async function GET(request: Request) {
     const startDate = searchParams.get('start_date') || '2025-01-01'
     const endDate = searchParams.get('end_date') || '2025-01-31'
 
-    let pdfBuffer: Buffer
-    let filename: string
+    let htmlContent: string
 
     if (reportType === 'Attendance') {
       const result = await pool.query(`
@@ -29,8 +28,7 @@ export async function GET(request: Request) {
         ORDER BY a.date DESC, e.name
       `, [startDate, endDate])
       
-      pdfBuffer = PDFService.generateAttendanceReport(result.rows, startDate, endDate)
-      filename = `attendance_report_${startDate}_to_${endDate}.pdf`
+      htmlContent = PDFService.generateAttendanceReport(result.rows, startDate, endDate)
     } else if (reportType === 'Expenses') {
       const result = await pool.query(`
         SELECT 
@@ -47,8 +45,7 @@ export async function GET(request: Request) {
       `, [startDate, endDate])
       
       // For basic expense report, use the detailed expense report generator
-      pdfBuffer = PDFService.generateDetailedExpenseReport(result.rows, startDate, endDate)
-      filename = `expense_report_${startDate}_to_${endDate}.pdf`
+      htmlContent = PDFService.generateDetailedExpenseReport(result.rows, startDate, endDate)
     } else if (reportType === 'Employees') {
       const result = await pool.query(`
         SELECT 
@@ -65,8 +62,7 @@ export async function GET(request: Request) {
         ORDER BY name
       `)
       
-      pdfBuffer = PDFService.generateEmployeeReport(result.rows)
-      filename = `employee_report_${new Date().toISOString().split('T')[0]}.pdf`
+      htmlContent = PDFService.generateEmployeeReport(result.rows)
     } else {
       return NextResponse.json(
         { error: 'Invalid report type. Supported types: Attendance, Expenses, Employees' },
@@ -74,12 +70,10 @@ export async function GET(request: Request) {
       )
     }
 
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(htmlContent, {
       status: 200,
       headers: {
-        'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${filename}"`,
-        'Content-Length': pdfBuffer.length.toString()
+        'Content-Type': 'text/html',
       }
     })
   } catch (error) {

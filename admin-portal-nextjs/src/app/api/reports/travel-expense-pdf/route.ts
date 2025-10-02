@@ -71,17 +71,13 @@ export async function GET(request: Request) {
 
     const expenses = expensesResult.rows
 
-    // Generate PDF using PDFMake
-    const pdfBuffer = PDFService.generateTravelExpenseReport(expenses, startDate, endDate)
+    // Generate HTML report
+    const htmlContent = PDFService.generateTravelExpenseReport(expenses, startDate, endDate)
     
-    const filename = `travel_expense_report_${startDate}_to_${endDate}.pdf`
-
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(htmlContent, {
       status: 200,
       headers: {
-        'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${filename}"`,
-        'Content-Length': pdfBuffer.length.toString()
+        'Content-Type': 'text/html',
       }
     })
   } catch (error) {
