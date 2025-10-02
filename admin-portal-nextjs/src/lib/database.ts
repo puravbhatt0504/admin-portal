@@ -7,11 +7,11 @@ const pool = new Pool({
   database: process.env.SUPABASE_DB_NAME || 'postgres',
   port: parseInt(process.env.SUPABASE_DB_PORT || '6543'),
   ssl: { rejectUnauthorized: false },
-  // Use very small pool size to avoid max clients error
-  max: 1,
-  min: 0,
-  idleTimeoutMillis: 3000,
-  connectionTimeoutMillis: 2000,
+  // Use reasonable pool size for better performance
+  max: 5,
+  min: 1,
+  idleTimeoutMillis: 10000,
+  connectionTimeoutMillis: 5000,
   // Add better error handling
   allowExitOnIdle: true,
   // Add query timeout
