@@ -5,6 +5,8 @@ import Dashboard from '@/components/Dashboard'
 import Employees from '@/components/Employees'
 import Attendance from '@/components/Attendance'
 import Expenses from '@/components/Expenses'
+import GeneralExpenses from '@/components/GeneralExpenses'
+import TravelExpenses from '@/components/TravelExpenses'
 import Reports from '@/components/Reports'
 import Settings from '@/components/Settings'
 
@@ -16,6 +18,17 @@ export default function Home() {
     // Load dark mode preference
     const savedDarkMode = localStorage.getItem('darkMode') === 'true'
     setDarkMode(savedDarkMode)
+
+    // Listen for navigation events from child components
+    const handleNavigate = (event: CustomEvent) => {
+      setActiveTab(event.detail)
+    }
+
+    window.addEventListener('navigate', handleNavigate as EventListener)
+    
+    return () => {
+      window.removeEventListener('navigate', handleNavigate as EventListener)
+    }
   }, [])
 
   const toggleDarkMode = () => {
@@ -34,6 +47,10 @@ export default function Home() {
         return <Attendance />
       case 'expenses':
         return <Expenses />
+      case 'general-expenses':
+        return <GeneralExpenses />
+      case 'travel-expenses':
+        return <TravelExpenses />
       case 'reports':
         return <Reports />
       case 'settings':
@@ -109,7 +126,27 @@ export default function Home() {
                     onClick={(e) => { e.preventDefault(); setActiveTab('expenses') }}
                   >
                     <i className="bi bi-credit-card me-2"></i>
-                    Expenses
+                    All Expenses
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a 
+                    className={`nav-link ${activeTab === 'general-expenses' ? 'active' : ''}`}
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); setActiveTab('general-expenses') }}
+                  >
+                    <i className="bi bi-briefcase me-2"></i>
+                    General Expenses
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a 
+                    className={`nav-link ${activeTab === 'travel-expenses' ? 'active' : ''}`}
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); setActiveTab('travel-expenses') }}
+                  >
+                    <i className="bi bi-car-front me-2"></i>
+                    Travel Expenses
                   </a>
                 </li>
                 <li className="nav-item">

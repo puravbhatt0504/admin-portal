@@ -154,11 +154,95 @@ export default function Expenses() {
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1 className="h2">Expenses</h1>
-        <button className="btn btn-primary" onClick={openAddModal}>
-          <i className="bi bi-plus-circle me-2"></i>
-          Add Expense
-        </button>
+        <div>
+          <h1 className="h2 text-primary">
+            <i className="bi bi-credit-card me-2"></i>
+            All Expenses
+          </h1>
+          <p className="text-muted mb-0">Overview of all expenses - General and Travel</p>
+        </div>
+        <div className="btn-group">
+          <button className="btn btn-outline-primary" onClick={() => {
+            // This will be handled by the parent component
+            const event = new CustomEvent('navigate', { detail: 'general-expenses' })
+            window.dispatchEvent(event)
+          }}>
+            <i className="bi bi-briefcase me-2"></i>
+            General Expenses
+          </button>
+          <button className="btn btn-outline-info" onClick={() => {
+            // This will be handled by the parent component
+            const event = new CustomEvent('navigate', { detail: 'travel-expenses' })
+            window.dispatchEvent(event)
+          }}>
+            <i className="bi bi-car-front me-2"></i>
+            Travel Expenses
+          </button>
+        </div>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="row mb-4">
+        <div className="col-md-3">
+          <div className="card stats-card h-100">
+            <div className="card-body">
+              <div className="d-flex align-items-center">
+                <div className="icon me-3">
+                  <i className="bi bi-currency-rupee"></i>
+                </div>
+                <div>
+                  <p className="mb-1">Total Amount</p>
+                  <h3 className="mb-0 text-success">₹{expenses.reduce((sum, exp) => sum + exp.amount, 0).toLocaleString()}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3">
+          <div className="card stats-card h-100">
+            <div className="card-body">
+              <div className="d-flex align-items-center">
+                <div className="icon me-3">
+                  <i className="bi bi-briefcase"></i>
+                </div>
+                <div>
+                  <p className="mb-1">General</p>
+                  <h3 className="mb-0 text-info">{expenses.filter(exp => exp.expense_type !== 'Travel').length}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3">
+          <div className="card stats-card h-100">
+            <div className="card-body">
+              <div className="d-flex align-items-center">
+                <div className="icon me-3">
+                  <i className="bi bi-car-front"></i>
+                </div>
+                <div>
+                  <p className="mb-1">Travel</p>
+                  <h3 className="mb-0 text-primary">{expenses.filter(exp => exp.expense_type === 'Travel').length}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3">
+          <div className="card stats-card h-100">
+            <div className="card-body">
+              <div className="d-flex align-items-center">
+                <div className="icon me-3">
+                  <i className="bi bi-list-ul"></i>
+                </div>
+                <div>
+                  <p className="mb-1">Total Records</p>
+                  <h3 className="mb-0 text-warning">{expenses.length}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="card">
