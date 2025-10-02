@@ -670,41 +670,23 @@ export default function Attendance() {
                         <label className="form-label">
                           <i className="bi bi-clock me-1"></i>Check In Time
                         </label>
-                        <div className="row">
-                          <div className="col-md-6">
-                            <div className="input-group">
-                              <input
-                                type="time"
-                                className="form-control form-control-lg"
-                                value={formData.shift1_in}
-                                onChange={(e) => setFormData({ ...formData, shift1_in: e.target.value })}
-                                style={{ fontSize: '1.1rem' }}
-                              />
-                              <span className="input-group-text">
-                                <i className="bi bi-calendar-check"></i>
-                              </span>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="input-group">
-                              <input
-                                type="text"
-                                className={`form-control form-control-lg ${!isValid12HourTime(timeInputs.shift1_in_12) ? 'is-invalid' : ''}`}
-                                placeholder="6 PM, 6:30 PM"
-                                value={timeInputs.shift1_in_12}
-                                onChange={(e) => handle12HourTimeChange('shift1_in_12', e.target.value)}
-                                style={{ fontSize: '1.1rem' }}
-                              />
-                              <span className="input-group-text">
-                                <i className="bi bi-clock-history"></i>
-                              </span>
-                            </div>
-                            <small className="form-text text-muted">
-                              <i className="bi bi-info-circle me-1"></i>
-                              Enter time like: 6 PM, 6:30 PM, 6:30PM
-                            </small>
-                          </div>
+                        <div className="input-group">
+                          <input
+                            type="text"
+                            className={`form-control form-control-lg ${!isValid12HourTime(timeInputs.shift1_in_12) ? 'is-invalid' : ''}`}
+                            placeholder="6 PM, 6:30 PM"
+                            value={timeInputs.shift1_in_12}
+                            onChange={(e) => handle12HourTimeChange('shift1_in_12', e.target.value)}
+                            style={{ fontSize: '1.1rem' }}
+                          />
+                          <span className="input-group-text">
+                            <i className="bi bi-clock-history"></i>
+                          </span>
                         </div>
+                        <small className="form-text text-muted">
+                          <i className="bi bi-info-circle me-1"></i>
+                          Enter time like: 6 PM, 6:30 PM, 6:30PM
+                        </small>
                         {formData.shift1_in && (
                           <small className="form-text text-success">
                             <i className="bi bi-check-circle me-1"></i>
@@ -716,41 +698,23 @@ export default function Attendance() {
                             <label className="form-label">
                               <i className="bi bi-clock me-1"></i>Check Out Time
                             </label>
-                            <div className="row">
-                              <div className="col-md-6">
-                                <div className="input-group">
-                                  <input
-                                    type="time"
-                                    className="form-control form-control-lg"
-                                    value={formData.shift1_out}
-                                    onChange={(e) => setFormData({ ...formData, shift1_out: e.target.value })}
-                                    style={{ fontSize: '1.1rem' }}
-                                  />
-                                  <span className="input-group-text">
-                                    <i className="bi bi-calendar-x"></i>
-                                  </span>
-                                </div>
-                              </div>
-                              <div className="col-md-6">
-                                <div className="input-group">
-                                  <input
-                                    type="text"
-                                    className={`form-control form-control-lg ${!isValid12HourTime(timeInputs.shift1_out_12) ? 'is-invalid' : ''}`}
-                                    placeholder="5 PM, 5:30 PM"
-                                    value={timeInputs.shift1_out_12}
-                                    onChange={(e) => handle12HourTimeChange('shift1_out_12', e.target.value)}
-                                    style={{ fontSize: '1.1rem' }}
-                                  />
-                                  <span className="input-group-text">
-                                    <i className="bi bi-clock-history"></i>
-                                  </span>
-                                </div>
-                                <small className="form-text text-muted">
-                                  <i className="bi bi-info-circle me-1"></i>
-                                  Enter time like: 5 PM, 5:30 PM, 5:30PM
-                                </small>
-                              </div>
+                            <div className="input-group">
+                              <input
+                                type="text"
+                                className={`form-control form-control-lg ${!isValid12HourTime(timeInputs.shift1_out_12) ? 'is-invalid' : ''}`}
+                                placeholder="5 PM, 5:30 PM"
+                                value={timeInputs.shift1_out_12}
+                                onChange={(e) => handle12HourTimeChange('shift1_out_12', e.target.value)}
+                                style={{ fontSize: '1.1rem' }}
+                              />
+                              <span className="input-group-text">
+                                <i className="bi bi-clock-history"></i>
+                              </span>
                             </div>
+                            <small className="form-text text-muted">
+                              <i className="bi bi-info-circle me-1"></i>
+                              Enter time like: 5 PM, 5:30 PM, 5:30PM
+                            </small>
                             {formData.shift1_out && (
                               <small className="form-text text-success">
                                 <i className="bi bi-check-circle me-1"></i>
@@ -811,41 +775,23 @@ export default function Attendance() {
                             <label className="form-label">
                               <i className="bi bi-clock me-1"></i>Check In Time
                             </label>
-                            <div className="row">
-                              <div className="col-md-6">
-                                <div className="input-group">
-                                  <input
-                                    type="time"
-                                    className="form-control form-control-lg"
-                                    value={formData.shift2_in}
-                                    onChange={(e) => setFormData({ ...formData, shift2_in: e.target.value })}
-                                    style={{ fontSize: '1.1rem' }}
-                                  />
-                                  <span className="input-group-text">
-                                    <i className="bi bi-calendar-check"></i>
-                                  </span>
-                                </div>
-                              </div>
-                              <div className="col-md-6">
-                                <div className="input-group">
-                                  <input
-                                    type="text"
-                                    className={`form-control form-control-lg ${!isValid12HourTime(timeInputs.shift2_in_12) ? 'is-invalid' : ''}`}
-                                    placeholder="6 PM, 8 PM"
-                                    value={timeInputs.shift2_in_12}
-                                    onChange={(e) => handle12HourTimeChange('shift2_in_12', e.target.value)}
-                                    style={{ fontSize: '1.1rem' }}
-                                  />
-                                  <span className="input-group-text">
-                                    <i className="bi bi-clock-history"></i>
-                                  </span>
-                                </div>
-                                <small className="form-text text-muted">
-                                  <i className="bi bi-info-circle me-1"></i>
-                                  Enter time like: 6 PM, 8 PM, 8:30 PM
-                                </small>
-                              </div>
+                            <div className="input-group">
+                              <input
+                                type="text"
+                                className={`form-control form-control-lg ${!isValid12HourTime(timeInputs.shift2_in_12) ? 'is-invalid' : ''}`}
+                                placeholder="6 PM, 8 PM"
+                                value={timeInputs.shift2_in_12}
+                                onChange={(e) => handle12HourTimeChange('shift2_in_12', e.target.value)}
+                                style={{ fontSize: '1.1rem' }}
+                              />
+                              <span className="input-group-text">
+                                <i className="bi bi-clock-history"></i>
+                              </span>
                             </div>
+                            <small className="form-text text-muted">
+                              <i className="bi bi-info-circle me-1"></i>
+                              Enter time like: 6 PM, 8 PM, 8:30 PM
+                            </small>
                             {formData.shift2_in && (
                               <small className="form-text text-success">
                                 <i className="bi bi-check-circle me-1"></i>
@@ -857,41 +803,23 @@ export default function Attendance() {
                             <label className="form-label">
                               <i className="bi bi-clock me-1"></i>Check Out Time
                             </label>
-                            <div className="row">
-                              <div className="col-md-6">
-                                <div className="input-group">
-                                  <input
-                                    type="time"
-                                    className="form-control form-control-lg"
-                                    value={formData.shift2_out}
-                                    onChange={(e) => setFormData({ ...formData, shift2_out: e.target.value })}
-                                    style={{ fontSize: '1.1rem' }}
-                                  />
-                                  <span className="input-group-text">
-                                    <i className="bi bi-calendar-x"></i>
-                                  </span>
-                                </div>
-                              </div>
-                              <div className="col-md-6">
-                                <div className="input-group">
-                                  <input
-                                    type="text"
-                                    className={`form-control form-control-lg ${!isValid12HourTime(timeInputs.shift2_out_12) ? 'is-invalid' : ''}`}
-                                    placeholder="2 AM, 6 AM"
-                                    value={timeInputs.shift2_out_12}
-                                    onChange={(e) => handle12HourTimeChange('shift2_out_12', e.target.value)}
-                                    style={{ fontSize: '1.1rem' }}
-                                  />
-                                  <span className="input-group-text">
-                                    <i className="bi bi-clock-history"></i>
-                                  </span>
-                                </div>
-                                <small className="form-text text-muted">
-                                  <i className="bi bi-info-circle me-1"></i>
-                                  Enter time like: 2 AM, 6 AM, 2:30 AM
-                                </small>
-                              </div>
+                            <div className="input-group">
+                              <input
+                                type="text"
+                                className={`form-control form-control-lg ${!isValid12HourTime(timeInputs.shift2_out_12) ? 'is-invalid' : ''}`}
+                                placeholder="2 AM, 6 AM"
+                                value={timeInputs.shift2_out_12}
+                                onChange={(e) => handle12HourTimeChange('shift2_out_12', e.target.value)}
+                                style={{ fontSize: '1.1rem' }}
+                              />
+                              <span className="input-group-text">
+                                <i className="bi bi-clock-history"></i>
+                              </span>
                             </div>
+                            <small className="form-text text-muted">
+                              <i className="bi bi-info-circle me-1"></i>
+                              Enter time like: 2 AM, 6 AM, 2:30 AM
+                            </small>
                             {formData.shift2_out && (
                               <small className="form-text text-success">
                                 <i className="bi bi-check-circle me-1"></i>
