@@ -45,7 +45,7 @@ export default function Reports() {
             doc.setFont('helvetica', 'bold')
             doc.text(line, 20, yPosition)
             yPosition += 10
-          } else if (line.includes('📊') || line.includes('👥') || line.includes('📋')) {
+          } else if (line.includes('SUMMARY') || line.includes('REPORT') || line.includes('BREAKDOWN')) {
             // Section headers
             doc.setFontSize(14)
             doc.setFont('helvetica', 'bold')
@@ -122,10 +122,14 @@ export default function Reports() {
         doc.text(`Generated on: ${new Date().toLocaleString()}`, 20, 45)
         doc.text(`Date Range: ${startDate} to ${endDate}`, 20, 55)
         
+        // Add a line separator
+        doc.setDrawColor(200, 200, 200)
+        doc.line(20, 65, 190, 65)
+        
         // Summary Section with colored boxes
         doc.setFontSize(16)
         doc.setFont('helvetica', 'bold')
-        doc.text('📊 EXPENSE SUMMARY', 20, 75)
+        doc.text('EXPENSE SUMMARY', 20, 75)
         
         // Create colored summary boxes
         const summaryY = 85
@@ -179,7 +183,7 @@ export default function Reports() {
         let currentY = summaryY + 40
         doc.setFontSize(14)
         doc.setFont('helvetica', 'bold')
-        doc.text('👥 EMPLOYEE EXPENSE SUMMARY', 20, currentY)
+        doc.text('EMPLOYEE EXPENSE SUMMARY', 20, currentY)
         
         currentY += 15
         doc.setFontSize(10)
@@ -190,32 +194,43 @@ export default function Reports() {
         const tableHeaders = ['Employee', 'Total Amount', 'Expenses Count']
         const colWidths = [80, 60, 40]
         const startX = 20
+        const tableWidth = colWidths[0] + colWidths[1] + colWidths[2]
         
-        // Table header
-        doc.setFillColor(240, 240, 240)
-        doc.rect(startX, currentY - 5, colWidths[0] + colWidths[1] + colWidths[2], 10, 'F')
+        // Table header with better styling
+        doc.setFillColor(50, 50, 50)
+        doc.rect(startX, currentY - 5, tableWidth, 12, 'F')
         doc.setFont('helvetica', 'bold')
-        doc.text(tableHeaders[0], startX + 2, currentY + 2)
-        doc.text(tableHeaders[1], startX + colWidths[0] + 2, currentY + 2)
-        doc.text(tableHeaders[2], startX + colWidths[0] + colWidths[1] + 2, currentY + 2)
+        doc.setTextColor(255, 255, 255) // White text on dark background
+        doc.text(tableHeaders[0], startX + 5, currentY + 3)
+        doc.text(tableHeaders[1], startX + colWidths[0] + 5, currentY + 3)
+        doc.text(tableHeaders[2], startX + colWidths[0] + colWidths[1] + 5, currentY + 3)
         
-        currentY += 10
+        currentY += 12
         doc.setFont('helvetica', 'normal')
+        doc.setTextColor(0, 0, 0) // Reset to black
         
-        // Employee rows
+        // Employee rows with alternating colors
+        let rowIndex = 0
         Object.entries(employeeData).forEach(([employee, expenses]) => {
           if (currentY > 270) {
             doc.addPage()
             currentY = 20
           }
           
+          // Alternate row colors
+          if (rowIndex % 2 === 0) {
+            doc.setFillColor(248, 249, 250)
+            doc.rect(startX, currentY - 2, tableWidth, 10, 'F')
+          }
+          
           const empTotal = expenses.reduce((sum, exp) => sum + parseFloat(exp.amount), 0)
-          doc.text(employee, startX + 2, currentY + 2)
+          doc.text(employee, startX + 5, currentY + 3)
           doc.setTextColor(0, 150, 0) // Green for amounts
-          doc.text(`₹${empTotal.toLocaleString()}`, startX + colWidths[0] + 2, currentY + 2)
+          doc.text(`₹${empTotal.toLocaleString()}`, startX + colWidths[0] + 5, currentY + 3)
           doc.setTextColor(0, 0, 0) // Reset to black
-          doc.text(expenses.length.toString(), startX + colWidths[0] + colWidths[1] + 2, currentY + 2)
-          currentY += 8
+          doc.text(expenses.length.toString(), startX + colWidths[0] + colWidths[1] + 5, currentY + 3)
+          currentY += 10
+          rowIndex++
         })
         
         // Add new page for detailed breakdown
@@ -225,7 +240,7 @@ export default function Reports() {
         // Detailed breakdown
         doc.setFontSize(16)
         doc.setFont('helvetica', 'bold')
-        doc.text('📊 DETAILED BREAKDOWN', 20, currentY)
+        doc.text('DETAILED BREAKDOWN', 20, currentY)
         currentY += 20
         
         // Process each employee
@@ -241,7 +256,7 @@ export default function Reports() {
           doc.setFontSize(12)
           doc.setFont('helvetica', 'bold')
           doc.setTextColor(0, 100, 200) // Blue for employee names
-          doc.text(`👤 ${employee.toUpperCase()}`, 20, currentY)
+          doc.text(`${employee.toUpperCase()}`, 20, currentY)
           currentY += 10
           
           doc.setFontSize(10)
@@ -266,8 +281,13 @@ export default function Reports() {
                 doc.addPage()
                 currentY = 20
               }
-              doc.text(`• ${expense.description} - ₹${expense.amount} (${new Date(expense.date).toLocaleDateString()}) [${expense.status}]`, 25, currentY)
-              currentY += 6
+              doc.text(`• ${expense.description}`, 25, currentY)
+              doc.setTextColor(0, 150, 0) // Green for amount
+              doc.text(`₹${expense.amount}`, 25, currentY + 4)
+              doc.setTextColor(100, 100, 100) // Gray for date and status
+              doc.text(`${new Date(expense.date).toLocaleDateString()} - ${expense.status}`, 25, currentY + 8)
+              doc.setTextColor(0, 0, 0) // Reset to black
+              currentY += 12
             })
             currentY += 5
           }
@@ -285,17 +305,26 @@ export default function Reports() {
                 doc.addPage()
                 currentY = 20
               }
-              doc.text(`• ${expense.description} - ₹${expense.amount} (${new Date(expense.date).toLocaleDateString()})`, 25, currentY)
+              doc.text(`• ${expense.description}`, 25, currentY)
+              doc.setTextColor(0, 150, 0) // Green for amount
+              doc.text(`₹${expense.amount}`, 25, currentY + 4)
+              doc.setTextColor(100, 100, 100) // Gray for date
+              doc.text(`${new Date(expense.date).toLocaleDateString()}`, 25, currentY + 8)
+              
+              // Additional details
+              let detailY = currentY + 12
               if (expense.kilometers && expense.kilometers > 0) {
-                doc.text(`  Distance: ${expense.kilometers} km`, 30, currentY + 4)
-                currentY += 4
+                doc.setTextColor(0, 0, 0)
+                doc.text(`Distance: ${expense.kilometers} km`, 30, detailY)
+                detailY += 4
               }
               if (expense.receipt_number) {
-                doc.text(`  Receipt: ${expense.receipt_number}`, 30, currentY + 4)
-                currentY += 4
+                doc.text(`Receipt: ${expense.receipt_number}`, 30, detailY)
+                detailY += 4
               }
-              doc.text(`  Status: ${expense.status}`, 30, currentY + 4)
-              currentY += 8
+              doc.text(`Status: ${expense.status}`, 30, detailY)
+              doc.setTextColor(0, 0, 0) // Reset to black
+              currentY = detailY + 8
             })
             currentY += 10
           }
@@ -356,7 +385,7 @@ export default function Reports() {
             doc.setFont('helvetica', 'bold')
             doc.text(line, 20, yPosition)
             yPosition += 10
-          } else if (line.includes('📊') || line.includes('👥') || line.includes('📋')) {
+          } else if (line.includes('SUMMARY') || line.includes('REPORT') || line.includes('BREAKDOWN')) {
             // Section headers
             doc.setFontSize(14)
             doc.setFont('helvetica', 'bold')
@@ -441,7 +470,7 @@ export default function Reports() {
             doc.setFont('helvetica', 'bold')
             doc.text(line, 20, yPosition)
             yPosition += 10
-          } else if (line.includes('📊') || line.includes('👥') || line.includes('📋')) {
+          } else if (line.includes('SUMMARY') || line.includes('REPORT') || line.includes('BREAKDOWN')) {
             // Section headers
             doc.setFontSize(14)
             doc.setFont('helvetica', 'bold')
