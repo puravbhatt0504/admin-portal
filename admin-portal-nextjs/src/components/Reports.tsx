@@ -15,16 +15,63 @@ export default function Reports() {
       const result = await response.json()
 
       if (result.success && result.pdfContent) {
-        // Create and download the PDF
-        const blob = new Blob([result.pdfContent], { type: 'application/pdf' })
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = result.filename || 'report.pdf'
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
+        // Generate actual PDF using jsPDF
+        const { jsPDF } = await import('jspdf')
+        const doc = new jsPDF()
+        
+        // Set font
+        doc.setFont('helvetica')
+        
+        // Split content into pages
+        const lines = result.pdfContent.split('\n')
+        const pageHeight = 280
+        let yPosition = 20
+        
+        lines.forEach((line) => {
+          if (yPosition > pageHeight) {
+            doc.addPage()
+            yPosition = 20
+          }
+          
+          // Handle different line types
+          if (line.includes('=')) {
+            // Header lines
+            doc.setFontSize(16)
+            doc.setFont('helvetica', 'bold')
+            doc.text(line, 20, yPosition)
+            yPosition += 10
+          } else if (line.includes('📊') || line.includes('👥') || line.includes('📋')) {
+            // Section headers
+            doc.setFontSize(14)
+            doc.setFont('helvetica', 'bold')
+            doc.text(line, 20, yPosition)
+            yPosition += 8
+          } else if (line.includes('•')) {
+            // List items
+            doc.setFontSize(10)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 25, yPosition)
+            yPosition += 6
+          } else if (line.includes('|')) {
+            // Table rows
+            doc.setFontSize(8)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 20, yPosition)
+            yPosition += 5
+          } else if (line.trim() === '') {
+            // Empty lines
+            yPosition += 4
+          } else {
+            // Regular text
+            doc.setFontSize(10)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 20, yPosition)
+            yPosition += 6
+          }
+        })
+        
+        // Download the PDF
+        doc.save(`${reportType}_report_${startDate}_to_${endDate}.pdf`)
       } else {
         throw new Error(result.error || 'Failed to generate report')
       }
@@ -43,20 +90,69 @@ export default function Reports() {
       const result = await response.json()
 
       if (result.success && result.pdfContent) {
-        // Create and download the PDF
-        const blob = new Blob([result.pdfContent], { type: 'application/pdf' })
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = result.filename || 'detailed_expense_report.pdf'
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
+        // Generate actual PDF using jsPDF
+        const { jsPDF } = await import('jspdf')
+        const doc = new jsPDF()
+        
+        // Set font
+        doc.setFont('helvetica')
+        
+        // Split content into pages
+        const lines = result.pdfContent.split('\n')
+        const pageHeight = 280
+        let yPosition = 20
+        // let currentPage = 1
+        
+        lines.forEach((line) => {
+          if (yPosition > pageHeight) {
+            doc.addPage()
+            yPosition = 20
+            currentPage++
+          }
+          
+          // Handle different line types
+          if (line.includes('=')) {
+            // Header lines
+            doc.setFontSize(16)
+            doc.setFont('helvetica', 'bold')
+            doc.text(line, 20, yPosition)
+            yPosition += 10
+          } else if (line.includes('📊') || line.includes('👥') || line.includes('📋')) {
+            // Section headers
+            doc.setFontSize(14)
+            doc.setFont('helvetica', 'bold')
+            doc.text(line, 20, yPosition)
+            yPosition += 8
+          } else if (line.includes('•')) {
+            // List items
+            doc.setFontSize(10)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 25, yPosition)
+            yPosition += 6
+          } else if (line.includes('|')) {
+            // Table rows
+            doc.setFontSize(8)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 20, yPosition)
+            yPosition += 5
+          } else if (line.trim() === '') {
+            // Empty lines
+            yPosition += 4
+          } else {
+            // Regular text
+            doc.setFontSize(10)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 20, yPosition)
+            yPosition += 6
+          }
+        })
+        
+        // Download the PDF
+        doc.save(`detailed_expense_report_${startDate}_to_${endDate}.pdf`)
         
         // Show summary in alert
         if (result.summary) {
-          alert(`Report Generated!\n\nTotal Amount: ₹${result.summary.totalAmount.toLocaleString()}\nApproved: ₹${result.summary.approvedAmount.toLocaleString()}\nPending: ₹${result.summary.pendingAmount.toLocaleString()}\nRecords: ${result.summary.totalRecords}`)
+          alert(`PDF Report Generated!\n\nTotal Amount: ₹${result.summary.totalAmount.toLocaleString()}\nApproved: ₹${result.summary.approvedAmount.toLocaleString()}\nPending: ₹${result.summary.pendingAmount.toLocaleString()}\nRecords: ${result.summary.totalRecords}`)
         }
       } else {
         throw new Error(result.error || 'Failed to generate detailed expense report')
@@ -76,20 +172,67 @@ export default function Reports() {
       const result = await response.json()
 
       if (result.success && result.pdfContent) {
-        // Create and download the PDF
-        const blob = new Blob([result.pdfContent], { type: 'application/pdf' })
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = result.filename || 'general_expense_report.pdf'
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
+        // Generate actual PDF using jsPDF
+        const { jsPDF } = await import('jspdf')
+        const doc = new jsPDF()
+        
+        // Set font
+        doc.setFont('helvetica')
+        
+        // Split content into pages
+        const lines = result.pdfContent.split('\n')
+        const pageHeight = 280
+        let yPosition = 20
+        
+        lines.forEach((line) => {
+          if (yPosition > pageHeight) {
+            doc.addPage()
+            yPosition = 20
+          }
+          
+          // Handle different line types
+          if (line.includes('=')) {
+            // Header lines
+            doc.setFontSize(16)
+            doc.setFont('helvetica', 'bold')
+            doc.text(line, 20, yPosition)
+            yPosition += 10
+          } else if (line.includes('📊') || line.includes('👥') || line.includes('📋')) {
+            // Section headers
+            doc.setFontSize(14)
+            doc.setFont('helvetica', 'bold')
+            doc.text(line, 20, yPosition)
+            yPosition += 8
+          } else if (line.includes('•')) {
+            // List items
+            doc.setFontSize(10)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 25, yPosition)
+            yPosition += 6
+          } else if (line.includes('|')) {
+            // Table rows
+            doc.setFontSize(8)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 20, yPosition)
+            yPosition += 5
+          } else if (line.trim() === '') {
+            // Empty lines
+            yPosition += 4
+          } else {
+            // Regular text
+            doc.setFontSize(10)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 20, yPosition)
+            yPosition += 6
+          }
+        })
+        
+        // Download the PDF
+        doc.save(`general_expense_report_${startDate}_to_${endDate}.pdf`)
         
         // Show summary in alert
         if (result.summary) {
-          alert(`General Expenses Report Generated!\n\nTotal Amount: ₹${result.summary.totalAmount.toLocaleString()}\nApproved: ₹${result.summary.approvedAmount.toLocaleString()}\nPending: ₹${result.summary.pendingAmount.toLocaleString()}\nRecords: ${result.summary.totalRecords}\n\nBreakdown:\nGeneral: ${result.summary.generalCount}\nFood: ${result.summary.foodCount}\nOffice: ${result.summary.officeCount}`)
+          alert(`PDF Report Generated!\n\nTotal Amount: ₹${result.summary.totalAmount.toLocaleString()}\nApproved: ₹${result.summary.approvedAmount.toLocaleString()}\nPending: ₹${result.summary.pendingAmount.toLocaleString()}\nRecords: ${result.summary.totalRecords}\n\nBreakdown:\nGeneral: ${result.summary.generalCount}\nFood: ${result.summary.foodCount}\nOffice: ${result.summary.officeCount}`)
         }
       } else {
         throw new Error(result.error || 'Failed to generate general expense report')
@@ -109,20 +252,67 @@ export default function Reports() {
       const result = await response.json()
 
       if (result.success && result.pdfContent) {
-        // Create and download the PDF
-        const blob = new Blob([result.pdfContent], { type: 'application/pdf' })
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = result.filename || 'travel_expense_report.pdf'
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
+        // Generate actual PDF using jsPDF
+        const { jsPDF } = await import('jspdf')
+        const doc = new jsPDF()
+        
+        // Set font
+        doc.setFont('helvetica')
+        
+        // Split content into pages
+        const lines = result.pdfContent.split('\n')
+        const pageHeight = 280
+        let yPosition = 20
+        
+        lines.forEach((line) => {
+          if (yPosition > pageHeight) {
+            doc.addPage()
+            yPosition = 20
+          }
+          
+          // Handle different line types
+          if (line.includes('=')) {
+            // Header lines
+            doc.setFontSize(16)
+            doc.setFont('helvetica', 'bold')
+            doc.text(line, 20, yPosition)
+            yPosition += 10
+          } else if (line.includes('📊') || line.includes('👥') || line.includes('📋')) {
+            // Section headers
+            doc.setFontSize(14)
+            doc.setFont('helvetica', 'bold')
+            doc.text(line, 20, yPosition)
+            yPosition += 8
+          } else if (line.includes('•')) {
+            // List items
+            doc.setFontSize(10)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 25, yPosition)
+            yPosition += 6
+          } else if (line.includes('|')) {
+            // Table rows
+            doc.setFontSize(8)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 20, yPosition)
+            yPosition += 5
+          } else if (line.trim() === '') {
+            // Empty lines
+            yPosition += 4
+          } else {
+            // Regular text
+            doc.setFontSize(10)
+            doc.setFont('helvetica', 'normal')
+            doc.text(line, 20, yPosition)
+            yPosition += 6
+          }
+        })
+        
+        // Download the PDF
+        doc.save(`travel_expense_report_${startDate}_to_${endDate}.pdf`)
         
         // Show summary in alert
         if (result.summary) {
-          alert(`Travel Expenses Report Generated!\n\nTotal Amount: ₹${result.summary.totalAmount.toLocaleString()}\nApproved: ₹${result.summary.approvedAmount.toLocaleString()}\nPending: ₹${result.summary.pendingAmount.toLocaleString()}\nRecords: ${result.summary.totalRecords}\nDistance: ${result.summary.totalKilometers.toFixed(1)} km\nAvg Cost/km: ₹${result.summary.averageCostPerKm.toFixed(2)}\n\nBreakdown:\nTaxi: ${result.summary.taxiCount}\nFuel: ${result.summary.fuelCount}\nFlight: ${result.summary.flightCount}\nHotel: ${result.summary.hotelCount}`)
+          alert(`PDF Report Generated!\n\nTotal Amount: ₹${result.summary.totalAmount.toLocaleString()}\nApproved: ₹${result.summary.approvedAmount.toLocaleString()}\nPending: ₹${result.summary.pendingAmount.toLocaleString()}\nRecords: ${result.summary.totalRecords}\nDistance: ${result.summary.totalKilometers.toFixed(1)} km\nAvg Cost/km: ₹${result.summary.averageCostPerKm.toFixed(2)}\n\nBreakdown:\nTaxi: ${result.summary.taxiCount}\nFuel: ${result.summary.fuelCount}\nFlight: ${result.summary.flightCount}\nHotel: ${result.summary.hotelCount}`)
         }
       } else {
         throw new Error(result.error || 'Failed to generate travel expense report')
