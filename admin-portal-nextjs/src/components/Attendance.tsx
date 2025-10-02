@@ -34,7 +34,7 @@ export default function Attendance() {
     status: 'Present',
     total_hours: 0
   })
-  const [previousAttendance, setPreviousAttendance] = useState<any>(null)
+  const [previousAttendance, setPreviousAttendance] = useState<AttendanceRecord | null>(null)
   const [filterDate, setFilterDate] = useState(new Date().toISOString().split('T')[0])
   const [showAllDays, setShowAllDays] = useState(false)
   const [timeInputs, setTimeInputs] = useState({
@@ -233,7 +233,7 @@ export default function Attendance() {
     
     if (!match) return ''
     
-    let [, hours, minutes = '00', period] = match
+    const [, hours, minutes = '00', period] = match
     let hour24 = parseInt(hours)
     
     // Convert to 24-hour format
@@ -373,26 +373,6 @@ export default function Attendance() {
     setPreviousAttendance(null)
   }
 
-  // Reset entire form
-  const resetForm = () => {
-    setFormData({
-      employee_id: '',
-      date: new Date().toISOString().split('T')[0],
-      shift1_in: '',
-      shift1_out: '',
-      shift2_in: '',
-      shift2_out: '',
-      status: 'Present',
-      total_hours: 0
-    })
-    setTimeInputs({
-      shift1_in_12: '',
-      shift1_out_12: '',
-      shift2_in_12: '',
-      shift2_out_12: ''
-    })
-    setPreviousAttendance(null)
-  }
 
   // Handle date filter change
   const handleDateFilterChange = (date: string) => {

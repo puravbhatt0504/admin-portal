@@ -128,18 +128,6 @@ export default function Expenses() {
     }
   }
 
-  const openAddModal = () => {
-    setEditingExpense(null)
-    setFormData({
-      employee_id: '',
-      category: '',
-      description: '',
-      amount: '',
-      date: new Date().toISOString().split('T')[0],
-      status: 'Pending'
-    })
-    setShowModal(true)
-  }
 
   if (loading) {
     return (

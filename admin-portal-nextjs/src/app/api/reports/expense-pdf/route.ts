@@ -28,7 +28,7 @@ export async function GET(request: Request) {
         WHERE e.date >= $1 AND e.date <= $2
         ORDER BY e.date DESC, emp.name
       `, [startDate, endDate])
-    } catch (error) {
+    } catch {
       // Fallback to basic query if new columns don't exist
       expensesResult = await pool.query(`
         SELECT 
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
       `, [startDate, endDate])
       
       // Add default values for missing columns
-      expensesResult.rows = expensesResult.rows.map((row: any) => ({
+      expensesResult.rows = expensesResult.rows.map((row: Record<string, unknown>) => ({
         ...row,
         kilometers: 0,
         expense_type: 'General',

@@ -23,7 +23,7 @@ export async function GET() {
         JOIN employees emp ON e.employee_id = emp.id
         ORDER BY e.date DESC, e.id DESC
       `)
-    } catch (error) {
+    } catch {
       // If new columns don't exist, fall back to basic query
       console.log('New columns not available, using basic query')
       result = await pool.query(`
@@ -41,7 +41,7 @@ export async function GET() {
       `)
       
       // Add default values for missing columns
-      result.rows = result.rows.map((row: any) => ({
+            result.rows = result.rows.map((row: Record<string, unknown>) => ({
         ...row,
         kilometers: 0,
         expense_type: 'General',
@@ -95,7 +95,7 @@ export async function POST(request: Request) {
         receipt_number || null,
         notes || null
       ])
-    } catch (error) {
+    } catch {
       // If new columns don't exist, fall back to basic insert
       console.log('New columns not available, using basic insert')
       result = await pool.query(`
@@ -112,10 +112,11 @@ export async function POST(request: Request) {
       ])
       
       // Add default values for missing columns
-      result.rows[0].kilometers = 0
-      result.rows[0].expense_type = expense_type || 'General'
-      result.rows[0].receipt_number = receipt_number || ''
-      result.rows[0].notes = notes || ''
+      const row = result.rows[0] as Record<string, unknown>
+      row.kilometers = 0
+      row.expense_type = expense_type || 'General'
+      row.receipt_number = receipt_number || ''
+      row.notes = notes || ''
     }
 
     return NextResponse.json({ expense: result.rows[0] })
