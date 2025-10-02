@@ -69,6 +69,72 @@ export default function Reports() {
     }
   }
 
+  const generateGeneralExpenseReport = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/reports/general-expense-pdf?start_date=${startDate}&end_date=${endDate}`)
+      const result = await response.json()
+
+      if (result.success && result.pdfContent) {
+        // Create and download the PDF
+        const blob = new Blob([result.pdfContent], { type: 'application/pdf' })
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = result.filename || 'general_expense_report.pdf'
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+        
+        // Show summary in alert
+        if (result.summary) {
+          alert(`General Expenses Report Generated!\n\nTotal Amount: ₹${result.summary.totalAmount.toLocaleString()}\nApproved: ₹${result.summary.approvedAmount.toLocaleString()}\nPending: ₹${result.summary.pendingAmount.toLocaleString()}\nRecords: ${result.summary.totalRecords}\n\nBreakdown:\nGeneral: ${result.summary.generalCount}\nFood: ${result.summary.foodCount}\nOffice: ${result.summary.officeCount}`)
+        }
+      } else {
+        throw new Error(result.error || 'Failed to generate general expense report')
+      }
+    } catch (error) {
+      console.error('Error generating general expense report:', error)
+      alert('Failed to generate general expense report. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const generateTravelExpenseReport = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/reports/travel-expense-pdf?start_date=${startDate}&end_date=${endDate}`)
+      const result = await response.json()
+
+      if (result.success && result.pdfContent) {
+        // Create and download the PDF
+        const blob = new Blob([result.pdfContent], { type: 'application/pdf' })
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = result.filename || 'travel_expense_report.pdf'
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+        
+        // Show summary in alert
+        if (result.summary) {
+          alert(`Travel Expenses Report Generated!\n\nTotal Amount: ₹${result.summary.totalAmount.toLocaleString()}\nApproved: ₹${result.summary.approvedAmount.toLocaleString()}\nPending: ₹${result.summary.pendingAmount.toLocaleString()}\nRecords: ${result.summary.totalRecords}\nDistance: ${result.summary.totalKilometers.toFixed(1)} km\nAvg Cost/km: ₹${result.summary.averageCostPerKm.toFixed(2)}\n\nBreakdown:\nTaxi: ${result.summary.taxiCount}\nFuel: ${result.summary.fuelCount}\nFlight: ${result.summary.flightCount}\nHotel: ${result.summary.hotelCount}`)
+        }
+      } else {
+        throw new Error(result.error || 'Failed to generate travel expense report')
+      }
+    } catch (error) {
+      console.error('Error generating travel expense report:', error)
+      alert('Failed to generate travel expense report. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const generateQuickReport = async (type: string) => {
     setLoading(true)
     try {
@@ -241,6 +307,130 @@ export default function Reports() {
                     <>
                       <i className="bi bi-file-earmark-bar-graph me-2"></i>
                       Generate Detailed Expense Report
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* General Expenses Report */}
+        <div className="col-lg-6 mb-4">
+          <div className="card border-info">
+            <div className="card-header bg-info text-white">
+              <h5 className="card-title mb-0">
+                <i className="bi bi-briefcase me-2"></i>
+                General Expenses Report
+              </h5>
+            </div>
+            <div className="card-body">
+              <p className="text-muted mb-3">
+                Generate focused reports for general business expenses:
+              </p>
+              <ul className="list-unstyled mb-3">
+                <li><i className="bi bi-check-circle text-info me-2"></i>Office supplies, food, equipment</li>
+                <li><i className="bi bi-check-circle text-info me-2"></i>Expense type breakdown (General, Food, Office)</li>
+                <li><i className="bi bi-check-circle text-info me-2"></i>Employee-specific general expenses</li>
+                <li><i className="bi bi-check-circle text-info me-2"></i>Receipt numbers and detailed notes</li>
+              </ul>
+              <form onSubmit={(e) => { e.preventDefault(); generateGeneralExpenseReport(); }}>
+                <div className="mb-3">
+                  <label className="form-label">Start Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">End Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-info w-100"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                      Generating General Report...
+                    </>
+                  ) : (
+                    <>
+                      <i className="bi bi-briefcase me-2"></i>
+                      Generate General Expenses Report
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* Travel Expenses Report */}
+        <div className="col-lg-6 mb-4">
+          <div className="card border-primary">
+            <div className="card-header bg-primary text-white">
+              <h5 className="card-title mb-0">
+                <i className="bi bi-car-front me-2"></i>
+                Travel Expenses Report
+              </h5>
+            </div>
+            <div className="card-body">
+              <p className="text-muted mb-3">
+                Generate focused reports for travel-related expenses:
+              </p>
+              <ul className="list-unstyled mb-3">
+                <li><i className="bi bi-check-circle text-primary me-2"></i>Taxi, fuel, toll, parking, flights, hotels</li>
+                <li><i className="bi bi-check-circle text-primary me-2"></i>Distance tracking and cost per kilometer</li>
+                <li><i className="bi bi-check-circle text-primary me-2"></i>Travel category breakdown</li>
+                <li><i className="bi bi-check-circle text-primary me-2"></i>Employee travel efficiency analysis</li>
+              </ul>
+              <form onSubmit={(e) => { e.preventDefault(); generateTravelExpenseReport(); }}>
+                <div className="mb-3">
+                  <label className="form-label">Start Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">End Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-primary w-100"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                      Generating Travel Report...
+                    </>
+                  ) : (
+                    <>
+                      <i className="bi bi-car-front me-2"></i>
+                      Generate Travel Expenses Report
                     </>
                   )}
                 </button>
