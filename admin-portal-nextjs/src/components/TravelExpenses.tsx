@@ -143,8 +143,8 @@ export default function TravelExpenses() {
       date: expense.date,
       status: expense.status,
       kilometers: expense.kilometers?.toString() || '',
-      odometer_start: '',
-      odometer_end: '',
+      odometer_start: (expense as any).odometer_start?.toString() || '',
+      odometer_end: (expense as any).odometer_end?.toString() || '',
       expense_type: 'Travel',
       receipt_number: expense.receipt_number || '',
       notes: expense.notes || ''
@@ -170,7 +170,9 @@ export default function TravelExpenses() {
         body: JSON.stringify({
           ...formData,
           employee_id: employee.id,
-          amount: parseFloat(formData.amount)
+          amount: parseFloat(formData.amount),
+          odometer_start: formData.odometer_start ? parseFloat(formData.odometer_start) : null,
+          odometer_end: formData.odometer_end ? parseFloat(formData.odometer_end) : null
         }),
       })
 
@@ -225,7 +227,12 @@ export default function TravelExpenses() {
     const end = parseFloat(formData.odometer_end)
     if (start && end && end > start) {
       const km = end - start
-      setFormData({ ...formData, kilometers: km.toString() })
+      const amount = km * 3.5 // ₹3.5 per km
+      setFormData({ 
+        ...formData, 
+        kilometers: km.toString(),
+        amount: amount.toFixed(2)
+      })
     }
   }
 

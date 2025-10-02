@@ -21,6 +21,8 @@ export async function GET(request: Request) {
           e.date,
           e.status,
           COALESCE(e.kilometers, 0) as kilometers,
+          COALESCE(e.odometer_start, 0) as odometer_start,
+          COALESCE(e.odometer_end, 0) as odometer_end,
           COALESCE(e.expense_type, 'General') as expense_type,
           COALESCE(e.receipt_number, '') as receipt_number,
           COALESCE(e.notes, '') as notes

@@ -16,6 +16,8 @@ export async function GET() {
           e.date, 
           e.status,
           COALESCE(e.kilometers, 0) as kilometers,
+          COALESCE(e.odometer_start, 0) as odometer_start,
+          COALESCE(e.odometer_end, 0) as odometer_end,
           COALESCE(e.expense_type, 'General') as expense_type,
           COALESCE(e.receipt_number, '') as receipt_number,
           COALESCE(e.notes, '') as notes
@@ -44,6 +46,8 @@ export async function GET() {
             result.rows = result.rows.map((row: Record<string, unknown>) => ({
         ...row,
         kilometers: 0,
+        odometer_start: 0,
+        odometer_end: 0,
         expense_type: 'General',
         receipt_number: '',
         notes: ''
@@ -72,6 +76,8 @@ export async function POST(request: Request) {
       date, 
       status, 
       kilometers, 
+      odometer_start,
+      odometer_end,
       expense_type, 
       receipt_number, 
       notes 
@@ -81,8 +87,8 @@ export async function POST(request: Request) {
     let result;
     try {
       result = await pool.query(`
-        INSERT INTO expenses (employee_id, category, description, amount, date, status, kilometers, expense_type, receipt_number, notes)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        INSERT INTO expenses (employee_id, category, description, amount, date, status, kilometers, odometer_start, odometer_end, expense_type, receipt_number, notes)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
         RETURNING *
       `, [
         parseInt(employee_id), 
@@ -92,6 +98,8 @@ export async function POST(request: Request) {
         date, 
         status,
         kilometers ? parseFloat(kilometers) : null,
+        odometer_start ? parseFloat(odometer_start) : null,
+        odometer_end ? parseFloat(odometer_end) : null,
         expense_type || 'General',
         receipt_number || null,
         notes || null
@@ -115,6 +123,8 @@ export async function POST(request: Request) {
       // Add default values for missing columns
       const row = result.rows[0] as Record<string, unknown>
       row.kilometers = 0
+      row.odometer_start = 0
+      row.odometer_end = 0
       row.expense_type = expense_type || 'General'
       row.receipt_number = receipt_number || ''
       row.notes = notes || ''

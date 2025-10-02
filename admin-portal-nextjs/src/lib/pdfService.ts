@@ -253,10 +253,22 @@ export class PDFService {
     const summary = this.calculateExpenseSummary(travelExpenses)
     const employeeExpenses = this.groupExpensesByEmployee(travelExpenses)
     const totalDistance = travelExpenses.reduce((sum, exp) => {
+      // First try to use actual kilometers if available
       const km = exp.kilometers
-      if (km === null || km === undefined || km === '' || km === '0' || km === '0.00' || km === '0.0') return sum
-      const numKm = Number(km)
-      return isNaN(numKm) ? sum : sum + numKm
+      if (km && km !== null && km !== undefined && km !== '' && km !== '0' && km !== '0.00' && km !== '0.0') {
+        const numKm = Number(km)
+        if (!isNaN(numKm) && numKm > 0) return sum + numKm
+      }
+      
+      // If no kilometers, try to calculate from odometer readings
+      const odometerStart = (exp as any).odometer_start
+      const odometerEnd = (exp as any).odometer_end
+      if (odometerStart && odometerEnd && odometerEnd > odometerStart) {
+        const calculatedKm = odometerEnd - odometerStart
+        return sum + calculatedKm
+      }
+      
+      return sum
     }, 0)
     
     // Debug logging
@@ -335,10 +347,22 @@ export class PDFService {
             ${Object.entries(employeeExpenses).map(([employee, expenses]) => {
               const empTotal = expenses.reduce((sum, exp) => sum + Number(exp.amount), 0)
               const empDistance = expenses.reduce((sum, exp) => {
+                // First try to use actual kilometers if available
                 const km = exp.kilometers
-                if (km === null || km === undefined || km === '' || km === '0' || km === '0.00' || km === '0.0') return sum
-                const numKm = Number(km)
-                return isNaN(numKm) ? sum : sum + numKm
+                if (km && km !== null && km !== undefined && km !== '' && km !== '0' && km !== '0.00' && km !== '0.0') {
+                  const numKm = Number(km)
+                  if (!isNaN(numKm) && numKm > 0) return sum + numKm
+                }
+                
+                // If no kilometers, try to calculate from odometer readings
+                const odometerStart = (exp as any).odometer_start
+                const odometerEnd = (exp as any).odometer_end
+                if (odometerStart && odometerEnd && odometerEnd > odometerStart) {
+                  const calculatedKm = odometerEnd - odometerStart
+                  return sum + calculatedKm
+                }
+                
+                return sum
               }, 0)
               
               // If no distance data, estimate based on amount (₹3.5 per km)
