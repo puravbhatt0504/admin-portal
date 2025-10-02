@@ -1,9 +1,13 @@
 import { NextResponse } from 'next/server'
 import pool from '@/lib/database'
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const result = await pool.query(`
+    const { searchParams } = new URL(request.url)
+    const employeeId = searchParams.get('employee_id')
+    const date = searchParams.get('date')
+    
+    let query = `
       SELECT 
         a.id, 
         e.name as employee_name, 
@@ -16,8 +20,28 @@ export async function GET() {
         a.status
       FROM attendance a
       JOIN employees e ON a.employee_id = e.id
-      ORDER BY a.date DESC, a.shift1_in DESC
-    `)
+    `
+    
+    const conditions = []
+    const params = []
+    
+    if (employeeId) {
+      conditions.push(`a.employee_id = $${params.length + 1}`)
+      params.push(parseInt(employeeId))
+    }
+    
+    if (date) {
+      conditions.push(`a.date = $${params.length + 1}`)
+      params.push(date)
+    }
+    
+    if (conditions.length > 0) {
+      query += ` WHERE ${conditions.join(' AND ')}`
+    }
+    
+    query += ` ORDER BY a.date DESC, a.shift1_in DESC`
+    
+    const result = await pool.query(query, params)
     
     return NextResponse.json({ attendance: result.rows })
   } catch (error) {

@@ -34,6 +34,7 @@ export default function Attendance() {
     status: 'Present',
     total_hours: 0
   })
+  const [previousAttendance, setPreviousAttendance] = useState<any>(null)
 
   useEffect(() => {
     loadAttendance()
@@ -112,6 +113,13 @@ export default function Attendance() {
   const calculateShiftHours = (startTime: string, endTime: string) => {
     if (!startTime || !endTime) return 0
     
+    // Validate time format
+    const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/
+    if (!timeRegex.test(startTime) || !timeRegex.test(endTime)) {
+      console.warn('Invalid time format:', { startTime, endTime })
+      return 0
+    }
+    
     const start = new Date(`2000-01-01T${startTime}`)
     const end = new Date(`2000-01-01T${endTime}`)
     
@@ -124,7 +132,15 @@ export default function Attendance() {
     }
     
     const hours = diffMs / (1000 * 60 * 60)
-    return Math.max(0, Math.round(hours * 100) / 100) // Ensure non-negative result
+    const result = Math.max(0, Math.round(hours * 100) / 100) // Ensure non-negative result
+    
+    // Additional validation to prevent any negative values
+    if (result < 0) {
+      console.warn('Negative hours detected, returning 0:', { startTime, endTime, result })
+      return 0
+    }
+    
+    return result
   }
 
   // Helper function to check if shift crosses midnight
@@ -159,6 +175,87 @@ export default function Attendance() {
 
   const getShift2Hours = () => {
     return calculateShiftHours(formData.shift2_in, formData.shift2_out)
+  }
+
+  // Function to load previous attendance data for selected employee and date
+  const loadPreviousAttendance = async (employeeId: string, date: string) => {
+    try {
+      const response = await fetch(`/api/attendance?employee_id=${employeeId}&date=${date}`)
+      const data = await response.json()
+      
+      if (data.attendance && data.attendance.length > 0) {
+        const prevData = data.attendance[0]
+        setPreviousAttendance(prevData)
+        
+        // Auto-fill form with previous data
+        setFormData(prev => ({
+          ...prev,
+          shift1_in: prevData.shift1_in || '',
+          shift1_out: prevData.shift1_out || '',
+          shift2_in: prevData.shift2_in || '',
+          shift2_out: prevData.shift2_out || '',
+          status: prevData.status || 'Present'
+        }))
+      } else {
+        setPreviousAttendance(null)
+        // Reset form if no previous data
+        setFormData(prev => ({
+          ...prev,
+          shift1_in: '',
+          shift1_out: '',
+          shift2_in: '',
+          shift2_out: '',
+          status: 'Present'
+        }))
+      }
+    } catch (error) {
+      console.error('Error loading previous attendance:', error)
+      setPreviousAttendance(null)
+    }
+  }
+
+  // Handle employee selection change
+  const handleEmployeeChange = (employeeId: string) => {
+    setFormData(prev => ({ ...prev, employee_id: employeeId }))
+    if (employeeId && formData.date) {
+      loadPreviousAttendance(employeeId, formData.date)
+    }
+  }
+
+  // Handle date change
+  const handleDateChange = (date: string) => {
+    setFormData(prev => ({ ...prev, date }))
+    if (formData.employee_id && date) {
+      loadPreviousAttendance(formData.employee_id, date)
+    }
+  }
+
+  // Clear form data
+  const clearForm = () => {
+    setFormData(prev => ({
+      ...prev,
+      shift1_in: '',
+      shift1_out: '',
+      shift2_in: '',
+      shift2_out: '',
+      status: 'Present'
+    }))
+    setPreviousAttendance(null)
+  }
+
+  // Reset entire form
+  const resetForm = () => {
+    setFormData({
+      employee_id: '',
+      date: new Date().toISOString().split('T')[0],
+      shift1_in: '',
+      shift1_out: '',
+      shift2_in: '',
+      shift2_out: '',
+      status: 'Present',
+      total_hours: 0
+    })
+    setPreviousAttendance(null)
   }
 
   if (loading) {
@@ -252,7 +349,7 @@ export default function Attendance() {
                     <select
                       className="form-select"
                       value={formData.employee_id}
-                      onChange={(e) => setFormData({ ...formData, employee_id: e.target.value })}
+                      onChange={(e) => handleEmployeeChange(e.target.value)}
                       required
                     >
                       <option value="">Select Employee</option>
@@ -262,6 +359,11 @@ export default function Attendance() {
                         </option>
                       ))}
                     </select>
+                    {previousAttendance && (
+                      <div className="alert alert-info mt-2">
+                        <small><i className="bi bi-info-circle me-1"></i>Previous attendance data loaded for this employee and date</small>
+                      </div>
+                    )}
                   </div>
                   <div className="mb-3">
                     <label className="form-label">Date</label>
@@ -269,7 +371,7 @@ export default function Attendance() {
                       type="date"
                       className="form-control"
                       value={formData.date}
-                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                      onChange={(e) => handleDateChange(e.target.value)}
                       required
                     />
                   </div>
@@ -530,16 +632,27 @@ export default function Attendance() {
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Save Attendance
-                  </button>
+                  <div className="d-flex gap-2">
+                    <button
+                      type="button"
+                      className="btn btn-outline-warning"
+                      onClick={clearForm}
+                      disabled={!formData.shift1_in && !formData.shift1_out && !formData.shift2_in && !formData.shift2_out}
+                    >
+                      <i className="bi bi-arrow-clockwise me-1"></i>Clear Times
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => setShowModal(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button type="submit" className="btn btn-primary">
+                      <i className="bi bi-check-circle me-1"></i>
+                      {previousAttendance ? 'Update' : 'Add'} Attendance
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
