@@ -11,7 +11,26 @@ const pool = new Pool({
   max: 1,
   min: 0,
   idleTimeoutMillis: 3000,
-  connectionTimeoutMillis: 2000
+  connectionTimeoutMillis: 2000,
+  // Add better error handling
+  allowExitOnIdle: true,
+  // Add query timeout
+  query_timeout: 10000,
+  // Add statement timeout
+  statement_timeout: 10000
+});
+
+// Add error handling for pool events
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
+});
+
+pool.on('connect', () => {
+  console.log('Database client connected');
+});
+
+pool.on('remove', () => {
+  console.log('Database client removed');
 });
 
 export default pool;
