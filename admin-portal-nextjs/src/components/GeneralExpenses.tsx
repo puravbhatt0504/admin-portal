@@ -49,37 +49,44 @@ export default function GeneralExpenses() {
   const loadExpenses = async () => {
     try {
       const response = await fetch('/api/expenses')
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
       
-      if (response.ok) {
-        // Filter for general expenses (non-travel)
-        const generalExpenses = (result.expenses || []).filter((expense: Expense) => {
-          // If explicitly marked as travel, exclude it
-          if (expense.expense_type === 'Travel') return false
-          
-          // Check if category suggests travel - exclude these
-          const travelCategories = ['Taxi', 'Fuel', 'Toll', 'Parking', 'Flight', 'Hotel', 'Travel', 'Transport']
-          if (travelCategories.some(cat => 
-            expense.category && expense.category.toLowerCase().includes(cat.toLowerCase())
-          )) return false
-          
-          // Check if description suggests travel - exclude these
-          const travelKeywords = ['taxi', 'fuel', 'toll', 'parking', 'flight', 'hotel', 'travel', 'transport', 'uber', 'ola', 'metro', 'bus', 'cab', 'ride']
-          if (travelKeywords.some(keyword => 
-            expense.description && expense.description.toLowerCase().includes(keyword)
-          )) return false
-          
-          // Include everything else as general expenses
-          return true
-        })
-        
-        setExpenses(generalExpenses)
-        console.log(`Found ${generalExpenses.length} general expenses out of ${result.expenses?.length || 0} total expenses`)
-      } else {
-        console.error('Error loading expenses:', result.error)
+      if (result.error) {
+        throw new Error(result.error)
       }
+      
+      // Filter for general expenses (non-travel)
+      const generalExpenses = (result.expenses || []).filter((expense: Expense) => {
+        // If explicitly marked as travel, exclude it
+        if (expense.expense_type === 'Travel') return false
+        
+        // Check if category suggests travel - exclude these
+        const travelCategories = ['Taxi', 'Fuel', 'Toll', 'Parking', 'Flight', 'Hotel', 'Travel', 'Transport']
+        if (travelCategories.some(cat => 
+          expense.category && expense.category.toLowerCase().includes(cat.toLowerCase())
+        )) return false
+        
+        // Check if description suggests travel - exclude these
+        const travelKeywords = ['taxi', 'fuel', 'toll', 'parking', 'flight', 'hotel', 'travel', 'transport', 'uber', 'ola', 'metro', 'bus', 'cab', 'ride']
+        if (travelKeywords.some(keyword => 
+          expense.description && expense.description.toLowerCase().includes(keyword)
+        )) return false
+        
+        // Include everything else as general expenses
+        return true
+      })
+      
+      setExpenses(generalExpenses)
+      console.log(`Found ${generalExpenses.length} general expenses out of ${result.expenses?.length || 0} total expenses`)
     } catch (error) {
       console.error('Error loading general expenses:', error)
+      // Set empty array on error to prevent loading loop
+      setExpenses([])
     } finally {
       setLoading(false)
     }
@@ -88,10 +95,22 @@ export default function GeneralExpenses() {
   const loadEmployees = async () => {
     try {
       const response = await fetch('/api/employees')
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
+      
+      if (result.error) {
+        throw new Error(result.error)
+      }
+      
       setEmployees(result.employees || [])
     } catch (error) {
       console.error('Error loading employees:', error)
+      // Set empty array on error
+      setEmployees([])
     }
   }
 

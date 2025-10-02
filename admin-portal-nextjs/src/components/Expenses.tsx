@@ -48,10 +48,22 @@ export default function Expenses() {
   const loadExpenses = async () => {
     try {
       const response = await fetch('/api/expenses')
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
+      
+      if (result.error) {
+        throw new Error(result.error)
+      }
+      
       setExpenses(result.expenses || [])
     } catch (error) {
       console.error('Error loading expenses:', error)
+      // Set empty array on error to prevent loading loop
+      setExpenses([])
     } finally {
       setLoading(false)
     }
@@ -60,10 +72,22 @@ export default function Expenses() {
   const loadEmployees = async () => {
     try {
       const response = await fetch('/api/employees')
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
+      
+      if (result.error) {
+        throw new Error(result.error)
+      }
+      
       setEmployees(result.employees || [])
     } catch (error) {
       console.error('Error loading employees:', error)
+      // Set empty array on error
+      setEmployees([])
     }
   }
 

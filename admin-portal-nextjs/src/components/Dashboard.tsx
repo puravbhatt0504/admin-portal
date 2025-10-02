@@ -43,10 +43,30 @@ export default function Dashboard() {
   const loadDashboardData = async () => {
     try {
       const response = await fetch('/api/dashboard')
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
+      
+      if (result.error) {
+        throw new Error(result.error)
+      }
+      
       setData(result)
     } catch (error) {
       console.error('Error loading dashboard data:', error)
+      // Set default data on error to prevent loading loop
+      setData({
+        totalEmployees: 0,
+        presentToday: 0,
+        lateToday: 0,
+        absentToday: 0,
+        totalExpenses: 0,
+        recentAttendance: [],
+        expenseBreakdown: []
+      })
     } finally {
       setLoading(false)
     }

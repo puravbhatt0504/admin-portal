@@ -35,10 +35,22 @@ export default function Employees() {
   const loadEmployees = async () => {
     try {
       const response = await fetch('/api/employees')
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
+      
+      if (result.error) {
+        throw new Error(result.error)
+      }
+      
       setEmployees(result.employees || [])
     } catch (error) {
       console.error('Error loading employees:', error)
+      // Set empty array on error to prevent loading loop
+      setEmployees([])
     } finally {
       setLoading(false)
     }
