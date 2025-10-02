@@ -99,7 +99,7 @@ export default function Attendance() {
     e.preventDefault()
     
     // Calculate and validate total hours before submission
-    const calculatedTotal = calculateTotalHours()
+    const calculatedTotal = calculateFormTotalHours()
     
     // Additional validation to prevent negative values
     if (calculatedTotal < 0) {
@@ -255,7 +255,7 @@ export default function Attendance() {
     return !!match
   }
 
-  const calculateTotalHours = () => {
+  const calculateFormTotalHours = () => {
     // Calculate hours for each shift with validation
     const shift1Hours = calculateShiftHours(formData.shift1_in, formData.shift1_out)
     const shift2Hours = calculateShiftHours(formData.shift2_in, formData.shift2_out)
@@ -964,11 +964,11 @@ export default function Attendance() {
                         <div className="row text-center">
                         <div className="col-md-4">
                           <div className="border-end">
-                            <h4 className={`mb-1 ${calculateTotalHours() < 0 ? 'text-danger' : 'text-primary'}`}>
-                              {Math.max(0, calculateTotalHours()).toFixed(1)}
+                            <h4 className={`mb-1 ${calculateFormTotalHours() < 0 ? 'text-danger' : 'text-primary'}`}>
+                              {Math.max(0, calculateFormTotalHours()).toFixed(1)}
                             </h4>
                             <small className="text-muted">Total Hours</small>
-                            {calculateTotalHours() < 0 && (
+                            {calculateFormTotalHours() < 0 && (
                               <div className="small text-danger">
                                 <i className="bi bi-exclamation-triangle me-1"></i>
                                 Invalid time entries
@@ -996,19 +996,19 @@ export default function Attendance() {
                             )}
                           </div>
                         </div>
-                        {calculateTotalHours() > 0 && (
+                        {calculateFormTotalHours() > 0 && (
                           <div className="mt-3">
                             <div className="progress" style={{ height: '8px' }}>
                               <div 
                                 className="progress-bar bg-gradient" 
                                 role="progressbar" 
                                 style={{ 
-                                  width: `${Math.min(100, (calculateTotalHours() / 12) * 100)}%`,
+                                  width: `${Math.min(100, (calculateFormTotalHours() / 12) * 100)}%`,
                                   background: 'linear-gradient(90deg, #10b981 0%, #3b82f6 100%)'
                                 }}
                               ></div>
                             </div>
-                            <small className="text-muted">Progress: {Math.min(100, Math.round((calculateTotalHours() / 12) * 100))}% of 12 hours</small>
+                            <small className="text-muted">Progress: {Math.min(100, Math.round((calculateFormTotalHours() / 12) * 100))}% of 12 hours</small>
                           </div>
                         )}
                       </div>
