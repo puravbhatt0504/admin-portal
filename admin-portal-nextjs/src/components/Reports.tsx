@@ -107,51 +107,197 @@ export default function Reports() {
         // Set font
         doc.setFont('helvetica')
         
-        // Split content into pages
-        const lines = result.pdfContent.split('\n')
-        const pageHeight = 280
-        let yPosition = 20
+        // Parse the data from the API response
+        const data = result.summary
         
-        lines.forEach((line) => {
-          if (yPosition > pageHeight) {
+        // Title Page
+        doc.setFontSize(20)
+        doc.setFont('helvetica', 'bold')
+        doc.setTextColor(0, 100, 0) // Green color
+        doc.text('EXPENSE REPORT SUMMARY', 20, 30)
+        
+        doc.setFontSize(12)
+        doc.setFont('helvetica', 'normal')
+        doc.setTextColor(0, 0, 0) // Black color
+        doc.text(`Generated on: ${new Date().toLocaleString()}`, 20, 45)
+        doc.text(`Date Range: ${startDate} to ${endDate}`, 20, 55)
+        
+        // Summary Section with colored boxes
+        doc.setFontSize(16)
+        doc.setFont('helvetica', 'bold')
+        doc.text('📊 EXPENSE SUMMARY', 20, 75)
+        
+        // Create colored summary boxes
+        const summaryY = 85
+        const boxWidth = 50
+        const boxHeight = 25
+        
+        // Total Expenses Box (Green)
+        doc.setFillColor(0, 150, 0)
+        doc.rect(20, summaryY, boxWidth, boxHeight, 'F')
+        doc.setTextColor(255, 255, 255)
+        doc.setFontSize(10)
+        doc.text('TOTAL EXPENSES', 25, summaryY + 8)
+        doc.setFontSize(14)
+        doc.setFont('helvetica', 'bold')
+        doc.text(`₹${data.totalAmount.toLocaleString()}`, 25, summaryY + 18)
+        
+        // Approved Box (Blue)
+        doc.setFillColor(0, 100, 200)
+        doc.rect(80, summaryY, boxWidth, boxHeight, 'F')
+        doc.setTextColor(255, 255, 255)
+        doc.setFontSize(10)
+        doc.text('APPROVED', 85, summaryY + 8)
+        doc.setFontSize(14)
+        doc.setFont('helvetica', 'bold')
+        doc.text(`₹${data.approvedAmount.toLocaleString()}`, 85, summaryY + 18)
+        
+        // Pending Box (Orange)
+        doc.setFillColor(255, 140, 0)
+        doc.rect(140, summaryY, boxWidth, boxHeight, 'F')
+        doc.setTextColor(255, 255, 255)
+        doc.setFontSize(10)
+        doc.text('PENDING', 145, summaryY + 8)
+        doc.setFontSize(14)
+        doc.setFont('helvetica', 'bold')
+        doc.text(`₹${data.pendingAmount.toLocaleString()}`, 145, summaryY + 18)
+        
+        // Records Box (Purple)
+        doc.setFillColor(150, 0, 150)
+        doc.rect(200, summaryY, boxWidth, boxHeight, 'F')
+        doc.setTextColor(255, 255, 255)
+        doc.setFontSize(10)
+        doc.text('RECORDS', 205, summaryY + 8)
+        doc.setFontSize(14)
+        doc.setFont('helvetica', 'bold')
+        doc.text(`${data.totalRecords}`, 205, summaryY + 18)
+        
+        // Reset text color
+        doc.setTextColor(0, 0, 0)
+        
+        // Employee Summary Table
+        let currentY = summaryY + 40
+        doc.setFontSize(14)
+        doc.setFont('helvetica', 'bold')
+        doc.text('👥 EMPLOYEE EXPENSE SUMMARY', 20, currentY)
+        
+        currentY += 15
+        doc.setFontSize(10)
+        doc.setFont('helvetica', 'normal')
+        
+        // Create employee summary table
+        const employeeData = result.employeeExpenses || {}
+        const tableHeaders = ['Employee', 'Total Amount', 'Expenses Count']
+        const colWidths = [80, 60, 40]
+        const startX = 20
+        
+        // Table header
+        doc.setFillColor(240, 240, 240)
+        doc.rect(startX, currentY - 5, colWidths[0] + colWidths[1] + colWidths[2], 10, 'F')
+        doc.setFont('helvetica', 'bold')
+        doc.text(tableHeaders[0], startX + 2, currentY + 2)
+        doc.text(tableHeaders[1], startX + colWidths[0] + 2, currentY + 2)
+        doc.text(tableHeaders[2], startX + colWidths[0] + colWidths[1] + 2, currentY + 2)
+        
+        currentY += 10
+        doc.setFont('helvetica', 'normal')
+        
+        // Employee rows
+        Object.entries(employeeData).forEach(([employee, expenses]) => {
+          if (currentY > 270) {
             doc.addPage()
-            yPosition = 20
+            currentY = 20
           }
           
-          // Handle different line types
-          if (line.includes('=')) {
-            // Header lines
-            doc.setFontSize(16)
+          const empTotal = expenses.reduce((sum, exp) => sum + parseFloat(exp.amount), 0)
+          doc.text(employee, startX + 2, currentY + 2)
+          doc.setTextColor(0, 150, 0) // Green for amounts
+          doc.text(`₹${empTotal.toLocaleString()}`, startX + colWidths[0] + 2, currentY + 2)
+          doc.setTextColor(0, 0, 0) // Reset to black
+          doc.text(expenses.length.toString(), startX + colWidths[0] + colWidths[1] + 2, currentY + 2)
+          currentY += 8
+        })
+        
+        // Add new page for detailed breakdown
+        doc.addPage()
+        currentY = 20
+        
+        // Detailed breakdown
+        doc.setFontSize(16)
+        doc.setFont('helvetica', 'bold')
+        doc.text('📊 DETAILED BREAKDOWN', 20, currentY)
+        currentY += 20
+        
+        // Process each employee
+        Object.entries(employeeData).forEach(([employee, expenses]) => {
+          if (currentY > 200) {
+            doc.addPage()
+            currentY = 20
+          }
+          
+          const empTotal = expenses.reduce((sum, exp) => sum + parseFloat(exp.amount), 0)
+          
+          // Employee header
+          doc.setFontSize(12)
+          doc.setFont('helvetica', 'bold')
+          doc.setTextColor(0, 100, 200) // Blue for employee names
+          doc.text(`👤 ${employee.toUpperCase()}`, 20, currentY)
+          currentY += 10
+          
+          doc.setFontSize(10)
+          doc.setTextColor(0, 150, 0) // Green for total
+          doc.text(`Total: ₹${empTotal.toLocaleString()}`, 20, currentY)
+          currentY += 15
+          
+          // Group by expense type
+          const generalExpenses = expenses.filter(exp => exp.expense_type === 'General' || !exp.expense_type)
+          const travelExpenses = expenses.filter(exp => exp.expense_type === 'Travel')
+          
+          // General expenses
+          if (generalExpenses.length > 0) {
             doc.setFont('helvetica', 'bold')
-            doc.text(line, 20, yPosition)
-            yPosition += 10
-          } else if (line.includes('📊') || line.includes('👥') || line.includes('📋')) {
-            // Section headers
-            doc.setFontSize(14)
+            doc.setTextColor(0, 0, 0)
+            doc.text('General Expenses:', 20, currentY)
+            currentY += 8
+            
+            doc.setFont('helvetica', 'normal')
+            generalExpenses.forEach(expense => {
+              if (currentY > 270) {
+                doc.addPage()
+                currentY = 20
+              }
+              doc.text(`• ${expense.description} - ₹${expense.amount} (${new Date(expense.date).toLocaleDateString()}) [${expense.status}]`, 25, currentY)
+              currentY += 6
+            })
+            currentY += 5
+          }
+          
+          // Travel expenses
+          if (travelExpenses.length > 0) {
             doc.setFont('helvetica', 'bold')
-            doc.text(line, 20, yPosition)
-            yPosition += 8
-          } else if (line.includes('•')) {
-            // List items
-            doc.setFontSize(10)
+            doc.setTextColor(0, 0, 0)
+            doc.text('Travel Expenses:', 20, currentY)
+            currentY += 8
+            
             doc.setFont('helvetica', 'normal')
-            doc.text(line, 25, yPosition)
-            yPosition += 6
-          } else if (line.includes('|')) {
-            // Table rows
-            doc.setFontSize(8)
-            doc.setFont('helvetica', 'normal')
-            doc.text(line, 20, yPosition)
-            yPosition += 5
-          } else if (line.trim() === '') {
-            // Empty lines
-            yPosition += 4
-          } else {
-            // Regular text
-            doc.setFontSize(10)
-            doc.setFont('helvetica', 'normal')
-            doc.text(line, 20, yPosition)
-            yPosition += 6
+            travelExpenses.forEach(expense => {
+              if (currentY > 270) {
+                doc.addPage()
+                currentY = 20
+              }
+              doc.text(`• ${expense.description} - ₹${expense.amount} (${new Date(expense.date).toLocaleDateString()})`, 25, currentY)
+              if (expense.kilometers && expense.kilometers > 0) {
+                doc.text(`  Distance: ${expense.kilometers} km`, 30, currentY + 4)
+                currentY += 4
+              }
+              if (expense.receipt_number) {
+                doc.text(`  Receipt: ${expense.receipt_number}`, 30, currentY + 4)
+                currentY += 4
+              }
+              doc.text(`  Status: ${expense.status}`, 30, currentY + 4)
+              currentY += 8
+            })
+            currentY += 10
           }
         })
         

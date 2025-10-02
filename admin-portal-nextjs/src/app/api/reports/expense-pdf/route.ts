@@ -185,7 +185,8 @@ export async function GET(request: Request) {
         pendingAmount,
         totalRecords: expenses.length,
         employeeCount: Object.keys(employeeExpenses).length
-      }
+      },
+      employeeExpenses: employeeExpenses
     })
 
   } catch (error) {
