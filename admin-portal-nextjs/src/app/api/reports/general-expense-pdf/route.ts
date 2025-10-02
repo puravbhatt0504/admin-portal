@@ -17,10 +17,10 @@ export async function GET(request: Request) {
         e.amount,
         e.date,
         e.status,
-        e.kilometers,
-        e.expense_type,
-        e.receipt_number,
-        e.notes
+        COALESCE(e.kilometers, 0) as kilometers,
+        COALESCE(e.expense_type, 'General') as expense_type,
+        COALESCE(e.receipt_number, '') as receipt_number,
+        COALESCE(e.notes, '') as notes
       FROM expenses e
       JOIN employees emp ON e.employee_id = emp.id
       WHERE e.date >= $1 AND e.date <= $2

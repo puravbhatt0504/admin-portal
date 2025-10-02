@@ -49,11 +49,33 @@ export default function TravelExpenses() {
     try {
       const response = await fetch('/api/expenses')
       const result = await response.json()
-      // Filter only travel expenses
-      const travelExpenses = (result.expenses || []).filter((expense: Expense) => 
-        expense.expense_type === 'Travel'
-      )
-      setExpenses(travelExpenses)
+      
+      if (response.ok) {
+        // Filter for travel expenses - check both expense_type and category
+        const travelExpenses = (result.expenses || []).filter((expense: Expense) => {
+          // Check if explicitly marked as travel
+          if (expense.expense_type === 'Travel') return true
+          
+          // Check if category suggests travel
+          const travelCategories = ['Taxi', 'Fuel', 'Toll', 'Parking', 'Flight', 'Hotel', 'Travel', 'Transport']
+          if (travelCategories.some(cat => 
+            expense.category && expense.category.toLowerCase().includes(cat.toLowerCase())
+          )) return true
+          
+          // Check if description suggests travel
+          const travelKeywords = ['taxi', 'fuel', 'toll', 'parking', 'flight', 'hotel', 'travel', 'transport', 'uber', 'ola', 'metro', 'bus', 'cab', 'ride']
+          if (travelKeywords.some(keyword => 
+            expense.description && expense.description.toLowerCase().includes(keyword)
+          )) return true
+          
+          return false
+        })
+        
+        setExpenses(travelExpenses)
+        console.log(`Found ${travelExpenses.length} travel expenses out of ${result.expenses?.length || 0} total expenses`)
+      } else {
+        console.error('Error loading expenses:', result.error)
+      }
     } catch (error) {
       console.error('Error loading travel expenses:', error)
     } finally {

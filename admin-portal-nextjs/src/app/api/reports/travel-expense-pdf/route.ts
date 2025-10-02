@@ -17,14 +17,20 @@ export async function GET(request: Request) {
         e.amount,
         e.date,
         e.status,
-        e.kilometers,
-        e.expense_type,
-        e.receipt_number,
-        e.notes
+        COALESCE(e.kilometers, 0) as kilometers,
+        COALESCE(e.expense_type, 'General') as expense_type,
+        COALESCE(e.receipt_number, '') as receipt_number,
+        COALESCE(e.notes, '') as notes
       FROM expenses e
       JOIN employees emp ON e.employee_id = emp.id
       WHERE e.date >= $1 AND e.date <= $2
-      AND e.expense_type = 'Travel'
+      AND (e.expense_type = 'Travel' OR 
+           e.category IN ('Taxi', 'Fuel', 'Toll', 'Parking', 'Flight', 'Hotel', 'Travel', 'Transport') OR
+           e.description ILIKE '%taxi%' OR e.description ILIKE '%fuel%' OR e.description ILIKE '%toll%' OR
+           e.description ILIKE '%parking%' OR e.description ILIKE '%flight%' OR e.description ILIKE '%hotel%' OR
+           e.description ILIKE '%travel%' OR e.description ILIKE '%transport%' OR e.description ILIKE '%uber%' OR
+           e.description ILIKE '%ola%' OR e.description ILIKE '%metro%' OR e.description ILIKE '%bus%' OR
+           e.description ILIKE '%cab%' OR e.description ILIKE '%ride%')
       ORDER BY e.date DESC, emp.name
     `, [startDate, endDate])
 
