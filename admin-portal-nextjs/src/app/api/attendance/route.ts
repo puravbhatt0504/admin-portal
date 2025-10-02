@@ -107,17 +107,24 @@ export async function POST(request: Request) {
             total_hours
           })
 
+    // Use smaller ID to avoid integer overflow
+    const timestampId = Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 1000)
+    
     const result = await pool.query(`
-      INSERT INTO attendance (employee_id, date, shift1_in, shift1_out, shift2_in, shift2_out, total_hours, status)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      INSERT INTO attendance (id, employee_id, date, shift1_in, shift1_out, shift2_in, shift2_out, total_hours, status)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       RETURNING *
-    `, [parseInt(employee_id), date, shift1_in || null, shift1_out || null, shift2_in || null, shift2_out || null, total_hours, status])
-
+    `, [timestampId, parseInt(employee_id), date, shift1_in || null, shift1_out || null, shift2_in || null, shift2_out || null, total_hours, status])
+    
     return NextResponse.json({ attendance: result.rows[0] })
   } catch (error) {
     console.error('Error creating attendance:', error)
     return NextResponse.json(
-      { error: 'Failed to create attendance' },
+      { 
+        error: 'Failed to create attendance',
+        details: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined
+      },
       { status: 500 }
     )
   }
