@@ -8,10 +8,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   // Add stability settings to prevent dev server hanging
-  experimental: {
-    // Disable some experimental features that can cause hanging
-    serverComponentsExternalPackages: ['pg'],
-  },
+  serverExternalPackages: ['pg'],
   // Add webpack configuration for better stability
   webpack: (config, { dev, isServer }) => {
     if (dev) {
