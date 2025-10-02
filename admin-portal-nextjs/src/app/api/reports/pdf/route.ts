@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import pool from '@/lib/database'
+import { PDFService } from '@/lib/pdfService'
 
 export async function GET(request: Request) {
   try {
@@ -8,8 +9,8 @@ export async function GET(request: Request) {
     const startDate = searchParams.get('start_date') || '2025-01-01'
     const endDate = searchParams.get('end_date') || '2025-01-31'
 
-    let data: Record<string, unknown>[] = []
-    let title = ''
+    let pdfBuffer: Buffer
+    let filename: string
 
     if (reportType === 'Attendance') {
       const result = await pool.query(`
@@ -28,8 +29,8 @@ export async function GET(request: Request) {
         ORDER BY a.date DESC, e.name
       `, [startDate, endDate])
       
-      data = result.rows
-      title = 'Attendance Report'
+      pdfBuffer = PDFService.generateAttendanceReport(result.rows, startDate, endDate)
+      filename = `attendance_report_${startDate}_to_${endDate}.pdf`
     } else if (reportType === 'Expenses') {
       const result = await pool.query(`
         SELECT 
@@ -45,74 +46,44 @@ export async function GET(request: Request) {
         ORDER BY exp.date DESC, e.name
       `, [startDate, endDate])
       
-      data = result.rows
-      title = 'Expense Report'
+      // For basic expense report, use the detailed expense report generator
+      pdfBuffer = PDFService.generateDetailedExpenseReport(result.rows, startDate, endDate)
+      filename = `expense_report_${startDate}_to_${endDate}.pdf`
     } else if (reportType === 'Employees') {
       const result = await pool.query(`
         SELECT 
+          id,
           name,
           position,
           department,
           email,
           phone,
           hire_date,
-          salary
+          salary,
+          status
         FROM employees
         ORDER BY name
       `)
       
-      data = result.rows
-      title = 'Employee Report'
-    }
-
-    // Generate PDF content (simplified text-based PDF)
-    let pdfContent = `${title}\n`
-    pdfContent += `Generated on: ${new Date().toLocaleString()}\n`
-    pdfContent += `Date Range: ${startDate} to ${endDate}\n`
-    pdfContent += `${'='.repeat(50)}\n\n`
-
-    if (data.length === 0) {
-      pdfContent += 'No data found for the selected criteria.\n'
+      pdfBuffer = PDFService.generateEmployeeReport(result.rows)
+      filename = `employee_report_${new Date().toISOString().split('T')[0]}.pdf`
     } else {
-      if (reportType === 'Attendance') {
-        pdfContent += 'Employee Name | Date | Shift 1 | Shift 2 | Total Hours | Status\n'
-        pdfContent += '-'.repeat(80) + '\n'
-        data.forEach(record => {
-          const shift1 = record.shift1_in && record.shift1_out ? `${record.shift1_in}-${record.shift1_out}` : 'N/A'
-          const shift2 = record.shift2_in && record.shift2_out ? `${record.shift2_in}-${record.shift2_out}` : 'N/A'
-          pdfContent += `${record.employee_name} | ${record.date} | ${shift1} | ${shift2} | ${record.total_hours || 0} | ${record.status}\n`
-        })
-      } else if (reportType === 'Expenses') {
-        pdfContent += 'Employee Name | Category | Description | Amount | Date | Status\n'
-        pdfContent += '-'.repeat(70) + '\n'
-        data.forEach(record => {
-          pdfContent += `${record.employee_name} | ${record.category} | ${record.description} | ₹${record.amount} | ${record.date} | ${record.status}\n`
-        })
-      } else if (reportType === 'Employees') {
-        pdfContent += 'Name | Position | Department | Email | Phone | Hire Date | Salary\n'
-        pdfContent += '-'.repeat(70) + '\n'
-        data.forEach(record => {
-          pdfContent += `${record.name} | ${record.position} | ${record.department} | ${record.email} | ${record.phone} | ${record.hire_date} | ₹${record.salary}\n`
-        })
-      }
+      return NextResponse.json(
+        { error: 'Invalid report type. Supported types: Attendance, Expenses, Employees' },
+        { status: 400 }
+      )
     }
 
-    // Add summary
-    pdfContent += `\n${'='.repeat(50)}\n`
-    pdfContent += `Total Records: ${data.length}\n`
-    pdfContent += `Report Generated: ${new Date().toLocaleString()}\n`
-
-    const filename = `${reportType.toLowerCase().replace(' ', '_')}_report_${startDate}_to_${endDate}.txt`
-
-    return NextResponse.json({
-      success: true,
-      pdfContent: pdfContent,
-      filename: filename,
-      message: 'Report generated successfully'
+    return new NextResponse(pdfBuffer, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Length': pdfBuffer.length.toString()
+      }
     })
-
   } catch (error) {
-    console.error('Error generating PDF report:', error)
+    console.error('Error generating report:', error)
     return NextResponse.json(
       { error: 'Failed to generate report', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
