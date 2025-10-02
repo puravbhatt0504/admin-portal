@@ -53,10 +53,11 @@ export async function GET() {
     return NextResponse.json({ expenses: result.rows })
   } catch (error) {
     console.error('Error fetching expenses:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch expenses' },
-      { status: 500 }
-    )
+    // Return fallback data instead of error to prevent loading loop
+    return NextResponse.json({
+      expenses: [],
+      error: 'Database connection failed - showing fallback data'
+    })
   }
 }
 
