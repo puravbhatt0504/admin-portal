@@ -111,13 +111,11 @@ export default function Reports() {
         const lines = result.pdfContent.split('\n')
         const pageHeight = 280
         let yPosition = 20
-        // let currentPage = 1
         
         lines.forEach((line) => {
           if (yPosition > pageHeight) {
             doc.addPage()
             yPosition = 20
-            currentPage++
           }
           
           // Handle different line types
