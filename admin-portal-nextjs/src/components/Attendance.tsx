@@ -78,13 +78,27 @@ export default function Attendance() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    // Calculate and validate total hours before submission
+    const calculatedTotal = calculateTotalHours()
+    
+    // Additional validation to prevent negative values
+    if (calculatedTotal < 0) {
+      console.error('Negative total hours detected, preventing submission:', calculatedTotal)
+      alert('Error: Invalid time entries detected. Please check your shift times.')
+      return
+    }
+    
     try {
       const response = await fetch('/api/attendance', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          total_hours: calculatedTotal
+        }),
       })
 
       if (response.ok) {
@@ -100,9 +114,14 @@ export default function Attendance() {
           total_hours: 0
         })
         loadAttendance()
+      } else {
+        const errorData = await response.json()
+        console.error('API Error:', errorData)
+        alert('Error saving attendance: ' + (errorData.error || 'Unknown error'))
       }
     } catch (error) {
       console.error('Error saving attendance:', error)
+      alert('Error saving attendance. Please try again.')
     }
   }
 
@@ -211,17 +230,41 @@ export default function Attendance() {
   }
 
   const calculateTotalHours = () => {
+    // Calculate hours for each shift with validation
     const shift1Hours = calculateShiftHours(formData.shift1_in, formData.shift1_out)
     const shift2Hours = calculateShiftHours(formData.shift2_in, formData.shift2_out)
-    return shift1Hours + shift2Hours
+    
+    // Ensure both values are non-negative
+    const validShift1 = Math.max(0, shift1Hours)
+    const validShift2 = Math.max(0, shift2Hours)
+    
+    const total = validShift1 + validShift2
+    
+    // Final safety check
+    const result = Math.max(0, Math.round(total * 100) / 100)
+    
+    // Debug logging
+    console.log('Total Hours Calculation:', {
+      shift1_in: formData.shift1_in,
+      shift1_out: formData.shift1_out,
+      shift1Hours: validShift1,
+      shift2_in: formData.shift2_in,
+      shift2_out: formData.shift2_out,
+      shift2Hours: validShift2,
+      total: result
+    })
+    
+    return result
   }
 
   const getShift1Hours = () => {
-    return calculateShiftHours(formData.shift1_in, formData.shift1_out)
+    const hours = calculateShiftHours(formData.shift1_in, formData.shift1_out)
+    return Math.max(0, hours)
   }
 
   const getShift2Hours = () => {
-    return calculateShiftHours(formData.shift2_in, formData.shift2_out)
+    const hours = calculateShiftHours(formData.shift2_in, formData.shift2_out)
+    return Math.max(0, hours)
   }
 
   // Function to load previous attendance data for selected employee and date
@@ -893,15 +936,23 @@ export default function Attendance() {
                       </div>
                       <div className="card-body">
                         <div className="row text-center">
-                          <div className="col-md-4">
-                            <div className="border-end">
-                              <h4 className="text-primary mb-1">{calculateTotalHours().toFixed(1)}</h4>
-                              <small className="text-muted">Total Hours</small>
-                              {(isOvernightShift(formData.shift1_in, formData.shift1_out) || isOvernightShift(formData.shift2_in, formData.shift2_out)) && (
-                                <div className="small text-warning">🌙 Includes overnight</div>
-                              )}
-                            </div>
+                        <div className="col-md-4">
+                          <div className="border-end">
+                            <h4 className={`mb-1 ${calculateTotalHours() < 0 ? 'text-danger' : 'text-primary'}`}>
+                              {Math.max(0, calculateTotalHours()).toFixed(1)}
+                            </h4>
+                            <small className="text-muted">Total Hours</small>
+                            {calculateTotalHours() < 0 && (
+                              <div className="small text-danger">
+                                <i className="bi bi-exclamation-triangle me-1"></i>
+                                Invalid time entries
+                              </div>
+                            )}
+                            {(isOvernightShift(formData.shift1_in, formData.shift1_out) || isOvernightShift(formData.shift2_in, formData.shift2_out)) && (
+                              <div className="small text-warning">🌙 Includes overnight</div>
+                            )}
                           </div>
+                        </div>
                           <div className="col-md-4">
                             <div className="border-end">
                               <h4 className="text-success mb-1">{getShift1Hours().toFixed(1)}</h4>

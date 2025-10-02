@@ -98,6 +98,15 @@ export async function POST(request: Request) {
           // Ensure non-negative result
           total_hours = Math.max(0, total_hours)
 
+          // Debug logging
+          console.log('API Total Hours Calculation:', {
+            shift1_in,
+            shift1_out,
+            shift2_in,
+            shift2_out,
+            total_hours
+          })
+
     const result = await pool.query(`
       INSERT INTO attendance (employee_id, date, shift1_in, shift1_out, shift2_in, shift2_out, total_hours, status)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
