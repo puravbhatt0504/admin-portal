@@ -5,6 +5,6 @@
     "SUPABASE_DB_PASSWORD": "puravbhatt0504",
     "SUPABASE_DB_HOST": "aws-1-ap-south-1.pooler.supabase.com",
     "SUPABASE_DB_NAME": "postgres",
-    "SUPABASE_DB_PORT": "5432"
+    "SUPABASE_DB_PORT": "6543"
   }
 }
