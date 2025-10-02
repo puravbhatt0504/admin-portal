@@ -298,7 +298,33 @@ export class PDFService {
         </div>
     </div>
 
-    <h2>EMPLOYEE BREAKDOWN</h2>
+    <h2>EMPLOYEE TRAVEL EXPENSE SUMMARY</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Total Amount</th>
+                <th>Total Distance</th>
+                <th>Expenses Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${Object.entries(employeeExpenses).map(([employee, expenses]) => {
+              const empTotal = expenses.reduce((sum, exp) => sum + Number(exp.amount), 0)
+              const empDistance = expenses.reduce((sum, exp) => sum + Number(exp.kilometers || 0), 0)
+              return `
+                <tr>
+                    <td>${employee}</td>
+                    <td class="amount">₹${empTotal.toLocaleString()}</td>
+                    <td>${empDistance.toFixed(1)} km</td>
+                    <td>${expenses.length}</td>
+                </tr>
+              `
+            }).join('')}
+        </tbody>
+    </table>
+
+    <h2>DETAILED BREAKDOWN</h2>
     ${Object.entries(employeeExpenses).map(([employee, expenses]) => {
       const empTotal = expenses.reduce((sum, exp) => sum + Number(exp.amount), 0)
       
