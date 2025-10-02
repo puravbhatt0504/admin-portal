@@ -35,15 +35,22 @@ export default function Attendance() {
     total_hours: 0
   })
   const [previousAttendance, setPreviousAttendance] = useState<any>(null)
+  const [filterDate, setFilterDate] = useState(new Date().toISOString().split('T')[0])
+  const [showAllDays, setShowAllDays] = useState(false)
 
   useEffect(() => {
     loadAttendance()
     loadEmployees()
   }, [])
 
-  const loadAttendance = async () => {
+  const loadAttendance = async (dateFilter?: string) => {
     try {
-      const response = await fetch('/api/attendance')
+      let url = '/api/attendance'
+      if (dateFilter && !showAllDays) {
+        url += `?date=${dateFilter}`
+      }
+      
+      const response = await fetch(url)
       const result = await response.json()
       setAttendance(result.attendance || [])
     } catch (error) {
@@ -258,6 +265,24 @@ export default function Attendance() {
     setPreviousAttendance(null)
   }
 
+  // Handle date filter change
+  const handleDateFilterChange = (date: string) => {
+    setFilterDate(date)
+    loadAttendance(date)
+  }
+
+  // Toggle between specific date and all days view
+  const toggleViewMode = () => {
+    setShowAllDays(!showAllDays)
+    if (!showAllDays) {
+      // Switching to all days view
+      loadAttendance()
+    } else {
+      // Switching to specific date view
+      loadAttendance(filterDate)
+    }
+  }
+
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ height: '400px' }}>
@@ -278,11 +303,91 @@ export default function Attendance() {
         </button>
       </div>
 
+      {/* Date Filter Section */}
+      <div className="card mb-4">
+        <div className="card-body">
+          <div className="row align-items-center">
+            <div className="col-md-6">
+              <div className="d-flex align-items-center gap-3">
+                <div className="form-check form-switch">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="viewModeToggle"
+                    checked={showAllDays}
+                    onChange={toggleViewMode}
+                  />
+                  <label className="form-check-label" htmlFor="viewModeToggle">
+                    <strong>Show All Days</strong>
+                  </label>
+                </div>
+                {!showAllDays && (
+                  <div className="d-flex align-items-center gap-2">
+                    <label className="form-label mb-0">
+                      <i className="bi bi-calendar3 me-1"></i>Filter by Date:
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={filterDate}
+                      onChange={(e) => handleDateFilterChange(e.target.value)}
+                      style={{ width: 'auto' }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="col-md-6 text-end">
+              <div className="d-flex align-items-center justify-content-end gap-2">
+                <span className="badge bg-info">
+                  <i className="bi bi-info-circle me-1"></i>
+                  {showAllDays ? 'Showing all days' : `Showing ${filterDate}`}
+                </span>
+                <button
+                  className="btn btn-outline-secondary btn-sm"
+                  onClick={() => loadAttendance(showAllDays ? undefined : filterDate)}
+                  title="Refresh data"
+                >
+                  <i className="bi bi-arrow-clockwise"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="card">
         <div className="card-body">
+          {/* Attendance Summary */}
+          <div className="row mb-3">
+            <div className="col-md-8">
+              <h5 className="mb-1">
+                {showAllDays ? 'All Attendance Records' : `Attendance for ${filterDate}`}
+              </h5>
+              <p className="text-muted mb-0">
+                {attendance.length} record{attendance.length !== 1 ? 's' : ''} found
+                {!showAllDays && attendance.length > 0 && (
+                  <span className="ms-2">
+                    • Total Hours: {attendance.reduce((sum, record) => sum + (record.total_hours || 0), 0).toFixed(1)}h
+                  </span>
+                )}
+              </p>
+            </div>
+            <div className="col-md-4 text-end">
+              {!showAllDays && attendance.length === 0 && (
+                <button
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={() => setShowModal(true)}
+                >
+                  <i className="bi bi-plus-circle me-1"></i>Add for this date
+                </button>
+              )}
+            </div>
+          </div>
+          
           <div className="table-responsive">
             <table className="table table-striped table-hover">
-              <thead>
+              <thead className="table-dark">
                 <tr>
                   <th>Employee</th>
                   <th>Date</th>
@@ -296,33 +401,62 @@ export default function Attendance() {
                 </tr>
               </thead>
               <tbody>
-                {attendance.map((record) => (
-                  <tr key={record.id}>
-                    <td>{record.employee_name}</td>
-                    <td>{new Date(record.date).toLocaleDateString()}</td>
-                    <td>{record.shift1_in || '-'}</td>
-                    <td>{record.shift1_out || '-'}</td>
-                    <td>{record.shift2_in || '-'}</td>
-                    <td>{record.shift2_out || '-'}</td>
-                    <td>{record.total_hours}</td>
-                    <td>
-                      <span className={`badge ${
-                        record.status === 'Present' ? 'bg-success' : 
-                        record.status === 'Late' ? 'bg-warning' : 'bg-danger'
-                      }`}>
-                        {record.status}
-                      </span>
-                    </td>
-                    <td>
-                      <button
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => handleDelete(record.id)}
-                      >
-                        <i className="bi bi-trash"></i>
-                      </button>
+                {attendance.length === 0 ? (
+                  <tr>
+                    <td colSpan={9} className="text-center py-4">
+                      <div className="text-muted">
+                        <i className="bi bi-calendar-x fs-1 d-block mb-2"></i>
+                        <h5>No attendance records found</h5>
+                        <p className="mb-0">
+                          {showAllDays 
+                            ? 'No attendance has been marked yet.' 
+                            : `No attendance records found for ${filterDate}.`
+                          }
+                        </p>
+                        {!showAllDays && (
+                          <button
+                            className="btn btn-primary mt-2"
+                            onClick={() => setShowModal(true)}
+                          >
+                            <i className="bi bi-plus-circle me-1"></i>Mark Attendance for this date
+                          </button>
+                        )}
+                      </div>
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  attendance.map((record) => (
+                    <tr key={record.id}>
+                      <td>{record.employee_name}</td>
+                      <td>{new Date(record.date).toLocaleDateString()}</td>
+                      <td>{record.shift1_in || '-'}</td>
+                      <td>{record.shift1_out || '-'}</td>
+                      <td>{record.shift2_in || '-'}</td>
+                      <td>{record.shift2_out || '-'}</td>
+                      <td>
+                        <span className="badge bg-primary">
+                          {record.total_hours || 0}h
+                        </span>
+                      </td>
+                      <td>
+                        <span className={`badge ${
+                          record.status === 'Present' ? 'bg-success' : 
+                          record.status === 'Late' ? 'bg-warning' : 'bg-danger'
+                        }`}>
+                          {record.status}
+                        </span>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-sm btn-outline-danger"
+                          onClick={() => handleDelete(record.id)}
+                        >
+                          <i className="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
