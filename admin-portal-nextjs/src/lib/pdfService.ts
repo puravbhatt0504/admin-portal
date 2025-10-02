@@ -271,8 +271,8 @@ export class PDFService {
     let displayDistance = totalDistance
     if (totalDistance === 0) {
       console.log('No kilometers data found, estimating based on amounts...')
-      // Rough estimation: ₹10-15 per km for travel expenses
-      const estimatedKm = Math.round(travelExpenses.reduce((sum, exp) => sum + Number(exp.amount), 0) / 12 * 10) / 10
+      // Rough estimation: ₹3.5 per km for travel expenses
+      const estimatedKm = Math.round(travelExpenses.reduce((sum, exp) => sum + Number(exp.amount), 0) / 3.5 * 10) / 10
       console.log('Estimated total distance:', estimatedKm, 'km')
       displayDistance = estimatedKm
     }
@@ -341,8 +341,8 @@ export class PDFService {
                 return isNaN(numKm) ? sum : sum + numKm
               }, 0)
               
-              // If no distance data, estimate based on amount
-              const displayEmpDistance = empDistance > 0 ? empDistance : Math.round((empTotal / 12) * 10) / 10
+              // If no distance data, estimate based on amount (₹3.5 per km)
+              const displayEmpDistance = empDistance > 0 ? empDistance : Math.round((empTotal / 3.5) * 10) / 10
               return `
                 <tr>
                     <td>${employee}</td>
@@ -385,7 +385,7 @@ export class PDFService {
         <h4 style="color: #0066cc; margin: 0 0 10px 0;">📊 Distance Data Note</h4>
         <p style="margin: 0; color: #0066cc;">
             <strong>Estimated distances shown:</strong> The travel expenses in this report don't have kilometers recorded, 
-            so distances are estimated based on expense amounts (₹12 per km average). 
+            so distances are estimated based on expense amounts (₹3.5 per km). 
             For accurate tracking, please fill out the "Distance (km)" field when adding travel expenses.
         </p>
     </div>

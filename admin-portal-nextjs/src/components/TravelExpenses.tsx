@@ -35,6 +35,8 @@ export default function TravelExpenses() {
     date: new Date().toISOString().split('T')[0],
     status: 'Pending',
     kilometers: '',
+    odometer_start: '',
+    odometer_end: '',
     expense_type: 'Travel',
     receipt_number: '',
     notes: ''
@@ -122,6 +124,8 @@ export default function TravelExpenses() {
       date: new Date().toISOString().split('T')[0],
       status: 'Pending',
       kilometers: '',
+      odometer_start: '',
+      odometer_end: '',
       expense_type: 'Travel',
       receipt_number: '',
       notes: ''
@@ -139,6 +143,8 @@ export default function TravelExpenses() {
       date: expense.date,
       status: expense.status,
       kilometers: expense.kilometers?.toString() || '',
+      odometer_start: '',
+      odometer_end: '',
       expense_type: 'Travel',
       receipt_number: expense.receipt_number || '',
       notes: expense.notes || ''
@@ -212,6 +218,15 @@ export default function TravelExpenses() {
     const totalKm = getTotalKilometers()
     if (totalKm === 0) return 0
     return getTotalAmount() / totalKm
+  }
+
+  const calculateKilometers = () => {
+    const start = parseFloat(formData.odometer_start)
+    const end = parseFloat(formData.odometer_end)
+    if (start && end && end > start) {
+      const km = end - start
+      setFormData({ ...formData, kilometers: km.toString() })
+    }
   }
 
   if (loading) {
@@ -488,17 +503,58 @@ export default function TravelExpenses() {
                     </div>
                     <div className="col-md-4">
                       <div className="mb-3">
-                        <label className="form-label">Distance (km)</label>
+                        <label className="form-label">Odometer Start (km)</label>
                         <input
                           type="number"
                           className="form-control"
-                          value={formData.kilometers}
-                          onChange={(e) => setFormData({ ...formData, kilometers: e.target.value })}
+                          value={formData.odometer_start}
+                          onChange={(e) => setFormData({ ...formData, odometer_start: e.target.value })}
                           min="0"
                           step="0.1"
-                          placeholder="Enter distance"
-                          required
+                          placeholder="Start reading"
                         />
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="mb-3">
+                        <label className="form-label">Odometer End (km)</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          value={formData.odometer_end}
+                          onChange={(e) => setFormData({ ...formData, odometer_end: e.target.value })}
+                          min="0"
+                          step="0.1"
+                          placeholder="End reading"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-4">
+                      <div className="mb-3">
+                        <label className="form-label">Distance (km)</label>
+                        <div className="input-group">
+                          <input
+                            type="number"
+                            className="form-control"
+                            value={formData.kilometers}
+                            onChange={(e) => setFormData({ ...formData, kilometers: e.target.value })}
+                            min="0"
+                            step="0.1"
+                            placeholder="Enter distance"
+                            required
+                          />
+                          <button
+                            type="button"
+                            className="btn btn-outline-secondary"
+                            onClick={calculateKilometers}
+                            disabled={!formData.odometer_start || !formData.odometer_end}
+                          >
+                            Calculate
+                          </button>
+                        </div>
+                        <small className="text-muted">
+                          Enter odometer readings above and click Calculate, or enter distance manually
+                        </small>
                       </div>
                     </div>
                     <div className="col-md-4">
