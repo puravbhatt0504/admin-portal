@@ -254,7 +254,7 @@ export class PDFService {
     const employeeExpenses = this.groupExpensesByEmployee(travelExpenses)
     const totalDistance = travelExpenses.reduce((sum, exp) => {
       const km = exp.kilometers
-      if (km === null || km === undefined || km === '') return sum
+      if (km === null || km === undefined || km === '' || km === '0' || km === '0.00' || km === '0.0') return sum
       const numKm = Number(km)
       return isNaN(numKm) ? sum : sum + numKm
     }, 0)
@@ -334,7 +334,7 @@ export class PDFService {
               const empTotal = expenses.reduce((sum, exp) => sum + Number(exp.amount), 0)
               const empDistance = expenses.reduce((sum, exp) => {
                 const km = exp.kilometers
-                if (km === null || km === undefined || km === '') return sum
+                if (km === null || km === undefined || km === '' || km === '0' || km === '0.00' || km === '0.0') return sum
                 const numKm = Number(km)
                 return isNaN(numKm) ? sum : sum + numKm
               }, 0)
