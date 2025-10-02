@@ -44,6 +44,25 @@ export default function Attendance() {
     shift2_out_12: ''
   })
 
+  // Helper function to safely calculate total hours
+  const calculateTotalHours = (attendanceRecords: AttendanceRecord[]): string => {
+    try {
+      if (!attendanceRecords || !Array.isArray(attendanceRecords)) {
+        return '0.0'
+      }
+      
+      const total = attendanceRecords.reduce((sum, record) => {
+        const hours = typeof record.total_hours === 'number' ? record.total_hours : 0
+        return sum + hours
+      }, 0)
+      
+      return total.toFixed(1)
+    } catch (error) {
+      console.error('Error calculating total hours:', error)
+      return '0.0'
+    }
+  }
+
   useEffect(() => {
     loadAttendance()
     loadEmployees()
@@ -499,7 +518,7 @@ export default function Attendance() {
                 {attendance.length} record{attendance.length !== 1 ? 's' : ''} found
                 {!showAllDays && attendance.length > 0 && (
                   <span className="ms-2">
-                    • Total Hours: {(attendance.reduce((sum, record) => sum + (record.total_hours || 0), 0) || 0).toFixed(1)}h
+                    • Total Hours: {calculateTotalHours(attendance)}h
                   </span>
                 )}
               </p>
