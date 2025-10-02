@@ -497,6 +497,7 @@ export default function TravelExpenses() {
                           min="0"
                           step="0.1"
                           placeholder="Enter distance"
+                          required
                         />
                       </div>
                     </div>

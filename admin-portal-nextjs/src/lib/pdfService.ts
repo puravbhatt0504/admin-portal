@@ -266,6 +266,14 @@ export class PDFService {
       type: typeof exp.kilometers 
     })))
     console.log('Total distance calculated:', totalDistance)
+    
+    // If no kilometers data, estimate based on amount (rough calculation)
+    if (totalDistance === 0) {
+      console.log('No kilometers data found, estimating based on amounts...')
+      // Rough estimation: ₹10-15 per km for travel expenses
+      const estimatedKm = Math.round(travelExpenses.reduce((sum, exp) => sum + Number(exp.amount), 0) / 12 * 10) / 10
+      console.log('Estimated total distance:', estimatedKm, 'km')
+    }
 
     return `
 <!DOCTYPE html>
@@ -303,7 +311,7 @@ export class PDFService {
         </div>
         <div class="summary-box">
             <h3>TOTAL DISTANCE</h3>
-            <div class="value">${totalDistance.toFixed(1)} km</div>
+            <div class="value">${totalDistance > 0 ? totalDistance.toFixed(1) + ' km' : 'No data*'}</div>
         </div>
         <div class="summary-box">
             <h3>RECORDS</h3>
@@ -334,7 +342,7 @@ export class PDFService {
                 <tr>
                     <td>${employee}</td>
                     <td class="amount">₹${empTotal.toLocaleString()}</td>
-                    <td>${empDistance.toFixed(1)} km</td>
+                    <td>${empDistance > 0 ? empDistance.toFixed(1) + ' km' : '-'}</td>
                     <td>${expenses.length}</td>
                 </tr>
               `
@@ -366,6 +374,16 @@ export class PDFService {
         </div>
       `
     }).join('')}
+    
+    ${totalDistance === 0 ? `
+    <div style="margin-top: 30px; padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 5px;">
+        <h4 style="color: #856404; margin: 0 0 10px 0;">📝 Note about Distance Data</h4>
+        <p style="margin: 0; color: #856404;">
+            <strong>No distance data available:</strong> The travel expenses in this report don't have kilometers recorded. 
+            To get accurate distance tracking, please ensure that when adding travel expenses, the "Distance (km)" field is filled out.
+        </p>
+    </div>
+    ` : ''}
 </body>
 </html>
     `
