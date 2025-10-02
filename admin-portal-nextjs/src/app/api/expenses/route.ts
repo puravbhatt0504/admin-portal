@@ -3,23 +3,52 @@ import pool from '@/lib/database'
 
 export async function GET() {
   try {
-    const result = await pool.query(`
-      SELECT 
-        e.id, 
-        emp.name as employee_name, 
-        e.category, 
-        e.description, 
-        e.amount, 
-        e.date, 
-        e.status,
-        COALESCE(e.kilometers, 0) as kilometers,
-        COALESCE(e.expense_type, 'General') as expense_type,
-        COALESCE(e.receipt_number, '') as receipt_number,
-        COALESCE(e.notes, '') as notes
-      FROM expenses e
-      JOIN employees emp ON e.employee_id = emp.id
-      ORDER BY e.date DESC, e.id DESC
-    `)
+    // First try with all columns
+    let result;
+    try {
+      result = await pool.query(`
+        SELECT 
+          e.id, 
+          emp.name as employee_name, 
+          e.category, 
+          e.description, 
+          e.amount, 
+          e.date, 
+          e.status,
+          COALESCE(e.kilometers, 0) as kilometers,
+          COALESCE(e.expense_type, 'General') as expense_type,
+          COALESCE(e.receipt_number, '') as receipt_number,
+          COALESCE(e.notes, '') as notes
+        FROM expenses e
+        JOIN employees emp ON e.employee_id = emp.id
+        ORDER BY e.date DESC, e.id DESC
+      `)
+    } catch (error) {
+      // If new columns don't exist, fall back to basic query
+      console.log('New columns not available, using basic query')
+      result = await pool.query(`
+        SELECT 
+          e.id, 
+          emp.name as employee_name, 
+          e.category, 
+          e.description, 
+          e.amount, 
+          e.date, 
+          e.status
+        FROM expenses e
+        JOIN employees emp ON e.employee_id = emp.id
+        ORDER BY e.date DESC, e.id DESC
+      `)
+      
+      // Add default values for missing columns
+      result.rows = result.rows.map((row: any) => ({
+        ...row,
+        kilometers: 0,
+        expense_type: 'General',
+        receipt_number: '',
+        notes: ''
+      }))
+    }
     
     return NextResponse.json({ expenses: result.rows })
   } catch (error) {

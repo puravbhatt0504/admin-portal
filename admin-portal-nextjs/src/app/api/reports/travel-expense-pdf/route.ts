@@ -8,31 +8,65 @@ export async function GET(request: Request) {
     const endDate = searchParams.get('end_date') || '2025-01-31'
 
     // Get only travel expenses in date range
-    const expensesResult = await pool.query(`
-      SELECT 
-        e.id,
-        emp.name as employee_name,
-        e.category,
-        e.description,
-        e.amount,
-        e.date,
-        e.status,
-        COALESCE(e.kilometers, 0) as kilometers,
-        COALESCE(e.expense_type, 'General') as expense_type,
-        COALESCE(e.receipt_number, '') as receipt_number,
-        COALESCE(e.notes, '') as notes
-      FROM expenses e
-      JOIN employees emp ON e.employee_id = emp.id
-      WHERE e.date >= $1 AND e.date <= $2
-      AND (e.expense_type = 'Travel' OR 
-           e.category IN ('Taxi', 'Fuel', 'Toll', 'Parking', 'Flight', 'Hotel', 'Travel', 'Transport') OR
-           e.description ILIKE '%taxi%' OR e.description ILIKE '%fuel%' OR e.description ILIKE '%toll%' OR
-           e.description ILIKE '%parking%' OR e.description ILIKE '%flight%' OR e.description ILIKE '%hotel%' OR
-           e.description ILIKE '%travel%' OR e.description ILIKE '%transport%' OR e.description ILIKE '%uber%' OR
-           e.description ILIKE '%ola%' OR e.description ILIKE '%metro%' OR e.description ILIKE '%bus%' OR
-           e.description ILIKE '%cab%' OR e.description ILIKE '%ride%')
-      ORDER BY e.date DESC, emp.name
-    `, [startDate, endDate])
+    let expensesResult;
+    try {
+      expensesResult = await pool.query(`
+        SELECT 
+          e.id,
+          emp.name as employee_name,
+          e.category,
+          e.description,
+          e.amount,
+          e.date,
+          e.status,
+          COALESCE(e.kilometers, 0) as kilometers,
+          COALESCE(e.expense_type, 'General') as expense_type,
+          COALESCE(e.receipt_number, '') as receipt_number,
+          COALESCE(e.notes, '') as notes
+        FROM expenses e
+        JOIN employees emp ON e.employee_id = emp.id
+        WHERE e.date >= $1 AND e.date <= $2
+        AND (e.expense_type = 'Travel' OR 
+             e.category IN ('Taxi', 'Fuel', 'Toll', 'Parking', 'Flight', 'Hotel', 'Travel', 'Transport') OR
+             e.description ILIKE '%taxi%' OR e.description ILIKE '%fuel%' OR e.description ILIKE '%toll%' OR
+             e.description ILIKE '%parking%' OR e.description ILIKE '%flight%' OR e.description ILIKE '%hotel%' OR
+             e.description ILIKE '%travel%' OR e.description ILIKE '%transport%' OR e.description ILIKE '%uber%' OR
+             e.description ILIKE '%ola%' OR e.description ILIKE '%metro%' OR e.description ILIKE '%bus%' OR
+             e.description ILIKE '%cab%' OR e.description ILIKE '%ride%')
+        ORDER BY e.date DESC, emp.name
+      `, [startDate, endDate])
+    } catch (error) {
+      // Fallback to basic query if new columns don't exist
+      expensesResult = await pool.query(`
+        SELECT 
+          e.id,
+          emp.name as employee_name,
+          e.category,
+          e.description,
+          e.amount,
+          e.date,
+          e.status
+        FROM expenses e
+        JOIN employees emp ON e.employee_id = emp.id
+        WHERE e.date >= $1 AND e.date <= $2
+        AND (e.category IN ('Taxi', 'Fuel', 'Toll', 'Parking', 'Flight', 'Hotel', 'Travel', 'Transport') OR
+             e.description ILIKE '%taxi%' OR e.description ILIKE '%fuel%' OR e.description ILIKE '%toll%' OR
+             e.description ILIKE '%parking%' OR e.description ILIKE '%flight%' OR e.description ILIKE '%hotel%' OR
+             e.description ILIKE '%travel%' OR e.description ILIKE '%transport%' OR e.description ILIKE '%uber%' OR
+             e.description ILIKE '%ola%' OR e.description ILIKE '%metro%' OR e.description ILIKE '%bus%' OR
+             e.description ILIKE '%cab%' OR e.description ILIKE '%ride%')
+        ORDER BY e.date DESC, emp.name
+      `, [startDate, endDate])
+      
+      // Add default values for missing columns
+      expensesResult.rows = expensesResult.rows.map((row: any) => ({
+        ...row,
+        kilometers: 0,
+        expense_type: 'Travel',
+        receipt_number: '',
+        notes: ''
+      }))
+    }
 
     const expenses = expensesResult.rows
 
