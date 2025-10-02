@@ -252,7 +252,20 @@ export class PDFService {
     
     const summary = this.calculateExpenseSummary(travelExpenses)
     const employeeExpenses = this.groupExpensesByEmployee(travelExpenses)
-    const totalDistance = travelExpenses.reduce((sum, exp) => sum + Number(exp.kilometers || 0), 0)
+    const totalDistance = travelExpenses.reduce((sum, exp) => {
+      const km = exp.kilometers
+      if (km === null || km === undefined || km === '') return sum
+      const numKm = Number(km)
+      return isNaN(numKm) ? sum : sum + numKm
+    }, 0)
+    
+    // Debug logging
+    console.log('Travel expenses sample:', travelExpenses.slice(0, 3).map(exp => ({ 
+      description: exp.description, 
+      kilometers: exp.kilometers, 
+      type: typeof exp.kilometers 
+    })))
+    console.log('Total distance calculated:', totalDistance)
 
     return `
 <!DOCTYPE html>
@@ -311,7 +324,12 @@ export class PDFService {
         <tbody>
             ${Object.entries(employeeExpenses).map(([employee, expenses]) => {
               const empTotal = expenses.reduce((sum, exp) => sum + Number(exp.amount), 0)
-              const empDistance = expenses.reduce((sum, exp) => sum + Number(exp.kilometers || 0), 0)
+              const empDistance = expenses.reduce((sum, exp) => {
+                const km = exp.kilometers
+                if (km === null || km === undefined || km === '') return sum
+                const numKm = Number(km)
+                return isNaN(numKm) ? sum : sum + numKm
+              }, 0)
               return `
                 <tr>
                     <td>${employee}</td>
