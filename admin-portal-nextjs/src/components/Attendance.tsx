@@ -499,7 +499,7 @@ export default function Attendance() {
                 {attendance.length} record{attendance.length !== 1 ? 's' : ''} found
                 {!showAllDays && attendance.length > 0 && (
                   <span className="ms-2">
-                    • Total Hours: {attendance.reduce((sum, record) => sum + (record.total_hours || 0), 0).toFixed(1)}h
+                    • Total Hours: {(attendance.reduce((sum, record) => sum + (record.total_hours || 0), 0) || 0).toFixed(1)}h
                   </span>
                 )}
               </p>
