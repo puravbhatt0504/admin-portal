@@ -208,7 +208,7 @@ export default function GeneralExpenses() {
   })
 
   const getTotalAmount = () => {
-    return filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0)
+    return filteredExpenses.reduce((sum, expense) => sum + (expense.amount || 0), 0)
   }
 
   const getExpenseTypeCount = (type: string) => {
@@ -252,7 +252,7 @@ export default function GeneralExpenses() {
                 </div>
                 <div>
                   <p className="mb-1">Total Amount</p>
-                  <h3 className="mb-0 text-success">₹{getTotalAmount().toLocaleString()}</h3>
+                  <h3 className="mb-0 text-success">₹{(getTotalAmount() || 0).toLocaleString()}</h3>
                 </div>
               </div>
             </div>
@@ -401,7 +401,7 @@ export default function GeneralExpenses() {
                       <span className="badge bg-info">{expense.category}</span>
                     </td>
                     <td>{expense.description}</td>
-                    <td className="fw-bold text-success">₹{expense.amount.toLocaleString()}</td>
+                    <td className="fw-bold text-success">₹{(expense.amount || 0).toLocaleString()}</td>
                     <td>{new Date(expense.date).toLocaleDateString()}</td>
                     <td>
                       {expense.receipt_number ? (

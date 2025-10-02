@@ -190,7 +190,7 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <p className="mb-1">Total Expenses (This Month)</p>
-                  <h3 className="mb-0">₹{data.totalExpenses.toLocaleString()}</h3>
+                  <h3 className="mb-0">₹{(data.totalExpenses || 0).toLocaleString()}</h3>
                 </div>
               </div>
             </div>

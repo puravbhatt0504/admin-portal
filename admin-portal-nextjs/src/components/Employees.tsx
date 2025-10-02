@@ -178,7 +178,7 @@ export default function Employees() {
                     <td>{employee.email}</td>
                     <td>{employee.phone}</td>
                     <td>{new Date(employee.hire_date).toLocaleDateString()}</td>
-                    <td>₹{employee.salary.toLocaleString()}</td>
+                    <td>₹{(employee.salary || 0).toLocaleString()}</td>
                     <td>
                       <button
                         className="btn btn-sm btn-outline-primary me-2"
