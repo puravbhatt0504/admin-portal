@@ -125,15 +125,40 @@ export async function POST(request: Request) {
         RETURNING *
       `, [shift1_in || null, shift1_out || null, shift2_in || null, shift2_out || null, total_hours, status, parseInt(employee_id), date])
     } else {
-      // Insert new record
+      // Insert new record with retry mechanism for ID collisions
       console.log('Creating new attendance record')
-      const timestampId = Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 1000)
       
-      result = await pool.query(`
-        INSERT INTO attendance (id, employee_id, date, shift1_in, shift1_out, shift2_in, shift2_out, total_hours, status)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-        RETURNING *
-      `, [timestampId, parseInt(employee_id), date, shift1_in || null, shift1_out || null, shift2_in || null, shift2_out || null, total_hours, status])
+      let attempts = 0
+      const maxAttempts = 5
+      let insertSuccess = false
+      
+      while (attempts < maxAttempts && !insertSuccess) {
+        try {
+          // Generate a unique ID using multiple factors
+          const timestampId = Date.now() + Math.floor(Math.random() * 100000) + (parseInt(employee_id) * 1000) + attempts
+          
+          result = await pool.query(`
+            INSERT INTO attendance (id, employee_id, date, shift1_in, shift1_out, shift2_in, shift2_out, total_hours, status)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            RETURNING *
+          `, [timestampId, parseInt(employee_id), date, shift1_in || null, shift1_out || null, shift2_in || null, shift2_out || null, total_hours, status])
+          
+          insertSuccess = true
+        } catch (error: any) {
+          if (error.code === '23505' && attempts < maxAttempts - 1) {
+            // Duplicate key error, try again with different ID
+            attempts++
+            console.log(`ID collision detected, retrying with attempt ${attempts + 1}`)
+            continue
+          } else {
+            throw error
+          }
+        }
+      }
+      
+      if (!insertSuccess) {
+        throw new Error('Failed to create attendance record after multiple attempts')
+      }
     }
     
     return NextResponse.json({ 
