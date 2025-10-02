@@ -10,6 +10,10 @@ interface Expense {
   amount: number
   date: string
   status: string
+  kilometers?: number
+  expense_type?: string
+  receipt_number?: string
+  notes?: string
 }
 
 interface Employee {
@@ -29,7 +33,11 @@ export default function Expenses() {
     description: '',
     amount: '',
     date: new Date().toISOString().split('T')[0],
-    status: 'Pending'
+    status: 'Pending',
+    kilometers: '',
+    expense_type: 'General',
+    receipt_number: '',
+    notes: ''
   })
 
   useEffect(() => {
@@ -160,10 +168,13 @@ export default function Expenses() {
               <thead>
                 <tr>
                   <th>Employee</th>
+                  <th>Type</th>
                   <th>Category</th>
                   <th>Description</th>
                   <th>Amount</th>
                   <th>Date</th>
+                  <th>KM</th>
+                  <th>Receipt</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -173,11 +184,28 @@ export default function Expenses() {
                   <tr key={expense.id}>
                     <td>{expense.employee_name}</td>
                     <td>
+                      <span className={`badge ${
+                        expense.expense_type === 'Travel' ? 'bg-primary' :
+                        expense.expense_type === 'Food' ? 'bg-success' :
+                        expense.expense_type === 'Office' ? 'bg-info' : 'bg-secondary'
+                      }`}>
+                        {expense.expense_type || 'General'}
+                      </span>
+                    </td>
+                    <td>
                       <span className="badge bg-info">{expense.category}</span>
                     </td>
                     <td>{expense.description}</td>
-                    <td>₹{expense.amount.toLocaleString()}</td>
+                    <td className="fw-bold text-success">₹{expense.amount.toLocaleString()}</td>
                     <td>{new Date(expense.date).toLocaleDateString()}</td>
+                    <td>
+                      {expense.kilometers ? `${expense.kilometers} km` : '-'}
+                    </td>
+                    <td>
+                      {expense.receipt_number ? (
+                        <span className="badge bg-light text-dark">{expense.receipt_number}</span>
+                      ) : '-'}
+                    </td>
                     <td>
                       <span className={`badge ${
                         expense.status === 'Approved' ? 'bg-success' : 
@@ -239,7 +267,11 @@ export default function Expenses() {
                           category: '',
                           description: '',
                           amount: '',
-                          status: 'Pending'
+                          status: 'Pending',
+                          kilometers: '',
+                          expense_type: 'General',
+                          receipt_number: '',
+                          notes: ''
                         })
                       }}
                       required
@@ -298,6 +330,51 @@ export default function Expenses() {
                       value={formData.date}
                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                       required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Expense Type</label>
+                    <select
+                      className="form-select"
+                      value={formData.expense_type}
+                      onChange={(e) => setFormData({ ...formData, expense_type: e.target.value })}
+                    >
+                      <option value="General">General</option>
+                      <option value="Travel">Travel</option>
+                      <option value="Food">Food</option>
+                      <option value="Office">Office</option>
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Kilometers (for travel expenses)</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      value={formData.kilometers}
+                      onChange={(e) => setFormData({ ...formData, kilometers: e.target.value })}
+                      min="0"
+                      step="0.1"
+                      placeholder="Enter kilometers if applicable"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Receipt Number</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={formData.receipt_number}
+                      onChange={(e) => setFormData({ ...formData, receipt_number: e.target.value })}
+                      placeholder="Enter receipt number if available"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Notes</label>
+                    <textarea
+                      className="form-control"
+                      rows={3}
+                      value={formData.notes}
+                      onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                      placeholder="Additional notes or details"
                     />
                   </div>
                   <div className="mb-3">

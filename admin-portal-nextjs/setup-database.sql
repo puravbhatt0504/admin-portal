@@ -44,6 +44,11 @@ CREATE TABLE expenses (
     amount DECIMAL(10,2) NOT NULL,
     date DATE NOT NULL,
     status VARCHAR(50) DEFAULT 'Pending',
+    -- Additional fields for detailed tracking
+    kilometers DECIMAL(8,2), -- For travel expenses
+    expense_type VARCHAR(50) DEFAULT 'General', -- General, Travel, Food, etc.
+    receipt_number VARCHAR(100), -- Receipt reference
+    notes TEXT, -- Additional notes
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

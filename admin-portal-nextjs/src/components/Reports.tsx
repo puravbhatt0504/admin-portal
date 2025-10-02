@@ -36,6 +36,39 @@ export default function Reports() {
     }
   }
 
+  const generateDetailedExpenseReport = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/reports/expense-pdf?start_date=${startDate}&end_date=${endDate}`)
+      const result = await response.json()
+
+      if (result.success && result.pdfContent) {
+        // Create and download the PDF
+        const blob = new Blob([result.pdfContent], { type: 'application/pdf' })
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = result.filename || 'detailed_expense_report.pdf'
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+        document.body.removeChild(a)
+        
+        // Show summary in alert
+        if (result.summary) {
+          alert(`Report Generated!\n\nTotal Amount: ₹${result.summary.totalAmount.toLocaleString()}\nApproved: ₹${result.summary.approvedAmount.toLocaleString()}\nPending: ₹${result.summary.pendingAmount.toLocaleString()}\nRecords: ${result.summary.totalRecords}`)
+        }
+      } else {
+        throw new Error(result.error || 'Failed to generate detailed expense report')
+      }
+    } catch (error) {
+      console.error('Error generating detailed expense report:', error)
+      alert('Failed to generate detailed expense report. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const generateQuickReport = async (type: string) => {
     setLoading(true)
     try {
@@ -150,6 +183,68 @@ export default function Reports() {
                   )}
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Detailed Expense Report */}
+        <div className="col-lg-6 mb-4">
+          <div className="card border-success">
+            <div className="card-header bg-success text-white">
+              <h5 className="card-title mb-0">
+                <i className="bi bi-file-earmark-bar-graph me-2"></i>
+                Detailed Expense Report
+              </h5>
+            </div>
+            <div className="card-body">
+              <p className="text-muted mb-3">
+                Generate comprehensive expense reports with:
+              </p>
+              <ul className="list-unstyled mb-3">
+                <li><i className="bi bi-check-circle text-success me-2"></i>Total expenses summary (highlighted in green)</li>
+                <li><i className="bi bi-check-circle text-success me-2"></i>Employee-specific breakdowns</li>
+                <li><i className="bi bi-check-circle text-success me-2"></i>Separate General & Travel expense tables</li>
+                <li><i className="bi bi-check-circle text-success me-2"></i>Detailed info: date, km, amount, receipt numbers</li>
+              </ul>
+              <form onSubmit={(e) => { e.preventDefault(); generateDetailedExpenseReport(); }}>
+                <div className="mb-3">
+                  <label className="form-label">Start Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">End Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-success w-100"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                      Generating Detailed Report...
+                    </>
+                  ) : (
+                    <>
+                      <i className="bi bi-file-earmark-bar-graph me-2"></i>
+                      Generate Detailed Expense Report
+                    </>
+                  )}
+                </button>
+              </form>
             </div>
           </div>
         </div>

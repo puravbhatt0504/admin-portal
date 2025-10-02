@@ -11,7 +11,11 @@ export async function GET() {
         e.description, 
         e.amount, 
         e.date, 
-        e.status
+        e.status,
+        e.kilometers,
+        e.expense_type,
+        e.receipt_number,
+        e.notes
       FROM expenses e
       JOIN employees emp ON e.employee_id = emp.id
       ORDER BY e.date DESC, e.id DESC
@@ -30,13 +34,35 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const data = await request.json()
-    const { employee_id, category, description, amount, date, status } = data
+    const { 
+      employee_id, 
+      category, 
+      description, 
+      amount, 
+      date, 
+      status, 
+      kilometers, 
+      expense_type, 
+      receipt_number, 
+      notes 
+    } = data
 
     const result = await pool.query(`
-      INSERT INTO expenses (employee_id, category, description, amount, date, status)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO expenses (employee_id, category, description, amount, date, status, kilometers, expense_type, receipt_number, notes)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       RETURNING *
-    `, [parseInt(employee_id), category, description, parseFloat(amount), date, status])
+    `, [
+      parseInt(employee_id), 
+      category, 
+      description, 
+      parseFloat(amount), 
+      date, 
+      status,
+      kilometers ? parseFloat(kilometers) : null,
+      expense_type || 'General',
+      receipt_number || null,
+      notes || null
+    ])
 
     return NextResponse.json({ expense: result.rows[0] })
   } catch (error) {
