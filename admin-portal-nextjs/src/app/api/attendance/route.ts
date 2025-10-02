@@ -134,8 +134,8 @@ export async function POST(request: Request) {
       
       while (attempts < maxAttempts && !insertSuccess) {
         try {
-          // Generate a unique ID using multiple factors
-          const timestampId = Date.now() + Math.floor(Math.random() * 100000) + (parseInt(employee_id) * 1000) + attempts
+          // Generate a unique ID using multiple factors (keeping it within integer range)
+          const timestampId = Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 100000) + (parseInt(employee_id) * 1000) + attempts
           
           result = await pool.query(`
             INSERT INTO attendance (id, employee_id, date, shift1_in, shift1_out, shift2_in, shift2_out, total_hours, status)
