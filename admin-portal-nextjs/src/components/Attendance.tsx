@@ -113,6 +113,13 @@ export default function Attendance() {
           status: 'Present',
           total_hours: 0
         })
+        setTimeInputs({
+          shift1_in_12: '',
+          shift1_out_12: '',
+          shift2_in_12: '',
+          shift2_out_12: ''
+        })
+        setPreviousAttendance(null)
         loadAttendance()
       } else {
         const errorData = await response.json()

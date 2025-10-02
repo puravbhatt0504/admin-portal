@@ -230,7 +230,18 @@ export default function Expenses() {
                     <select
                       className="form-select"
                       value={formData.employee_id}
-                      onChange={(e) => setFormData({ ...formData, employee_id: e.target.value })}
+                      onChange={(e) => {
+                        const newEmployeeId = e.target.value
+                        setFormData({ 
+                          ...formData, 
+                          employee_id: newEmployeeId,
+                          // Auto-clear other fields when selecting new employee
+                          category: '',
+                          description: '',
+                          amount: '',
+                          status: 'Pending'
+                        })
+                      }}
                       required
                     >
                       <option value="">Select Employee</option>
