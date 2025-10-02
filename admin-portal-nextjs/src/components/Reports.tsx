@@ -12,6 +12,11 @@ export default function Reports() {
     setLoading(true)
     try {
       const response = await fetch(`/api/reports/pdf?type=${reportType}&start_date=${startDate}&end_date=${endDate}`)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
 
       if (result.success && result.pdfContent) {
@@ -87,6 +92,11 @@ export default function Reports() {
     setLoading(true)
     try {
       const response = await fetch(`/api/reports/expense-pdf?start_date=${startDate}&end_date=${endDate}`)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
 
       if (result.success && result.pdfContent) {
@@ -169,6 +179,11 @@ export default function Reports() {
     setLoading(true)
     try {
       const response = await fetch(`/api/reports/general-expense-pdf?start_date=${startDate}&end_date=${endDate}`)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
 
       if (result.success && result.pdfContent) {
@@ -249,6 +264,11 @@ export default function Reports() {
     setLoading(true)
     try {
       const response = await fetch(`/api/reports/travel-expense-pdf?start_date=${startDate}&end_date=${endDate}`)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
       const result = await response.json()
 
       if (result.success && result.pdfContent) {

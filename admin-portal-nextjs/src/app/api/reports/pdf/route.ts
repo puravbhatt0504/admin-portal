@@ -16,9 +16,11 @@ export async function GET(request: Request) {
         SELECT 
           e.name as employee_name,
           a.date,
-          a.check_in,
-          a.check_out,
-          a.hours_worked,
+          a.shift1_in,
+          a.shift1_out,
+          a.shift2_in,
+          a.shift2_out,
+          a.total_hours,
           a.status
         FROM attendance a
         JOIN employees e ON a.employee_id = e.id
@@ -73,10 +75,12 @@ export async function GET(request: Request) {
       pdfContent += 'No data found for the selected criteria.\n'
     } else {
       if (reportType === 'Attendance') {
-        pdfContent += 'Employee Name | Date | Check In | Check Out | Hours | Status\n'
-        pdfContent += '-'.repeat(70) + '\n'
+        pdfContent += 'Employee Name | Date | Shift 1 | Shift 2 | Total Hours | Status\n'
+        pdfContent += '-'.repeat(80) + '\n'
         data.forEach(record => {
-          pdfContent += `${record.employee_name} | ${record.date} | ${record.check_in || 'N/A'} | ${record.check_out || 'N/A'} | ${record.hours_worked || 0} | ${record.status}\n`
+          const shift1 = record.shift1_in && record.shift1_out ? `${record.shift1_in}-${record.shift1_out}` : 'N/A'
+          const shift2 = record.shift2_in && record.shift2_out ? `${record.shift2_in}-${record.shift2_out}` : 'N/A'
+          pdfContent += `${record.employee_name} | ${record.date} | ${shift1} | ${shift2} | ${record.total_hours || 0} | ${record.status}\n`
         })
       } else if (reportType === 'Expenses') {
         pdfContent += 'Employee Name | Category | Description | Amount | Date | Status\n'
