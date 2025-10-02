@@ -255,9 +255,12 @@ export class PDFService {
     const totalDistance = travelExpenses.reduce((sum, exp) => {
       // First try to use actual kilometers if available
       const km = exp.kilometers
-      if (km && km !== null && km !== undefined && km !== '' && km !== '0' && km !== '0.00' && km !== '0.0') {
+      if (km && km !== null && km !== undefined && km !== '' && km !== '0' && km !== '0.00' && km !== '0.0' && km !== 0) {
         const numKm = Number(km)
-        if (!isNaN(numKm) && numKm > 0) return sum + numKm
+        if (!isNaN(numKm) && numKm > 0) {
+          console.log(`Using real data: ${km} km for ₹${exp.amount}`)
+          return sum + numKm
+        }
       }
       
       // If no kilometers, try to calculate from odometer readings
@@ -349,7 +352,7 @@ export class PDFService {
               const empDistance = expenses.reduce((sum, exp) => {
                 // First try to use actual kilometers if available
                 const km = exp.kilometers
-                if (km && km !== null && km !== undefined && km !== '' && km !== '0' && km !== '0.00' && km !== '0.0') {
+                if (km && km !== null && km !== undefined && km !== '' && km !== '0' && km !== '0.00' && km !== '0.0' && km !== 0) {
                   const numKm = Number(km)
                   if (!isNaN(numKm) && numKm > 0) return sum + numKm
                 }
